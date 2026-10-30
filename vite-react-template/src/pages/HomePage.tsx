@@ -1,3 +1,4 @@
+import { Link } from 'react-router'
 import { Container } from '@/components/layout/Container'
 import { Section } from '@/components/layout/Section'
 import { PageMeta } from '@/components/seo/PageMeta'
@@ -7,119 +8,144 @@ import * as c from '@/content/eqisi'
 import { asset } from '@/lib/assets'
 import { cn } from '@/lib/cn'
 
-const card = 'rounded-lg border border-border bg-surface p-6'
-const chip = 'rounded-full border border-border bg-surface px-4 py-2 text-sm font-semibold'
-
-function NumberedGrid({ items }: { items: readonly string[] }) {
-  return (
-    <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {items.map((item, i) => (
-        <li key={item} className={card}>
-          <span className="text-sm font-bold tracking-widest text-warning">{String(i + 1).padStart(2, '0')}</span>
-          <h3 className="mt-1 text-lg font-semibold">{item}</h3>
-        </li>
-      ))}
-    </ul>
-  )
-}
+const card = 'rounded-xl border border-border bg-surface p-6 shadow-subtle transition-all hover:border-primary/50'
 
 export function Component() {
   return (
     <>
       <PageMeta title={siteConfig.name} description={siteConfig.description} />
 
-      <section id="home" className="border-b border-border">
-        <Container className="grid items-center gap-10 py-16 sm:py-24 lg:grid-cols-[1.1fr_0.9fr]">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden border-b border-border bg-canvas">
+        <Container className="grid items-center gap-12 py-16 sm:py-24 lg:grid-cols-[1.1fr_0.9fr]">
           <div>
-            <p className="text-sm font-bold tracking-widest text-warning uppercase">Company profile 2025</p>
-            <h1 className="mt-3 text-display text-balance text-primary">{siteConfig.tagline}</h1>
-            <p className="mt-6 max-w-prose text-lg text-fg-muted">
-              EQISI provides warehousing, manpower and supply chain services, backed by technology that keeps payroll,
-              people and inventory moving on time.
+            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1 text-xs font-bold tracking-wider text-warning uppercase">
+              <span className="size-2 rounded-full bg-highlight" />
+              Company Profile 2025
+            </div>
+            <h1 className="mt-4 text-display text-balance font-extrabold text-primary">
+              {siteConfig.tagline}
+            </h1>
+            <p className="mt-6 max-w-prose text-lg leading-relaxed text-fg-muted">
+              EQISI delivers integrated warehousing, manpower, logistics, and facility solutions backed by automation systems that keep payroll, people, and inventory moving on time.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a href="#contact" className={buttonStyles({ size: 'lg' })}>Contact us</a>
-              <a href="#systems" className={buttonStyles({ size: 'lg', variant: 'secondary' })}>Our systems</a>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Link to="/services" className={buttonStyles({ size: 'lg' })}>
+                Our Services &amp; Systems
+              </Link>
+              <Link to="/contacts" className={buttonStyles({ size: 'lg', variant: 'secondary' })}>
+                Contact Us
+              </Link>
             </div>
           </div>
-          <img
-            src={asset('factory.webp')}
-            alt="Inside a busy manufacturing and warehouse facility"
-            width={900}
-            height={1029}
-            className="aspect-[16/10] w-full rounded-xl border-b-8 border-highlight object-cover shadow-elevated lg:aspect-[4/5]"
-          />
-        </Container>
-      </section>
-
-      <section id="about" aria-labelledby="about-heading" className="py-16 sm:py-20">
-        <Container className="grid items-center gap-10 lg:grid-cols-2">
-          <div>
-            <p className="text-sm font-bold tracking-widest text-warning uppercase">Get to know us</p>
-            <h2 id="about-heading" className="mt-2 text-3xl font-bold tracking-tight text-primary sm:text-4xl">
-              Innovative services for manufacturers and warehouses
-            </h2>
-            {c.about.map((p) => (
-              <p key={p} className="mt-4 max-w-prose text-fg-muted">{p}</p>
-            ))}
+          <div className="relative">
+            <img
+              src={asset('factory.webp')}
+              alt="Inside a busy manufacturing and warehouse facility"
+              width={900}
+              height={1029}
+              className="aspect-[16/10] w-full rounded-2xl border-b-8 border-highlight object-cover shadow-elevated lg:aspect-[4/5]"
+            />
           </div>
-          <img src={asset('industry.webp')} alt="Industrial plant with steel structures" width={900} height={1012} loading="lazy" className="max-h-[30rem] w-full rounded-xl object-cover" />
         </Container>
       </section>
 
-      <Section id="systems" muted eyebrow="Systems" title="Six systems that run your workforce and supply chain">
-        <NumberedGrid items={c.systems} />
-      </Section>
+      {/* Trust & Key Stats Strip */}
+      <section className="border-b border-border bg-surface py-10" aria-label="Key Highlights">
+        <Container>
+          <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+            <div className="border-l-4 border-primary pl-4">
+              <p className="text-3xl font-extrabold text-primary sm:text-4xl">1986</p>
+              <p className="mt-1 text-sm text-fg-muted font-medium">Industry Heritage (JRS Group)</p>
+            </div>
+            <div className="border-l-4 border-highlight pl-4">
+              <p className="text-3xl font-extrabold text-primary sm:text-4xl">DO-174</p>
+              <p className="mt-1 text-sm text-fg-muted font-medium">Full DOLE Compliance</p>
+            </div>
+            <div className="border-l-4 border-primary pl-4">
+              <p className="text-3xl font-extrabold text-primary sm:text-4xl">6</p>
+              <p className="mt-1 text-sm text-fg-muted font-medium">Core Management Systems</p>
+            </div>
+            <div className="border-l-4 border-highlight pl-4">
+              <p className="text-3xl font-extrabold text-primary sm:text-4xl">26+</p>
+              <p className="mt-1 text-sm text-fg-muted font-medium">Multinational &amp; Local Clients</p>
+            </div>
+          </div>
+        </Container>
+      </section>
 
-      <Section id="mission" eyebrow="Mission & vision" title="Where we are headed">
-        <div className="grid gap-4 md:grid-cols-2">
-          {[['Mission', c.mission], ['Vision', c.vision]].map(([title, text]) => (
-            <div key={title} className="rounded-lg bg-primary p-8 text-primary-fg">
-              <h3 className="text-2xl font-bold">{title}</h3>
-              <p className="mt-3 text-lg">{text}</p>
+      {/* Services Teaser */}
+      <Section
+        id="systems-preview"
+        muted
+        eyebrow="Core Competencies"
+        title="Six systems that run your workforce and supply chain"
+        lead="Our integrated software platforms streamline daily operations, minimize human error, and provide real-time management visibility."
+      >
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {c.systems.map((system, i) => (
+            <div key={system} className={card}>
+              <span className="text-sm font-bold tracking-widest text-warning">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <h3 className="mt-2 text-lg font-semibold text-fg">{system}</h3>
             </div>
           ))}
         </div>
-        <h3 className="mt-12 mb-4 text-2xl font-bold">Our values</h3>
-        <ul className="grid gap-4 md:grid-cols-3">
-          {c.values.map((v) => (
-            <li key={v.name} className={card}>
-              <h4 className="text-lg font-semibold">{v.name}</h4>
-              <p className="mt-2 text-fg-muted">{v.text}</p>
-            </li>
-          ))}
-        </ul>
+        <div className="mt-8 flex justify-center sm:justify-start">
+          <Link to="/services" className={buttonStyles({ variant: 'secondary' })}>
+            Explore All Services &amp; Capabilities &rarr;
+          </Link>
+        </div>
       </Section>
 
-      <Section id="team" muted eyebrow="Leadership" title="Our executive team">
-        <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {c.team.map((m) => (
-            <li key={m.name} className="overflow-hidden rounded-lg border border-b-4 border-border border-b-highlight bg-surface">
-              <img src={asset(m.photo)} alt={`Portrait of ${m.name}`} width={420} height={525} loading="lazy" className="aspect-[4/5] w-full object-cover object-top" />
-              <div className="p-4">
-                <p className="font-semibold">{m.name}</p>
-                <p className="text-sm text-fg-muted">{m.role}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </Section>
+      {/* About Teaser */}
+      <section className="py-16 sm:py-20 border-b border-border bg-canvas" aria-labelledby="home-about-heading">
+        <Container className="grid items-center gap-12 lg:grid-cols-2">
+          <div>
+            <p className="text-sm font-bold tracking-widest text-warning uppercase">About EQISI</p>
+            <h2 id="home-about-heading" className="mt-2 text-3xl font-bold tracking-tight text-primary sm:text-4xl">
+              Innovative services for manufacturers and warehouses
+            </h2>
+            {c.about.map((p) => (
+              <p key={p} className="mt-4 text-base leading-relaxed text-fg-muted">
+                {p}
+              </p>
+            ))}
+            <div className="mt-8">
+              <Link to="/about" className={buttonStyles()}>
+                Learn More About Our Heritage &amp; Team &rarr;
+              </Link>
+            </div>
+          </div>
+          <div className="overflow-hidden rounded-2xl border border-border shadow-card">
+            <img
+              src={asset('industry.webp')}
+              alt="Industrial plant with steel structures"
+              width={900}
+              height={1012}
+              loading="lazy"
+              className="max-h-[26rem] w-full object-cover"
+            />
+          </div>
+        </Container>
+      </section>
 
-      <Section id="industries" eyebrow="Industries" title="We operate in these industries">
-        <NumberedGrid items={c.industries} />
-        <h3 className="mt-14 text-2xl font-bold">We are not limited to blue collar workers</h3>
-        <p className="mt-2 mb-5 max-w-prose text-fg-muted">We also provide white collar personnel across various multinational industries.</p>
-        <ul className="flex flex-wrap gap-3">
-          {c.workforce.map((w) => (
-            <li key={w} className={chip}>{w}</li>
-          ))}
-        </ul>
-      </Section>
-
-      <Section id="clients" muted eyebrow="Our clients" title="Trusted by leading brands">
+      {/* Clients Section */}
+      <Section
+        id="clients"
+        muted
+        eyebrow="Our Clients"
+        title="Trusted by leading brands nationwide"
+        lead="We partner with top-tier multinational corporations, food service leaders, industrial manufacturers, and retail chains across the Philippines."
+      >
         <ul className="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7">
           {c.clients.map((client) => (
-            <li key={client.name} className="grid aspect-square place-items-center overflow-hidden rounded-full border-4 border-border bg-white">
+            <li
+              key={client.name}
+              title={client.name}
+              className="grid aspect-square place-items-center overflow-hidden rounded-full border-4 border-border bg-white shadow-subtle transition-transform hover:scale-105"
+            >
               <img
                 src={asset(client.logo)}
                 alt={client.name}
@@ -133,90 +159,55 @@ export function Component() {
         </ul>
       </Section>
 
-      <section id="edge" aria-labelledby="edge-heading" className="py-16 sm:py-20">
-        <Container className="grid items-center gap-10 lg:grid-cols-2">
-          <div>
-            <p className="text-sm font-bold tracking-widest text-warning uppercase">Edge in the market</p>
-            <h2 id="edge-heading" className="mt-2 text-3xl font-bold tracking-tight text-primary sm:text-4xl">Why companies choose EQISI</h2>
-            <ol className="mt-8 space-y-4">
-              {c.edge.map((e, i) => (
-                <li key={e} className={cn(card, 'py-4')}>
-                  <span className="mr-3 text-sm font-bold tracking-widest text-warning">{String(i + 1).padStart(2, '0')}</span>
-                  <span className="text-lg font-semibold">{e}</span>
-                </li>
-              ))}
-            </ol>
-          </div>
-          <img src={asset('edge.webp')} alt="Robotic arm on a production line" width={900} height={506} loading="lazy" className="w-full rounded-xl object-cover" />
-        </Container>
-      </section>
-
-      <Section id="leverage" muted eyebrow="Leverage" title="Ready for multinational companies" lead={c.leverageIntro}>
-        <ul className="flex flex-wrap gap-3">
-          {c.leverage.map((l) => (
-            <li key={l} className={chip}>{l}</li>
-          ))}
-        </ul>
-      </Section>
-
-      <section id="benefits" aria-labelledby="benefits-heading" className="py-16 sm:py-20">
-        <Container className="grid gap-10 lg:grid-cols-2">
-          <div>
-            <p className="text-sm font-bold tracking-widest text-warning uppercase">Employee benefits</p>
-            <h2 id="benefits-heading" className="mt-2 text-3xl font-bold tracking-tight text-primary sm:text-4xl">Real-time pay and benefits, from any phone</h2>
-            <ul className="mt-8 grid gap-3 sm:grid-cols-2">
-              {c.benefits.map((b, i) => (
-                <li key={b} className={cn(card, 'p-4 text-sm font-semibold')}>
-                  <span className="mr-2 font-bold text-warning">{String(i + 1).padStart(2, '0')}</span>
-                  {b}
-                </li>
-              ))}
-            </ul>
+      {/* Careers & Benefits Teaser */}
+      <section className="py-16 sm:py-20 border-b border-border bg-canvas" aria-labelledby="home-careers-heading">
+        <Container className="grid items-center gap-12 lg:grid-cols-2">
+          <div className="overflow-hidden rounded-2xl border border-border shadow-card">
+            <img
+              src={asset('benefits.webp')}
+              alt="Workers on a production floor"
+              width={900}
+              height={507}
+              loading="lazy"
+              className="w-full object-cover"
+            />
           </div>
           <div>
-            <img src={asset('benefits.webp')} alt="Workers on a production floor" width={900} height={507} loading="lazy" className="w-full rounded-xl object-cover" />
-            <ul className="mt-5 space-y-3">
-              {c.benefitReasons.map((r) => (
-                <li key={r} className={cn(card, 'p-4 text-fg-muted')}>{r}</li>
-              ))}
-            </ul>
+            <p className="text-sm font-bold tracking-widest text-warning uppercase">Careers &amp; Welfare</p>
+            <h2 id="home-careers-heading" className="mt-2 text-3xl font-bold tracking-tight text-primary sm:text-4xl">
+              Real-time pay, welfare and fast recruitment
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-fg-muted">
+              We empower our workforce with automated mobile-accessible payroll, emergency financial support, and real-time payslips. For clients, our streamlined 15-day deployment pipeline ensures qualified talent is ready without delay.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Link to="/careers" className={buttonStyles()}>
+                View Careers &amp; Benefits
+              </Link>
+              <Link to="/contacts" className={buttonStyles({ variant: 'secondary' })}>
+                Deploy a Team
+              </Link>
+            </div>
           </div>
         </Container>
       </section>
 
-      <Section id="recruitment" muted eyebrow="Recruitment & talent management" title="From new client to deployed team">
-        <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {c.recruitment.map((s) => (
-            <li key={s.title} className="rounded-lg border border-t-4 border-border border-t-primary bg-surface p-5">
-              <span className="inline-block rounded-full bg-surface-muted px-3 py-0.5 text-sm font-bold">{s.duration}</span>
-              <h3 className="mt-3 font-semibold">{s.title}</h3>
-              <p className="mt-1 text-sm text-fg-muted">{s.text}</p>
-            </li>
-          ))}
-        </ol>
-        <p className="mt-6 font-bold text-primary">Total timeline: {c.recruitmentTimeline}</p>
-      </Section>
-
-      <section id="contact" aria-labelledby="contact-heading" className="bg-primary py-16 text-primary-fg sm:py-20">
-        <Container>
-          <p className="text-sm font-bold tracking-widest uppercase">Contact us</p>
-          <h2 id="contact-heading" className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Thank you!</h2>
-          <p className="mt-3 max-w-prose">Reach out to {c.contact.person}, {c.contact.role}.</p>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="rounded-lg border border-primary-fg/30 bg-primary-fg/10 p-6">
-              <h3 className="font-semibold">Phone</h3>
-              <a className="mt-1 block underline" href={c.contact.phone.href}>{c.contact.phone.label}</a>
-            </div>
-            <div className="rounded-lg border border-primary-fg/30 bg-primary-fg/10 p-6">
-              <h3 className="font-semibold">Email</h3>
-              <a className="mt-1 block break-all underline" href={`mailto:${c.contact.email}`}>{c.contact.email}</a>
-            </div>
-            {c.contact.offices.map((o) => (
-              <div key={o.name} className="rounded-lg border border-primary-fg/30 bg-primary-fg/10 p-6">
-                <h3 className="font-semibold">{o.name}</h3>
-                <p className="mt-1">{o.address}</p>
-              </div>
-            ))}
+      {/* Bottom CTA Banner */}
+      <section className="bg-primary py-16 text-primary-fg sm:py-20">
+        <Container className="text-center">
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+            Ready to upgrade your supply chain &amp; workforce?
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-primary-fg/90">
+            Get in touch with President Rodulfo Mejes Malaca and our leadership team to discuss how EQISI can optimize your operations.
+          </p>
+          <div className="mt-8 flex justify-center gap-4">
+            <Link
+              to="/contacts"
+              className="inline-flex min-h-12 items-center justify-center rounded-lg bg-surface px-6 font-semibold text-fg shadow-elevated transition-colors hover:bg-surface-muted"
+            >
+              Contact Our Team
+            </Link>
           </div>
         </Container>
       </section>

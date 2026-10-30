@@ -9,11 +9,9 @@ export const siteConfig = {
   description: 'EQISI delivers warehousing, manpower, logistics and automation services to multinational and Philippine companies.',
   nav: [
     { to: '/', label: 'Home' },
-    { to: '/#about', label: 'About' },
-    { to: '/#systems', label: 'Systems' },
-    { to: '/#team', label: 'Team' },
-    { to: '/#clients', label: 'Clients' },
-    { to: '/#recruitment', label: 'Recruitment' },
-    { to: '/#contact', label: 'Contact' },
+    { to: '/about', label: 'About' },
+    { to: '/services', label: 'Services' },
+    { to: '/careers', label: 'Careers' },
+    { to: '/contacts', label: 'Contacts' },
   ] satisfies NavItem[],
 } as const

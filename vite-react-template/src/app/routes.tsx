@@ -1,4 +1,4 @@
-import type { RouteObject } from 'react-router'
+import { Navigate, type RouteObject } from 'react-router'
 import { RootLayout } from '@/components/layout/RootLayout'
 import { Component as RouteError } from '@/pages/RouteError'
 
@@ -16,6 +16,11 @@ export const routes: RouteObject[] = [
         ErrorBoundary: RouteError,
         children: [
           { index: true, lazy: () => import('@/pages/HomePage') },
+          { path: 'about', lazy: () => import('@/pages/AboutPage') },
+          { path: 'services', lazy: () => import('@/pages/ServicesPage') },
+          { path: 'careers', lazy: () => import('@/pages/CareersPage') },
+          { path: 'contacts', lazy: () => import('@/pages/ContactsPage') },
+          { path: 'contact', element: <Navigate to="/contacts" replace /> },
           { path: 'design-system', lazy: () => import('@/pages/DesignSystemPage') },
           { path: '*', lazy: () => import('@/pages/NotFoundPage') },
         ],
