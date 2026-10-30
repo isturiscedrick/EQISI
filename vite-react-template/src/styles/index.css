@@ -20,6 +20,7 @@
   --primary-fg: #ffffff;
   --accent: #0b7a85;
   --ring: #2b3fd0;
+  --highlight: #e98a0c; /* decorative only (borders, bars): too light for text */
 
   --success: #15803d;
   --warning: #9a5b00;
@@ -40,6 +41,7 @@
     --primary-fg: #0f1623;
     --accent: #55c4cd;
     --ring: #93a5ff;
+    --highlight: #f5a53a;
 
     --success: #4ade80;
     --warning: #fbbf24;
@@ -59,6 +61,7 @@
   --color-primary-fg: var(--primary-fg);
   --color-accent: var(--accent);
   --color-ring: var(--ring);
+  --color-highlight: var(--highlight);
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-danger: var(--danger);
@@ -91,6 +94,8 @@
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
+    /* Keeps in-page anchor targets clear of the sticky header (h-16). */
+    scroll-padding-top: 5rem;
   }
 
   body {

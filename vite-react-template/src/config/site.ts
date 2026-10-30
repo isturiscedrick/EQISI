@@ -4,11 +4,16 @@ export interface NavItem {
 }
 
 export const siteConfig = {
-  name: 'Starter',
-  tagline: 'A working starting point for your next interface',
-  description: 'A Vite, React 19, TypeScript and Tailwind CSS 4 starter.',
+  name: 'EQISI',
+  tagline: 'We deliver with automation',
+  description: 'EQISI delivers warehousing, manpower, logistics and automation services to multinational and Philippine companies.',
   nav: [
     { to: '/', label: 'Home' },
-    { to: '/design-system', label: 'Design system' },
+    { to: '/#about', label: 'About' },
+    { to: '/#systems', label: 'Systems' },
+    { to: '/#team', label: 'Team' },
+    { to: '/#clients', label: 'Clients' },
+    { to: '/#recruitment', label: 'Recruitment' },
+    { to: '/#contact', label: 'Contact' },
   ] satisfies NavItem[],
 } as const

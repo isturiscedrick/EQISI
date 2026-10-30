@@ -49,24 +49,36 @@ export function Header() {
             'md:static md:flex md:flex-row md:border-0 md:bg-transparent md:p-0',
           )}
         >
-          {siteConfig.nav.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              end={item.to === '/'}
-              onClick={() => setOpen(false)}
-              className={({ isActive }) =>
-                cn(
-                  'inline-flex min-h-11 items-center rounded-md px-3 font-medium',
-                  isActive
-                    ? 'underline decoration-2 underline-offset-8'
-                    : 'text-fg-muted hover:bg-surface-muted hover:text-fg',
-                )
-              }
-            >
-              {item.label}
-            </NavLink>
-          ))}
+          {siteConfig.nav.map((item) =>
+            item.to.includes('#') ? (
+              // In-page anchors use a plain Link: NavLink would mark every anchor active whenever the path is "/".
+              <Link
+                key={item.to}
+                to={item.to}
+                onClick={() => setOpen(false)}
+                className="inline-flex min-h-11 items-center rounded-md px-3 font-medium text-fg-muted hover:bg-surface-muted hover:text-fg"
+              >
+                {item.label}
+              </Link>
+            ) : (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.to === '/'}
+                onClick={() => setOpen(false)}
+                className={({ isActive }) =>
+                  cn(
+                    'inline-flex min-h-11 items-center rounded-md px-3 font-medium',
+                    isActive
+                      ? 'underline decoration-2 underline-offset-8'
+                      : 'text-fg-muted hover:bg-surface-muted hover:text-fg',
+                  )
+                }
+              >
+                {item.label}
+              </NavLink>
+            ),
+          )}
         </nav>
       </div>
     </header>
