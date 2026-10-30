@@ -6,7 +6,6 @@ import { buttonStyles } from '@/components/ui/button-styles'
 import { siteConfig } from '@/config/site'
 import * as c from '@/content/eqisi'
 import { asset } from '@/lib/assets'
-import { cn } from '@/lib/cn'
 
 const card = 'rounded-xl border border-border bg-surface p-6 shadow-subtle transition-all hover:border-primary/50'
 
@@ -131,36 +130,8 @@ export function Component() {
         </Container>
       </section>
 
-      {/* Clients Section */}
-      <Section
-        id="clients"
-        muted
-        eyebrow="Our Clients"
-        title="Trusted by leading brands nationwide"
-        lead="We partner with top-tier multinational corporations, food service leaders, industrial manufacturers, and retail chains across the Philippines."
-      >
-        <ul className="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7">
-          {c.clients.map((client) => (
-            <li
-              key={client.name}
-              title={client.name}
-              className="grid aspect-square place-items-center overflow-hidden rounded-full border-4 border-border bg-white shadow-subtle transition-transform hover:scale-105"
-            >
-              <img
-                src={asset(client.logo)}
-                alt={client.name}
-                width={150}
-                height={150}
-                loading="lazy"
-                className={cn('size-full object-contain', 'padded' in client && client.padded && 'p-[14%]')}
-              />
-            </li>
-          ))}
-        </ul>
-      </Section>
-
       {/* Careers & Benefits Teaser */}
-      <section className="py-16 sm:py-20 border-b border-border bg-canvas" aria-labelledby="home-careers-heading">
+      <section className="py-16 sm:py-20 border-b border-border bg-surface-muted" aria-labelledby="home-careers-heading">
         <Container className="grid items-center gap-12 lg:grid-cols-2">
           <div className="overflow-hidden rounded-2xl border border-border shadow-card">
             <img
