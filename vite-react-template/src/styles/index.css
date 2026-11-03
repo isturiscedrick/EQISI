@@ -58,8 +58,9 @@
 }
 
 @theme {
-  /* Typography: two system stacks, so there are no font requests to block rendering. */
-  --font-sans: ui-sans-serif, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* Two-font brand system: Montserrat for display/headings, Inter for body/UI. */
+  --font-sans: "Inter", ui-sans-serif, system-ui, "Segoe UI", Arial, sans-serif;
+  --font-heading: "Montserrat", "Inter", ui-sans-serif, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 
   --text-display: clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem);
@@ -248,8 +249,20 @@
 @layer base {
   h1,
   h2,
-  h3 {
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
     text-wrap: balance;
+  }
+
+  body,
+  button,
+  input,
+  textarea,
+  select {
+    font-family: var(--font-sans);
   }
 
   p {
