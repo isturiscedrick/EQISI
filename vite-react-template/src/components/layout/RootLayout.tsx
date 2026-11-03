@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { Outlet, ScrollRestoration, useLocation } from 'react-router'
 import { gsap } from 'gsap'
-import { animate, stagger } from 'animejs'
 import { BackToTop } from '@/components/ui/BackToTop'
 import { Footer } from './Footer'
 import { Header } from './Header'
@@ -12,21 +11,19 @@ export function RootLayout() {
   const mainRef = useRef<HTMLElement>(null)
   const lastPathname = useRef(pathname)
 
-  // GSAP controls the page-level entrance animation.
+  // GSAP provides a short, consistent transition whenever the route changes.
   useEffect(() => {
     const main = mainRef.current
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-    if (!main || reduceMotion) return
+    if (!main || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
     const context = gsap.context(() => {
       gsap.fromTo(
         main,
-        { autoAlpha: 0, y: 12 },
+        { autoAlpha: 0, y: 10 },
         {
           autoAlpha: 1,
           y: 0,
-          duration: 0.42,
+          duration: 0.38,
           ease: 'power2.out',
           clearProps: 'opacity,visibility,transform',
         },
@@ -36,45 +33,7 @@ export function RootLayout() {
     return () => context.revert()
   }, [pathname])
 
-  // Anime.js animates headings and non-lazy images without competing with GSAP.
-  useEffect(() => {
-    const main = mainRef.current
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-    if (!main || reduceMotion) return
-
-    const headings = main.querySelectorAll('h1, h2')
-    const images = main.querySelectorAll('img:not([loading="lazy"])')
-
-    const headingAnimation =
-      headings.length > 0
-        ? animate(headings, {
-            opacity: [0, 1],
-            translateY: [14, 0],
-            duration: 560,
-            delay: stagger(65),
-            ease: 'out(3)',
-          })
-        : null
-
-    const imageAnimation =
-      images.length > 0
-        ? animate(images, {
-            opacity: [0, 1],
-            scale: [0.985, 1],
-            duration: 720,
-            delay: 100,
-            ease: 'out(3)',
-          })
-        : null
-
-    return () => {
-      headingAnimation?.revert()
-      imageAnimation?.revert()
-    }
-  }, [pathname])
-
-  // Move keyboard focus to the new page after client-side navigation.
+  // Keep keyboard focus aligned with the newly navigated page.
   useEffect(() => {
     if (lastPathname.current === pathname) return
 
