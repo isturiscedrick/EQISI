@@ -28,7 +28,9 @@ export function Header() {
       ease: 'out(3)',
     })
 
-    return () => menuAnimation.revert()
+    return () => {
+      menuAnimation.revert()
+    }
   }, [open])
 
   // Escape closes the mobile menu and returns focus to its toggle.
