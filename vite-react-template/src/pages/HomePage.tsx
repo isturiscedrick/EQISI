@@ -1,6 +1,7 @@
 import { ArrowRight, CalendarDays, Cpu, Handshake, ShieldCheck } from 'lucide-react'
 import { Link } from 'react-router'
 import { Container } from '@/components/layout/Container'
+import { GlobeVisual } from '@/components/home/GlobeVisual'
 import { CtaBanner } from '@/components/layout/CtaBanner'
 import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
@@ -44,47 +45,7 @@ export function Component() {
             </Link>
           </>
         }
-        visual={
-          <div className="premium-frame relative mx-auto mt-5 max-w-5xl">
-            <div className="relative overflow-hidden rounded-[1.75rem] border border-border bg-surface shadow-modal">
-              <img
-                src={asset('factory.webp')}
-                alt="Modern industrial warehouse and manufacturing operations"
-                width={1600}
-                height={900}
-                fetchPriority="high"
-                className="premium-image aspect-[16/8] w-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-fg/45 via-transparent to-transparent" />
-              <div className="absolute bottom-4 left-4 right-4 flex flex-wrap items-end justify-between gap-3 sm:bottom-7 sm:left-7 sm:right-7">
-                <div className="rounded-2xl border border-white/30 bg-white/90 px-4 py-3 text-left shadow-elevated backdrop-blur-md sm:px-5">
-                  <p className="text-[10px] font-bold tracking-[0.18em] text-warning uppercase">Built on experience</p>
-                  <p className="mt-1 text-xl font-extrabold text-fg sm:text-2xl">Since 1986</p>
-                  <p className="text-xs text-fg-muted">A legacy of industrial service</p>
-                </div>
-                <div className="rounded-2xl border border-white/30 bg-white/90 px-4 py-3 text-left shadow-elevated backdrop-blur-md sm:px-5">
-                  <div className="flex items-center gap-2">
-                    <span className="grid size-8 place-items-center rounded-lg bg-highlight/15 text-accent">
-                      <ShieldCheck aria-hidden="true" className="size-4" />
-                    </span>
-                    <div>
-                      <p className="text-sm font-bold text-fg">DO-174 Compliant</p>
-                      <p className="text-xs text-fg-muted">People-first operations</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="animate-float absolute -left-3 top-1/4 hidden rounded-xl border border-border bg-surface/95 px-4 py-3 text-left shadow-elevated backdrop-blur sm:block lg:-left-10">
-              <p className="text-[10px] font-bold tracking-widest text-fg-muted uppercase">Connected systems</p>
-              <p className="mt-1 text-sm font-bold text-primary">People · Payroll · Inventory</p>
-            </div>
-            <div className="animate-float absolute -right-3 top-1/3 hidden rounded-xl border border-border bg-surface/95 px-4 py-3 text-left shadow-elevated backdrop-blur sm:block lg:-right-10" style={{ animationDelay: '-2.5s' }}>
-              <p className="text-[10px] font-bold tracking-widest text-fg-muted uppercase">One integrated partner</p>
-              <p className="mt-1 text-sm font-bold text-fg">Workforce + Supply Chain</p>
-            </div>
-          </div>
-        }
+        visual={<GlobeVisual />
       />
 
       {/* Key stats: a card that overlaps the hero */}
