@@ -18,9 +18,9 @@ export function GlobeVisual() {
   }, [])
 
   return (
-    <div ref={root} className="relative mx-auto w-full max-w-4xl" aria-label="Animated globe representing EQISI's connected industrial operations">
+    <div ref={root} className="relative mx-auto w-full max-w-5xl" aria-label="Animated globe representing EQISI's connected industrial operations">
       <div className="pointer-events-none absolute inset-x-[12%] top-[12%] h-[72%] rounded-full bg-primary/15 blur-3xl" />
-      <svg viewBox="0 0 900 560" role="img" aria-labelledby="eqisi-globe-title" className="relative z-10 mx-auto block max-h-[430px] w-full max-w-[780px] overflow-visible">
+      <svg viewBox="0 0 900 560" role="img" aria-labelledby="eqisi-globe-title" className="relative z-10 mx-auto block h-[clamp(330px,42vh,450px)] w-full max-w-[860px] overflow-visible">
         <title id="eqisi-globe-title">EQISI connected world globe</title>
         <defs>
           <radialGradient id="eqisi-globe-fill" cx="35%" cy="28%" r="72%">
