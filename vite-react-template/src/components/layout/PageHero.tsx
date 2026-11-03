@@ -36,7 +36,7 @@ export function PageHero({ id, eyebrow, title, description, actions, visual, lar
             id={`${id}-heading`}
             className={cn(
               'animate-hero-in hero-d1 mt-4 font-extrabold tracking-tight text-fg',
-              large ? 'text-[clamp(2.5rem,3.8vw,3.5rem)] leading-[1.04] text-balance' : 'text-3xl sm:text-5xl',
+              large ? 'text-[clamp(3.25rem,5.6vw,5.25rem)] leading-[0.98] text-balance' : 'text-3xl sm:text-5xl',
               centered && 'mx-auto max-w-3xl',
             )}
           >
