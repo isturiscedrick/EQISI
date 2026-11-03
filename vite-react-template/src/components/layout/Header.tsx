@@ -1,5 +1,6 @@
 import { ArrowRight, Clock, Mail, Menu, Phone, X } from 'lucide-react'
 import { useEffect, useId, useRef, useState } from 'react'
+import { animate } from 'animejs'
 import { Link, NavLink } from 'react-router'
 import { buttonStyles } from '@/components/ui/button-styles'
 import { siteConfig } from '@/config/site'
@@ -14,7 +15,24 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false)
   const menuId = useId()
   const toggleRef = useRef<HTMLButtonElement>(null)
+  const navRef = useRef<HTMLElement>(null)
   const barRef = useRef<HTMLDivElement>(null)
+
+  // Anime.js gives the mobile navigation a quick, lightweight entrance.
+  useEffect(() => {
+    const nav = navRef.current
+    if (!open || !nav || window.matchMedia('(min-width: 768px)').matches) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    const menuAnimation = animate(nav, {
+      opacity: [0, 1],
+      translateY: [-8, 0],
+      duration: 240,
+      ease: 'out(3)',
+    })
+
+    return () => menuAnimation.revert()
+  }, [open])
 
   // Escape closes the mobile menu and returns focus to its toggle.
   useEffect(() => {
@@ -99,10 +117,11 @@ export function Header() {
           </button>
 
           <nav
+            ref={navRef}
             id={menuId}
             aria-label="Main"
             className={cn(
-              open ? 'animate-menu-in flex' : 'hidden',
+              open ? 'flex' : 'hidden',
               'absolute inset-x-0 top-full flex-col gap-1 border-b border-border bg-canvas p-4 shadow-elevated',
               'md:static md:flex md:flex-row md:items-center md:border-0 md:bg-transparent md:p-0 md:shadow-none',
             )}
