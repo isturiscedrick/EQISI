@@ -70,12 +70,12 @@ export function Header() {
       <header
         className={cn(
           'sticky top-0 z-40 border-b border-border backdrop-blur transition-all duration-200',
-          scrolled ? 'bg-canvas/95 shadow-card' : 'bg-canvas/90',
+          scrolled ? 'bg-canvas/95 shadow-card' : 'bg-canvas/85',
         )}
       >
         <div
           className={cn(
-            'mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 transition-all duration-200 sm:px-6 lg:px-8',
+            'mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 transition-all duration-200 sm:px-6 lg:px-8',
             scrolled ? 'h-14' : 'h-16',
           )}
         >
@@ -102,7 +102,7 @@ export function Header() {
             className={cn(
               open ? 'flex' : 'hidden',
               'absolute inset-x-0 top-full flex-col gap-1 border-b border-border bg-canvas p-4 shadow-elevated',
-              'md:static md:flex md:flex-row md:items-center md:border-0 md:bg-transparent md:p-0 md:shadow-none',
+              'md:static md:flex md:flex-row md:items-center md:gap-1 md:rounded-full md:border md:border-border/70 md:bg-surface-muted/75 md:px-2 md:py-1 md:shadow-none',
             )}
           >
             {siteConfig.nav.map((item) => (
@@ -113,11 +113,11 @@ export function Header() {
                 onClick={() => setOpen(false)}
                 className={({ isActive }) =>
                   cn(
-                    'relative inline-flex min-h-11 items-center rounded-md px-3 font-medium transition-colors',
-                    'after:absolute after:inset-x-3 after:bottom-1.5 after:h-0.5 after:origin-left after:rounded-full after:bg-highlight after:transition-transform after:duration-200',
+                    'relative inline-flex min-h-9 items-center rounded-full px-4 text-sm font-medium transition-all duration-200',
+                    'after:hidden',
                     isActive
-                      ? 'font-bold text-primary after:scale-x-100'
-                      : 'text-fg-muted after:scale-x-0 hover:bg-surface-muted hover:text-fg hover:after:scale-x-100',
+                      ? 'bg-surface text-primary shadow-subtle'
+                      : 'text-fg-muted hover:bg-surface hover:text-fg',
                   )
                 }
               >

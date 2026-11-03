@@ -12,7 +12,7 @@ interface CtaBannerProps {
 /** Shared closing banner with slow floating shapes. */
 export function CtaBanner({ title, description, children }: CtaBannerProps) {
   return (
-    <section className="relative overflow-hidden bg-primary py-16 text-primary-fg sm:py-20">
+    <section className="relative overflow-hidden rounded-none bg-primary py-16 text-primary-fg sm:py-20">
       <div aria-hidden="true" className="animate-float pointer-events-none absolute -top-16 -left-16 size-64 rounded-full bg-primary-fg/5" />
       <div
         aria-hidden="true"
