@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { Reveal } from '@/components/ui/Reveal'
 import { cn } from '@/lib/cn'
 import { Container } from './Container'
 
@@ -17,11 +18,16 @@ export function Section({ id, eyebrow, title, lead, muted = false, children }: S
   return (
     <section id={id} aria-labelledby={`${id}-heading`} className={cn('py-16 sm:py-20', muted && 'bg-surface-muted')}>
       <Container>
-        <p className="text-sm font-bold tracking-widest text-warning uppercase">{eyebrow}</p>
-        <h2 id={`${id}-heading`} className="mt-2 max-w-3xl text-3xl font-bold tracking-tight text-primary sm:text-4xl">
-          {title}
-        </h2>
-        {lead && <p className="mt-3 max-w-prose text-fg-muted">{lead}</p>}
+        <Reveal>
+          <p className="flex items-center gap-3 text-sm font-bold tracking-widest text-warning uppercase">
+            <span aria-hidden="true" className="h-1 w-8 rounded-full bg-highlight" />
+            {eyebrow}
+          </p>
+          <h2 id={`${id}-heading`} className="mt-2 max-w-3xl text-3xl font-bold tracking-tight text-primary sm:text-4xl">
+            {title}
+          </h2>
+          {lead && <p className="mt-3 max-w-prose text-fg-muted">{lead}</p>}
+        </Reveal>
         <div className="mt-10">{children}</div>
       </Container>
     </section>

@@ -1,11 +1,17 @@
+import { ArrowRight, Check } from 'lucide-react'
 import { Link } from 'react-router'
-import { Container } from '@/components/layout/Container'
+import { AutomationIllustration } from '@/components/illustrations/AutomationIllustration'
+import { CtaBanner } from '@/components/layout/CtaBanner'
+import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
 import { PageMeta } from '@/components/seo/PageMeta'
 import { buttonStyles } from '@/components/ui/button-styles'
+import { Reveal } from '@/components/ui/Reveal'
+import { bannerButton, card, chip, iconTile } from '@/components/ui/surface-styles'
 import * as c from '@/content/eqisi'
 import { asset } from '@/lib/assets'
 import { cn } from '@/lib/cn'
+import { industryIcon, systemIcon } from '@/lib/icons'
 
 const systemDetails: Record<string, string> = {
   'Payroll Management System': 'Automated timekeeping and wage computations with real-time disbursement to guarantee 100% on-time payroll for thousands of personnel.',
@@ -16,9 +22,6 @@ const systemDetails: Record<string, string> = {
   'Global Positioning System': 'High-accuracy vehicle fleet tracking, delivery route optimization, and live dispatch monitoring nationwide.',
 }
 
-const card = 'rounded-xl border border-border bg-surface p-6 shadow-subtle'
-const chip = 'rounded-full border border-border bg-surface px-4 py-2 text-sm font-semibold text-fg'
-
 export function Component() {
   return (
     <>
@@ -27,31 +30,24 @@ export function Component() {
         description="Explore EQISI's six management automation systems, warehousing solutions, multi-industry workforce staffing, and multinational support."
       />
 
-      {/* Hero Section */}
-      <section className="border-b border-border bg-canvas py-16 sm:py-24" aria-labelledby="services-hero">
-        <Container>
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1 text-xs font-bold tracking-wider text-warning uppercase">
-              <span className="size-2 rounded-full bg-highlight" />
-              Integrated Solutions
-            </div>
-            <h1 id="services-hero" className="mt-4 text-3xl font-extrabold tracking-tight text-primary sm:text-5xl">
-              End-to-End Warehousing, Workforce &amp; Automation
-            </h1>
-            <p className="mt-6 text-lg leading-relaxed text-fg-muted">
-              We engineer specialized operational frameworks tailored to your supply chain requirements. By combining proprietary management software with trained industrial personnel, we ensure reliable, high-yield results.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-4">
-              <Link to="/contacts" className={buttonStyles({ size: 'lg' })}>
-                Request a Consultation
-              </Link>
-              <a href="#systems" className={buttonStyles({ size: 'lg', variant: 'secondary' })}>
-                View Our 6 Systems
-              </a>
-            </div>
-          </div>
-        </Container>
-      </section>
+      <PageHero
+        id="services-hero"
+        eyebrow="Integrated Solutions"
+        title="End-to-End Warehousing, Workforce & Automation"
+        description="We engineer specialized operational frameworks tailored to your supply chain requirements. By combining proprietary management software with trained industrial personnel, we ensure reliable, high-yield results."
+        actions={
+          <>
+            <Link to="/contacts" className={buttonStyles({ size: 'lg' })}>
+              Request a Consultation
+              <ArrowRight aria-hidden="true" className="size-5 transition-transform duration-200 group-hover:translate-x-1" />
+            </Link>
+            <a href="#systems" className={buttonStyles({ size: 'lg', variant: 'secondary' })}>
+              View Our 6 Systems
+            </a>
+          </>
+        }
+        visual={<AutomationIllustration className="mx-auto w-full max-w-lg" />}
+      />
 
       {/* Six Systems Section */}
       <Section
@@ -62,19 +58,27 @@ export function Component() {
         lead="Our custom digital architecture keeps payroll, inventory, and operations running with precision and zero downtime."
       >
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {c.systems.map((name, i) => (
-            <div key={name} className={cn(card, 'flex flex-col justify-between border-t-4 border-t-primary')}>
-              <div>
-                <span className="text-sm font-extrabold tracking-widest text-warning">
-                  SYSTEM {String(i + 1).padStart(2, '0')}
-                </span>
-                <h3 className="mt-2 text-xl font-bold text-fg">{name}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-fg-muted">
-                  {systemDetails[name] ?? 'Enterprise-grade software designed to optimize productivity and eliminate operational friction.'}
-                </p>
-              </div>
-            </div>
-          ))}
+          {c.systems.map((name, i) => {
+            const Icon = systemIcon(name)
+            return (
+              <Reveal key={name} delay={(i % 3) * 100} className="h-full">
+                <div className={cn(card, 'border-t-4 border-t-primary')}>
+                  <div className="flex items-center gap-4">
+                    <span className={iconTile}>
+                      <Icon aria-hidden="true" className="size-6" />
+                    </span>
+                    <span className="text-sm font-extrabold tracking-widest text-warning">
+                      SYSTEM {String(i + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+                  <h3 className="mt-4 text-xl font-bold text-fg">{name}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-fg-muted">
+                    {systemDetails[name] ?? 'Enterprise-grade software designed to optimize productivity and eliminate operational friction.'}
+                  </p>
+                </div>
+              </Reveal>
+            )
+          })}
         </div>
       </Section>
 
@@ -86,15 +90,25 @@ export function Component() {
         lead="From cold chain food distribution to high-tech manufacturing, our capabilities span key commercial and industrial sectors."
       >
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {c.industries.map((ind, i) => (
-            <div key={ind} className={cn(card, 'transition-all hover:border-primary/50')}>
-              <span className="text-xs font-bold text-warning">{String(i + 1).padStart(2, '0')}</span>
-              <h4 className="mt-1 font-semibold text-fg">{ind}</h4>
-            </div>
-          ))}
+          {c.industries.map((ind, i) => {
+            const Icon = industryIcon(ind)
+            return (
+              <Reveal key={ind} delay={(i % 4) * 80} className="h-full">
+                <div className={card}>
+                  <div className="flex items-center justify-between">
+                    <span className={iconTile}>
+                      <Icon aria-hidden="true" className="size-6" />
+                    </span>
+                    <span className="text-xs font-bold text-warning">{String(i + 1).padStart(2, '0')}</span>
+                  </div>
+                  <h4 className="mt-3 font-semibold text-fg">{ind}</h4>
+                </div>
+              </Reveal>
+            )
+          })}
         </div>
 
-        <div className="mt-16 rounded-2xl border border-border bg-surface-muted p-8 shadow-card">
+        <Reveal className="mt-16 rounded-2xl border border-border bg-surface-muted p-8 shadow-card">
           <h3 className="text-2xl font-bold text-fg">Not limited to blue collar workers</h3>
           <p className="mt-2 max-w-2xl text-base text-fg-muted">
             In addition to trained floor operators, we source, qualify, and manage specialized technical and white-collar personnel for multinational clients.
@@ -106,7 +120,7 @@ export function Component() {
               </li>
             ))}
           </ul>
-        </div>
+        </Reveal>
       </Section>
 
       {/* Multinational Leverage Section */}
@@ -118,13 +132,15 @@ export function Component() {
         lead={c.leverageIntro}
       >
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {c.leverage.map((item) => (
-            <div key={item} className="flex items-start gap-3 rounded-xl border border-border bg-surface p-5 shadow-subtle">
-              <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-highlight/20 text-xs font-bold text-highlight">
-                &#10003;
-              </span>
-              <p className="font-medium text-fg">{item}</p>
-            </div>
+          {c.leverage.map((item, i) => (
+            <Reveal key={item} delay={(i % 3) * 80} className="h-full">
+              <div className="group flex h-full items-start gap-3 rounded-xl border border-border bg-surface p-5 shadow-subtle transition-all duration-200 hover:border-primary/50 hover:shadow-card motion-safe:hover:-translate-y-1">
+                <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-highlight/20 text-highlight transition-colors duration-200 group-hover:bg-highlight group-hover:text-white">
+                  <Check aria-hidden="true" className="size-4" strokeWidth={3} />
+                </span>
+                <p className="font-medium text-fg">{item}</p>
+              </div>
+            </Reveal>
           ))}
         </div>
       </Section>
@@ -141,7 +157,7 @@ export function Component() {
             <li
               key={client.name}
               title={client.name}
-              className="grid aspect-square place-items-center overflow-hidden rounded-full border-4 border-border bg-white shadow-subtle transition-transform hover:scale-105"
+              className="grid aspect-square place-items-center overflow-hidden rounded-full border-4 border-border bg-white shadow-subtle transition-all duration-200 hover:border-primary/50 hover:shadow-card motion-safe:hover:scale-105"
             >
               <img
                 src={asset(client.logo)}
@@ -156,23 +172,15 @@ export function Component() {
         </ul>
       </Section>
 
-      {/* CTA Section */}
-      <section className="bg-primary py-16 text-primary-fg sm:py-20">
-        <Container className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Ready to design your custom service model?</h2>
-          <p className="mx-auto mt-4 max-w-xl text-primary-fg/90">
-            Tell us about your inventory, facility footprint, or staffing requirements, and we will formulate an integrated service package.
-          </p>
-          <div className="mt-8 flex justify-center gap-4">
-            <Link
-              to="/contacts"
-              className="inline-flex min-h-12 items-center justify-center rounded-lg bg-surface px-6 font-semibold text-fg shadow-elevated transition-colors hover:bg-surface-muted"
-            >
-              Contact Our Operations Team
-            </Link>
-          </div>
-        </Container>
-      </section>
+      <CtaBanner
+        title="Ready to design your custom service model?"
+        description="Tell us about your inventory, facility footprint, or staffing requirements, and we will formulate an integrated service package."
+      >
+        <Link to="/contacts" className={bannerButton}>
+          Contact Our Operations Team
+          <ArrowRight aria-hidden="true" className="size-5 transition-transform duration-200 group-hover:translate-x-1" />
+        </Link>
+      </CtaBanner>
     </>
   )
 }

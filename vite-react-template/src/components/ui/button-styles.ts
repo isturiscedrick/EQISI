@@ -9,14 +9,15 @@ export interface ButtonStyleOptions {
 }
 
 const base =
-  'inline-flex items-center justify-center gap-2 rounded-md font-medium whitespace-nowrap ' +
-  'transition-colors duration-150 ease-out ' +
+  'group inline-flex items-center justify-center gap-2 rounded-md font-medium whitespace-nowrap ' +
+  'transition-all duration-200 ease-out ' +
+  'not-disabled:motion-safe:hover:-translate-y-0.5 not-disabled:motion-safe:active:translate-y-0 ' +
   'aria-disabled:cursor-not-allowed disabled:cursor-not-allowed disabled:opacity-60'
 
 const variants: Record<ButtonVariant, string> = {
-  primary: 'bg-primary text-primary-fg hover:bg-primary/90 active:bg-primary/80',
+  primary: 'bg-primary text-primary-fg hover:bg-primary/90 hover:shadow-card active:bg-primary/80',
   secondary:
-    'border border-border bg-surface text-fg hover:bg-surface-muted active:bg-surface-muted/70',
+    'border border-border bg-surface text-fg hover:border-primary/50 hover:bg-surface-muted hover:shadow-subtle active:bg-surface-muted/70',
   ghost: 'text-fg hover:bg-surface-muted active:bg-surface-muted/70',
 }
 

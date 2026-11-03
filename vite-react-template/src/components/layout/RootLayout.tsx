@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { Outlet, ScrollRestoration, useLocation } from 'react-router'
+import { BackToTop } from '@/components/ui/BackToTop'
 import { Footer } from './Footer'
 import { Header } from './Header'
 import { NavigationProgress } from './NavigationProgress'
@@ -28,9 +29,12 @@ export function RootLayout() {
       <NavigationProgress />
       <Header />
       <main id="main" ref={mainRef} tabIndex={-1} className="flex-1 focus:outline-none">
-        <Outlet />
+        <div key={pathname} className="animate-page-in">
+          <Outlet />
+        </div>
       </main>
       <Footer />
+      <BackToTop />
       <ScrollRestoration />
     </div>
   )

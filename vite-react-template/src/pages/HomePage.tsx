@@ -1,74 +1,81 @@
+import { ArrowRight, CalendarDays, Cpu, Handshake, ShieldCheck } from 'lucide-react'
 import { Link } from 'react-router'
 import { Container } from '@/components/layout/Container'
+import { CtaBanner } from '@/components/layout/CtaBanner'
+import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
 import { PageMeta } from '@/components/seo/PageMeta'
 import { buttonStyles } from '@/components/ui/button-styles'
+import { Reveal } from '@/components/ui/Reveal'
+import { bannerButton, card, iconTile } from '@/components/ui/surface-styles'
 import { siteConfig } from '@/config/site'
 import * as c from '@/content/eqisi'
 import { asset } from '@/lib/assets'
+import { cn } from '@/lib/cn'
+import { systemIcon } from '@/lib/icons'
 
-const card = 'rounded-xl border border-border bg-surface p-6 shadow-subtle transition-all hover:border-primary/50'
+const stats = [
+  { value: '1986', label: 'Industry Heritage (JRS Group)', icon: CalendarDays, tone: 'border-primary' },
+  { value: 'DO-174', label: 'Full DOLE Compliance', icon: ShieldCheck, tone: 'border-highlight' },
+  { value: '6', label: 'Core Management Systems', icon: Cpu, tone: 'border-primary' },
+  { value: '26+', label: 'Multinational & Local Clients', icon: Handshake, tone: 'border-highlight' },
+]
 
 export function Component() {
   return (
     <>
       <PageMeta title={siteConfig.name} description={siteConfig.description} />
 
-      {/* Hero Section */}
-      <section className="relative overflow-hidden border-b border-border bg-canvas">
-        <Container className="grid items-center gap-12 py-16 sm:py-24 lg:grid-cols-[1.1fr_0.9fr]">
-          <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1 text-xs font-bold tracking-wider text-warning uppercase">
-              <span className="size-2 rounded-full bg-highlight" />
-              Company Profile 2025
-            </div>
-            <h1 className="mt-4 text-display text-balance font-extrabold text-primary">
-              {siteConfig.tagline}
-            </h1>
-            <p className="mt-6 max-w-prose text-lg leading-relaxed text-fg-muted">
-              EQISI delivers integrated warehousing, manpower, logistics, and facility solutions backed by automation systems that keep payroll, people, and inventory moving on time.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-4">
-              <Link to="/services" className={buttonStyles({ size: 'lg' })}>
-                Our Services &amp; Systems
-              </Link>
-              <Link to="/contacts" className={buttonStyles({ size: 'lg', variant: 'secondary' })}>
-                Contact Us
-              </Link>
-            </div>
-          </div>
+      <PageHero
+        id="home-hero"
+        large
+        eyebrow="Company Profile 2025"
+        title={siteConfig.tagline}
+        description="EQISI delivers integrated warehousing, manpower, logistics, and facility solutions backed by automation systems that keep payroll, people, and inventory moving on time."
+        actions={
+          <>
+            <Link to="/services" className={buttonStyles({ size: 'lg' })}>
+              Our Services &amp; Systems
+              <ArrowRight aria-hidden="true" className="size-5 transition-transform duration-200 group-hover:translate-x-1" />
+            </Link>
+            <Link to="/contacts" className={buttonStyles({ size: 'lg', variant: 'secondary' })}>
+              Contact Us
+            </Link>
+          </>
+        }
+        visual={
           <div className="relative">
             <img
               src={asset('factory.webp')}
               alt="Inside a busy manufacturing and warehouse facility"
               width={900}
               height={1029}
-              className="aspect-[16/10] w-full rounded-2xl border-b-8 border-highlight object-cover shadow-elevated lg:aspect-[4/5]"
+              className="aspect-16/10 w-full rounded-2xl border-b-8 border-highlight object-cover shadow-elevated lg:aspect-4/5"
             />
+            <div className="animate-float absolute bottom-6 left-4 flex items-center gap-3 rounded-xl border border-border bg-surface px-4 py-3 shadow-elevated">
+              <span className="grid size-10 place-items-center rounded-lg bg-highlight/15 text-accent">
+                <ShieldCheck aria-hidden="true" className="size-5" />
+              </span>
+              <div>
+                <p className="text-sm font-bold text-fg">DO-174 Compliant</p>
+                <p className="text-xs text-fg-muted">Full DOLE compliance</p>
+              </div>
+            </div>
           </div>
-        </Container>
-      </section>
+        }
+      />
 
-      {/* Trust & Key Stats Strip */}
-      <section className="border-b border-border bg-surface py-10" aria-label="Key Highlights">
+      {/* Key stats: a card that overlaps the hero */}
+      <section className="relative z-10 -mt-10 pb-16" aria-label="Key Highlights">
         <Container>
-          <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
-            <div className="border-l-4 border-primary pl-4">
-              <p className="text-3xl font-extrabold text-primary sm:text-4xl">1986</p>
-              <p className="mt-1 text-sm text-fg-muted font-medium">Industry Heritage (JRS Group)</p>
-            </div>
-            <div className="border-l-4 border-highlight pl-4">
-              <p className="text-3xl font-extrabold text-primary sm:text-4xl">DO-174</p>
-              <p className="mt-1 text-sm text-fg-muted font-medium">Full DOLE Compliance</p>
-            </div>
-            <div className="border-l-4 border-primary pl-4">
-              <p className="text-3xl font-extrabold text-primary sm:text-4xl">6</p>
-              <p className="mt-1 text-sm text-fg-muted font-medium">Core Management Systems</p>
-            </div>
-            <div className="border-l-4 border-highlight pl-4">
-              <p className="text-3xl font-extrabold text-primary sm:text-4xl">26+</p>
-              <p className="mt-1 text-sm text-fg-muted font-medium">Multinational &amp; Local Clients</p>
-            </div>
+          <div className="grid grid-cols-2 gap-6 rounded-2xl border border-border bg-surface p-6 shadow-elevated sm:p-8 md:grid-cols-4">
+            {stats.map((s, i) => (
+              <Reveal key={s.label} delay={i * 100} className={cn('border-l-4 pl-4', s.tone)}>
+                <s.icon aria-hidden="true" className="mb-2 size-5 text-fg-muted" />
+                <p className="text-3xl font-extrabold text-primary sm:text-4xl">{s.value}</p>
+                <p className="mt-1 text-sm font-medium text-fg-muted">{s.label}</p>
+              </Reveal>
+            ))}
           </div>
         </Container>
       </section>
@@ -82,27 +89,41 @@ export function Component() {
         lead="Our integrated software platforms streamline daily operations, minimize human error, and provide real-time management visibility."
       >
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {c.systems.map((system, i) => (
-            <div key={system} className={card}>
-              <span className="text-sm font-bold tracking-widest text-warning">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <h3 className="mt-2 text-lg font-semibold text-fg">{system}</h3>
-            </div>
-          ))}
+          {c.systems.map((system, i) => {
+            const Icon = systemIcon(system)
+            return (
+              <Reveal key={system} delay={(i % 3) * 100} className="h-full">
+                <div className={card}>
+                  <div className="flex items-center justify-between">
+                    <span className={iconTile}>
+                      <Icon aria-hidden="true" className="size-6" />
+                    </span>
+                    <span className="text-sm font-bold tracking-widest text-warning">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+                  <h3 className="mt-4 text-lg font-semibold text-fg">{system}</h3>
+                </div>
+              </Reveal>
+            )
+          })}
         </div>
-        <div className="mt-8 flex justify-center sm:justify-start">
+        <Reveal className="mt-8 flex justify-center sm:justify-start">
           <Link to="/services" className={buttonStyles({ variant: 'secondary' })}>
-            Explore All Services &amp; Capabilities &rarr;
+            Explore All Services &amp; Capabilities
+            <ArrowRight aria-hidden="true" className="size-4 transition-transform duration-200 group-hover:translate-x-1" />
           </Link>
-        </div>
+        </Reveal>
       </Section>
 
       {/* About Teaser */}
-      <section className="py-16 sm:py-20 border-b border-border bg-canvas" aria-labelledby="home-about-heading">
+      <section className="border-b border-border bg-canvas py-16 sm:py-20" aria-labelledby="home-about-heading">
         <Container className="grid items-center gap-12 lg:grid-cols-2">
-          <div>
-            <p className="text-sm font-bold tracking-widest text-warning uppercase">About EQISI</p>
+          <Reveal>
+            <p className="flex items-center gap-3 text-sm font-bold tracking-widest text-warning uppercase">
+              <span aria-hidden="true" className="h-1 w-8 rounded-full bg-highlight" />
+              About EQISI
+            </p>
             <h2 id="home-about-heading" className="mt-2 text-3xl font-bold tracking-tight text-primary sm:text-4xl">
               Innovative services for manufacturers and warehouses
             </h2>
@@ -113,38 +134,42 @@ export function Component() {
             ))}
             <div className="mt-8">
               <Link to="/about" className={buttonStyles()}>
-                Learn More About Our Heritage &amp; Team &rarr;
+                Learn More About Our Heritage &amp; Team
+                <ArrowRight aria-hidden="true" className="size-4 transition-transform duration-200 group-hover:translate-x-1" />
               </Link>
             </div>
-          </div>
-          <div className="overflow-hidden rounded-2xl border border-border shadow-card">
+          </Reveal>
+          <Reveal delay={150} className="overflow-hidden rounded-2xl border border-border shadow-card">
             <img
               src={asset('industry.webp')}
               alt="Industrial plant with steel structures"
               width={900}
               height={1012}
               loading="lazy"
-              className="max-h-[26rem] w-full object-cover"
+              className="max-h-104 w-full object-cover transition-transform duration-500 motion-safe:hover:scale-105"
             />
-          </div>
+          </Reveal>
         </Container>
       </section>
 
       {/* Careers & Benefits Teaser */}
-      <section className="py-16 sm:py-20 border-b border-border bg-surface-muted" aria-labelledby="home-careers-heading">
+      <section className="border-b border-border bg-surface-muted py-16 sm:py-20" aria-labelledby="home-careers-heading">
         <Container className="grid items-center gap-12 lg:grid-cols-2">
-          <div className="overflow-hidden rounded-2xl border border-border shadow-card">
+          <Reveal className="overflow-hidden rounded-2xl border border-border shadow-card">
             <img
               src={asset('benefits.webp')}
               alt="Workers on a production floor"
               width={900}
               height={507}
               loading="lazy"
-              className="w-full object-cover"
+              className="w-full object-cover transition-transform duration-500 motion-safe:hover:scale-105"
             />
-          </div>
-          <div>
-            <p className="text-sm font-bold tracking-widest text-warning uppercase">Careers &amp; Welfare</p>
+          </Reveal>
+          <Reveal delay={150}>
+            <p className="flex items-center gap-3 text-sm font-bold tracking-widest text-warning uppercase">
+              <span aria-hidden="true" className="h-1 w-8 rounded-full bg-highlight" />
+              Careers &amp; Welfare
+            </p>
             <h2 id="home-careers-heading" className="mt-2 text-3xl font-bold tracking-tight text-primary sm:text-4xl">
               Real-time pay, welfare and fast recruitment
             </h2>
@@ -159,29 +184,19 @@ export function Component() {
                 Deploy a Team
               </Link>
             </div>
-          </div>
+          </Reveal>
         </Container>
       </section>
 
-      {/* Bottom CTA Banner */}
-      <section className="bg-primary py-16 text-primary-fg sm:py-20">
-        <Container className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            Ready to upgrade your supply chain &amp; workforce?
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-primary-fg/90">
-            Get in touch with President Rodulfo Mejes Malaca and our leadership team to discuss how EQISI can optimize your operations.
-          </p>
-          <div className="mt-8 flex justify-center gap-4">
-            <Link
-              to="/contacts"
-              className="inline-flex min-h-12 items-center justify-center rounded-lg bg-surface px-6 font-semibold text-fg shadow-elevated transition-colors hover:bg-surface-muted"
-            >
-              Contact Our Team
-            </Link>
-          </div>
-        </Container>
-      </section>
+      <CtaBanner
+        title="Ready to upgrade your supply chain & workforce?"
+        description="Get in touch with President Rodulfo Mejes Malaca and our leadership team to discuss how EQISI can optimize your operations."
+      >
+        <Link to="/contacts" className={bannerButton}>
+          Contact Our Team
+          <ArrowRight aria-hidden="true" className="size-5 transition-transform duration-200 group-hover:translate-x-1" />
+        </Link>
+      </CtaBanner>
     </>
   )
 }

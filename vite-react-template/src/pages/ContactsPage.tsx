@@ -1,7 +1,16 @@
-import { Container } from '@/components/layout/Container'
+import { Building2, Clock, ExternalLink, Mail, Phone } from 'lucide-react'
+import { LocationIllustration } from '@/components/illustrations/LocationIllustration'
+import { CtaBanner } from '@/components/layout/CtaBanner'
+import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
 import { PageMeta } from '@/components/seo/PageMeta'
+import { Reveal } from '@/components/ui/Reveal'
 import * as c from '@/content/eqisi'
+
+const contactRow =
+  'group flex items-center gap-4 rounded-xl border border-border bg-canvas p-4 transition-all duration-200 hover:border-primary/50 hover:shadow-subtle'
+const contactIcon =
+  'flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors duration-200 group-hover:bg-primary group-hover:text-primary-fg'
 
 export function Component() {
   return (
@@ -11,31 +20,21 @@ export function Component() {
         description="Get in touch with EQISI executive leadership or visit our offices in Quezon City, Cabuyao Laguna, and Bulacan."
       />
 
-      {/* Hero Section */}
-      <section className="border-b border-border bg-canvas py-16 sm:py-24" aria-labelledby="contact-hero">
-        <Container>
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1 text-xs font-bold tracking-wider text-warning uppercase">
-              <span className="size-2 rounded-full bg-highlight" />
-              Direct Communication
-            </div>
-            <h1 id="contact-hero" className="mt-4 text-3xl font-extrabold tracking-tight text-primary sm:text-5xl">
-              Get in Touch with EQISI
-            </h1>
-            <p className="mt-6 text-lg leading-relaxed text-fg-muted">
-              Whether you are exploring warehouse automation, require manpower deployments, or have general business inquiries, our executive team is ready to assist you.
-            </p>
-          </div>
-        </Container>
-      </section>
+      <PageHero
+        id="contact-hero"
+        eyebrow="Direct Communication"
+        title="Get in Touch with EQISI"
+        description="Whether you are exploring warehouse automation, require manpower deployments, or have general business inquiries, our executive team is ready to assist you."
+        visual={<LocationIllustration className="mx-auto w-full max-w-lg" />}
+      />
 
       {/* Direct Contact & Offices */}
       <Section id="direct-contact" muted eyebrow="Direct Contacts" title="Executive Inquiries &amp; Office Locations">
         <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
           {/* Executive Direct Card */}
-          <div className="flex flex-col justify-between rounded-2xl border border-border bg-surface p-8 shadow-card">
+          <Reveal className="flex flex-col justify-between rounded-2xl border border-border bg-surface p-8 shadow-card">
             <div>
-              <span className="text-xs font-bold text-warning uppercase tracking-wider">Executive Contact</span>
+              <span className="text-xs font-bold tracking-wider text-warning uppercase">Executive Contact</span>
               <h3 className="mt-2 text-2xl font-bold text-fg">{c.contact.person}</h3>
               <p className="text-base font-semibold text-primary">{c.contact.role}</p>
               <p className="mt-3 text-sm leading-relaxed text-fg-muted">
@@ -43,30 +42,30 @@ export function Component() {
               </p>
 
               <div className="mt-8 space-y-5">
-                <div className="flex items-center gap-4 rounded-xl border border-border bg-canvas p-4">
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary font-bold text-lg">
-                    &#9742;
+                <div className={contactRow}>
+                  <span className={contactIcon}>
+                    <Phone aria-hidden="true" className="size-5" />
                   </span>
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-fg-muted">Direct Mobile / Phone</p>
+                    <p className="text-xs font-semibold tracking-wider text-fg-muted uppercase">Direct Mobile / Phone</p>
                     <a
                       href={c.contact.phone.href}
-                      className="text-base font-bold text-fg hover:text-primary transition-colors underline"
+                      className="text-base font-bold text-fg underline transition-colors hover:text-primary"
                     >
                       {c.contact.phone.label}
                     </a>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4 rounded-xl border border-border bg-canvas p-4">
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary font-bold text-lg">
-                    &#9993;
+                <div className={contactRow}>
+                  <span className={contactIcon}>
+                    <Mail aria-hidden="true" className="size-5" />
                   </span>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-fg-muted">Official Email</p>
+                  <div className="min-w-0">
+                    <p className="text-xs font-semibold tracking-wider text-fg-muted uppercase">Official Email</p>
                     <a
                       href={`mailto:${c.contact.email}`}
-                      className="text-base font-bold text-fg hover:text-primary transition-colors underline break-all"
+                      className="text-base font-bold break-all text-fg underline transition-colors hover:text-primary"
                     >
                       {c.contact.email}
                     </a>
@@ -75,50 +74,60 @@ export function Component() {
               </div>
             </div>
 
-            <div className="mt-8 rounded-xl bg-surface-muted p-4 text-xs font-medium text-fg-muted">
+            <div className="mt-8 flex items-center gap-3 rounded-xl bg-surface-muted p-4 text-xs font-medium text-fg-muted">
+              <Clock aria-hidden="true" className="size-4 shrink-0" />
               Operational Hours: Monday &ndash; Friday, 8:00 AM &ndash; 5:00 PM (Philippine Standard Time).
             </div>
-          </div>
+          </Reveal>
 
           {/* Offices List */}
           <div className="flex flex-col gap-4">
             {c.contact.offices.map((office, idx) => (
-              <div key={office.name} className="rounded-2xl border border-border bg-surface p-6 shadow-subtle">
-                <div className="flex items-center gap-2">
-                  <span className="inline-flex size-6 items-center justify-center rounded-full bg-highlight/20 text-xs font-bold text-highlight">
-                    {idx + 1}
-                  </span>
-                  <span className="text-xs font-bold text-warning uppercase tracking-wider">
-                    {office.name === 'Head Quarters' ? 'Main Headquarters' : 'Branch Facility'}
-                  </span>
+              <Reveal key={office.name} delay={idx * 100}>
+                <div className="group rounded-2xl border border-border bg-surface p-6 shadow-subtle transition-all duration-200 hover:border-primary/50 hover:shadow-card motion-safe:hover:-translate-y-1">
+                  <div className="flex items-center gap-3">
+                    <span className="flex size-9 items-center justify-center rounded-lg bg-highlight/15 text-accent transition-colors duration-200 group-hover:bg-highlight group-hover:text-white">
+                      <Building2 aria-hidden="true" className="size-5" />
+                    </span>
+                    <span className="text-xs font-bold tracking-wider text-warning uppercase">
+                      {office.name === 'Head Quarters' ? 'Main Headquarters' : 'Branch Facility'}
+                    </span>
+                  </div>
+                  <h4 className="mt-3 text-xl font-bold text-fg">{office.name}</h4>
+                  <p className="mt-2 text-sm leading-relaxed text-fg-muted">{office.address}</p>
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(office.address)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary underline-offset-4 hover:underline"
+                  >
+                    View on map
+                    <ExternalLink aria-hidden="true" className="size-4" />
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
                 </div>
-                <h4 className="mt-2 text-xl font-bold text-fg">{office.name}</h4>
-                <p className="mt-2 text-sm leading-relaxed text-fg-muted">{office.address}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </Section>
 
-      {/* Direct Communication Strip */}
-      <section className="bg-primary py-16 text-primary-fg sm:py-20">
-        <Container className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            Have an urgent requirement or facility visit request?
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-lg text-primary-fg/90">
+      <CtaBanner
+        title="Have an urgent requirement or facility visit request?"
+        description={
+          <>
             Call or email our executive office directly at{' '}
-            <a href={c.contact.phone.href} className="underline font-semibold hover:text-white">
+            <a href={c.contact.phone.href} className="font-semibold underline hover:text-white">
               {c.contact.phone.label}
             </a>{' '}
             or{' '}
-            <a href={`mailto:${c.contact.email}`} className="underline font-semibold hover:text-white">
+            <a href={`mailto:${c.contact.email}`} className="font-semibold underline hover:text-white">
               {c.contact.email}
             </a>
             .
-          </p>
-        </Container>
-      </section>
+          </>
+        }
+      />
     </>
   )
 }
