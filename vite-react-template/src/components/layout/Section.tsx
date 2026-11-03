@@ -8,27 +8,33 @@ interface SectionProps {
   eyebrow: string
   title: string
   lead?: string
-  /** Tinted background, to alternate sections. */
   muted?: boolean
   children: ReactNode
 }
 
-/** A page section with an eyebrow, heading and optional intro. The id doubles as the anchor target. */
+/** Consistent editorial section header and generous spacing across every route. */
 export function Section({ id, eyebrow, title, lead, muted = false, children }: SectionProps) {
   return (
-    <section id={id} aria-labelledby={`${id}-heading`} className={cn('py-16 sm:py-20', muted && 'bg-surface-muted')}>
-      <Container>
+    <section
+      id={id}
+      aria-labelledby={`${id}-heading`}
+      className={cn('relative overflow-hidden border-b border-border/60 py-20 sm:py-24 lg:py-28', muted ? 'bg-surface-muted/70' : 'bg-surface/75')}
+    >
+      {muted && <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-dots opacity-40" />}
+      <Container className="relative">
         <Reveal>
-          <p className="flex items-center gap-3 text-sm font-bold tracking-widest text-warning uppercase">
-            <span aria-hidden="true" className="h-1 w-8 rounded-full bg-highlight" />
-            {eyebrow}
-          </p>
-          <h2 id={`${id}-heading`} className="mt-2 max-w-3xl text-3xl font-bold tracking-tight text-primary sm:text-4xl">
-            {title}
-          </h2>
-          {lead && <p className="mt-3 max-w-prose text-fg-muted">{lead}</p>}
+          <div className="max-w-3xl">
+            <p className="flex items-center gap-3 text-xs font-extrabold tracking-[0.2em] text-warning uppercase">
+              <span aria-hidden="true" className="h-[3px] w-12 rounded-full bg-gradient-to-r from-highlight to-highlight/20" />
+              {eyebrow}
+            </p>
+            <h2 id={`${id}-heading`} className="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-fg sm:text-4xl lg:text-5xl">
+              {title}
+            </h2>
+            {lead && <p className="mt-5 max-w-2xl text-base leading-8 text-fg-muted sm:text-lg">{lead}</p>}
+          </div>
         </Reveal>
-        <div className="mt-10">{children}</div>
+        <div className="mt-12 sm:mt-14">{children}</div>
       </Container>
     </section>
   )
