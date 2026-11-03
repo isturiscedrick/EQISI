@@ -76,7 +76,7 @@ export function GlobeVisual() {
             duration: 1900,
             delay: index * 620,
             loop: true,
-            ease: 'outCubic',
+            ease: 'out(3)',
           }),
         )
       })
@@ -89,7 +89,7 @@ export function GlobeVisual() {
             duration: 2200,
             delay: index * 360,
             loop: true,
-            ease: 'inOutSine',
+            ease: 'inOut(2)',
           }),
         )
       })
@@ -101,7 +101,7 @@ export function GlobeVisual() {
             duration: 3600,
             delay: index * 520,
             loop: true,
-            ease: 'inOutSine',
+            ease: 'inOut(2)',
           }),
         )
       })
@@ -114,7 +114,7 @@ export function GlobeVisual() {
             duration: 2600,
             delay: index * 430,
             loop: true,
-            ease: 'inOutSine',
+            ease: 'inOut(2)',
           }),
         )
       })
@@ -127,7 +127,7 @@ export function GlobeVisual() {
             scale: [0.96, 1.06, 0.96],
             duration: 4800,
             loop: true,
-            ease: 'inOutSine',
+            ease: 'inOut(2)',
           }),
         )
       }
