@@ -73,8 +73,8 @@ export function RootLayout() {
         : null
 
     return () => {
-      headingAnimation?.cancel()
-      imageAnimation?.cancel()
+      headingAnimation?.revert()
+      imageAnimation?.revert()
     }
   }, [pathname])
 
