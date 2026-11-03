@@ -1,11 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { Outlet, ScrollRestoration, useLocation } from 'react-router'
-<<<<<<< HEAD
-import { BackToTop } from '@/components/ui/BackToTop'
-=======
 import { gsap } from 'gsap'
 import { animate, stagger } from 'animejs'
->>>>>>> db9a124968c3412708badbe3f305571978f515cb
+import { BackToTop } from '@/components/ui/BackToTop'
 import { Footer } from './Footer'
 import { Header } from './Header'
 import { NavigationProgress } from './NavigationProgress'
@@ -15,14 +12,12 @@ export function RootLayout() {
   const mainRef = useRef<HTMLElement>(null)
   const lastPathname = useRef(pathname)
 
-  // GSAP handles the route-level entrance. The context reverts its changes
-  // when the route changes or React Strict Mode re-runs this effect.
+  // GSAP controls the page-level entrance animation.
   useEffect(() => {
     const main = mainRef.current
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-    if (!main || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      return
-    }
+    if (!main || reduceMotion) return
 
     const context = gsap.context(() => {
       gsap.fromTo(
@@ -41,15 +36,12 @@ export function RootLayout() {
     return () => context.revert()
   }, [pathname])
 
-  // Anime.js adds a lighter stagger to headings and the first visible images.
-  // It is deliberately separate from GSAP so the two libraries don't animate
-  // the same CSS properties on the same elements.
+  // Anime.js animates headings and non-lazy images without competing with GSAP.
   useEffect(() => {
     const main = mainRef.current
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-    if (!main || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      return
-    }
+    if (!main || reduceMotion) return
 
     const headings = main.querySelectorAll('h1, h2')
     const images = main.querySelectorAll('img:not([loading="lazy"])')
@@ -82,7 +74,7 @@ export function RootLayout() {
     }
   }, [pathname])
 
-  // Move focus to the main content after client-side navigation.
+  // Move keyboard focus to the new page after client-side navigation.
   useEffect(() => {
     if (lastPathname.current === pathname) return
 
@@ -101,12 +93,6 @@ export function RootLayout() {
 
       <NavigationProgress />
       <Header />
-<<<<<<< HEAD
-      <main id="main" ref={mainRef} tabIndex={-1} className="flex-1 focus:outline-none">
-        <div key={pathname} className="animate-page-in">
-          <Outlet />
-        </div>
-=======
 
       <main
         id="main"
@@ -115,7 +101,6 @@ export function RootLayout() {
         className="flex-1 focus:outline-none"
       >
         <Outlet />
->>>>>>> db9a124968c3412708badbe3f305571978f515cb
       </main>
 
       <Footer />
