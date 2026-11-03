@@ -1,5 +1,6 @@
 import { Link } from 'react-router'
 import { siteConfig } from '@/config/site'
+import { Logo } from './Logo'
 
 const year = new Date().getFullYear()
 
@@ -8,6 +9,7 @@ export function Footer() {
     <footer className="border-t border-border bg-surface">
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-4 px-4 py-8 text-sm text-fg-muted sm:flex-row sm:px-6 lg:px-8">
         <div>
+          <Logo className="mb-3 h-14" />
           <p className="font-semibold text-fg">
             &copy; {year} {siteConfig.name} &mdash; Excel Quality Integrated Solutions Inc.
           </p>

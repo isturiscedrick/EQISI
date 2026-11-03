@@ -5,6 +5,8 @@
  * 1. Raw values live on :root (light) and are redefined for dark mode.
  * 2. @theme inline maps them to Tailwind utilities (bg-canvas, text-fg-muted, ...).
  * Change the look of the whole app by editing the values in this file only.
+ *
+ * Brand colors come from the EQISI logo: blue #4860AC and orange #F05424.
  */
 :root {
   color-scheme: light dark;
@@ -16,15 +18,15 @@
   --fg-muted: #4b5668;
   --border: #cfd6e0;
 
-  --primary: #2b3fd0;
+  --primary: #4860ac; /* logo blue; 5.9:1 on white */
   --primary-fg: #ffffff;
-  --accent: #0b7a85;
-  --ring: #2b3fd0;
-  --highlight: #e98a0c; /* decorative only (borders, bars): too light for text */
+  --accent: #b93a0f; /* dark logo orange; safe for text */
+  --ring: #4860ac;
+  --highlight: #f05424; /* logo orange: decorative only (borders, bars), too light for text */
 
   --success: #15803d;
-  --warning: #9a5b00;
-  --danger: #b42318;
+  --warning: #b93a0f; /* dark logo orange; 5.7:1 on white, 4.9:1 on surface-muted */
+  --danger: #c81e3a; /* crimson, kept distinct from the orange warning */
   --info: #1d5fbf;
 }
 
@@ -37,14 +39,14 @@
     --fg-muted: #a9b4c7;
     --border: #2f3d58;
 
-    --primary: #93a5ff;
+    --primary: #9db0f0; /* light tint of the logo blue */
     --primary-fg: #0f1623;
-    --accent: #55c4cd;
-    --ring: #93a5ff;
-    --highlight: #f5a53a;
+    --accent: #ff8a5c;
+    --ring: #9db0f0;
+    --highlight: #f5693a;
 
     --success: #4ade80;
-    --warning: #fbbf24;
+    --warning: #ff9a70;
     --danger: #f87171;
     --info: #7cb4ff;
   }
