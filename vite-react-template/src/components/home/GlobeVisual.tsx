@@ -1,100 +1,130 @@
 import { useLayoutEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 
-/** Animated EQISI globe illustration for the homepage hero. */
+/** Logo-inspired wireframe globe, animated with GSAP. */
 export function GlobeVisual() {
   const root = useRef<HTMLDivElement>(null)
 
   useLayoutEffect(() => {
     if (!root.current) return
     const ctx = gsap.context(() => {
-      gsap.to('.globe-spin', { rotation: 360, transformOrigin: '50% 50%', duration: 42, repeat: -1, ease: 'none' })
-      gsap.to('.globe-orbit', { rotation: -360, transformOrigin: '50% 50%', duration: 28, repeat: -1, ease: 'none' })
-      gsap.to('.globe-pulse', { opacity: 0.35, scale: 1.45, transformOrigin: '50% 50%', duration: 2.2, repeat: -1, yoyo: true, stagger: 0.65, ease: 'sine.inOut' })
-      gsap.fromTo('.globe-float', { y: 10, opacity: 0.65 }, { y: -9, opacity: 1, duration: 3.2, repeat: -1, yoyo: true, stagger: 0.45, ease: 'sine.inOut' })
-      gsap.fromTo('.globe-core', { scale: 0.96 }, { scale: 1.025, duration: 4, repeat: -1, yoyo: true, ease: 'sine.inOut' })
+      gsap.to('.globe-spin', {
+        rotation: 360,
+        transformOrigin: '50% 50%',
+        duration: 58,
+        repeat: -1,
+        ease: 'none',
+      })
+      gsap.to('.globe-orbit', {
+        rotation: -360,
+        transformOrigin: '50% 50%',
+        duration: 36,
+        repeat: -1,
+        ease: 'none',
+      })
+      gsap.to('.globe-pulse', {
+        opacity: 0.25,
+        scale: 1.55,
+        transformOrigin: '50% 50%',
+        duration: 2.4,
+        repeat: -1,
+        yoyo: true,
+        stagger: 0.7,
+        ease: 'sine.inOut',
+      })
+      gsap.fromTo(
+        '.globe-float',
+        { y: 8, opacity: 0.72 },
+        { y: -7, opacity: 1, duration: 3.6, repeat: -1, yoyo: true, stagger: 0.5, ease: 'sine.inOut' },
+      )
+      gsap.fromTo(
+        '.globe-core',
+        { scale: 0.985 },
+        { scale: 1.015, duration: 4.5, repeat: -1, yoyo: true, ease: 'sine.inOut' },
+      )
     }, root)
     return () => ctx.revert()
   }, [])
 
   return (
-    <div ref={root} className="relative mx-auto w-full max-w-5xl" aria-label="Animated globe representing EQISI's connected industrial operations">
-      <div className="pointer-events-none absolute inset-x-[12%] top-[12%] h-[72%] rounded-full bg-primary/15 blur-3xl" />
-      <svg viewBox="0 0 900 560" role="img" aria-labelledby="eqisi-globe-title" className="relative z-10 mx-auto block h-[clamp(330px,42vh,450px)] w-full max-w-[860px] overflow-visible">
-        <title id="eqisi-globe-title">EQISI connected world globe</title>
+    <div ref={root} className="relative mx-auto w-full max-w-5xl" aria-label="Animated EQISI wireframe globe">
+      <div className="pointer-events-none absolute inset-x-[18%] top-[14%] h-[68%] rounded-full bg-primary/10 blur-3xl" />
+      <svg
+        viewBox="0 0 900 560"
+        role="img"
+        aria-labelledby="eqisi-globe-title"
+        className="relative z-10 mx-auto block h-[clamp(330px,42vh,450px)] w-full max-w-[860px] overflow-visible"
+      >
+        <title id="eqisi-globe-title">EQISI logo-inspired blue wireframe globe</title>
         <defs>
-          <radialGradient id="eqisi-globe-fill" cx="35%" cy="28%" r="72%">
-            <stop offset="0%" stopColor="#f8fbff" />
-            <stop offset="48%" stopColor="#a9c5e5" />
-            <stop offset="100%" stopColor="#234c83" />
-          </radialGradient>
-          <linearGradient id="eqisi-globe-edge" x1="0" y1="0" x2="1" y2="1">
+          <radialGradient id="eqisi-wire-globe-glow" cx="38%" cy="34%" r="68%">
             <stop offset="0%" stopColor="#ffffff" stopOpacity=".9" />
-            <stop offset="100%" stopColor="#5c87bd" stopOpacity=".35" />
-          </linearGradient>
-          <clipPath id="eqisi-globe-clip"><circle cx="450" cy="278" r="190" /></clipPath>
-          <filter id="eqisi-globe-shadow" x="-40%" y="-40%" width="180%" height="180%">
-            <feGaussianBlur stdDeviation="18" />
+            <stop offset="72%" stopColor="#dbe8fb" stopOpacity=".25" />
+            <stop offset="100%" stopColor="#9db8e8" stopOpacity=".06" />
+          </radialGradient>
+          <clipPath id="eqisi-wire-globe-clip">
+            <circle cx="450" cy="278" r="184" />
+          </clipPath>
+          <filter id="eqisi-wire-globe-shadow" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="17" />
           </filter>
         </defs>
 
-        <ellipse cx="450" cy="486" rx="230" ry="23" fill="#163c6d" opacity=".13" filter="url(#eqisi-globe-shadow)" />
-        <g className="globe-orbit" fill="none" stroke="#6e91c4" strokeWidth="1.4" opacity=".72">
-          <ellipse cx="450" cy="278" rx="365" ry="104" transform="rotate(-13 450 278)" />
-          <ellipse cx="450" cy="278" rx="315" ry="150" transform="rotate(24 450 278)" strokeDasharray="4 9" opacity=".65" />
+        <ellipse cx="450" cy="484" rx="205" ry="20" fill="#1b326e" opacity=".10" filter="url(#eqisi-wire-globe-shadow)" />
+
+        <g className="globe-orbit" fill="none" stroke="#7894cb" strokeWidth="1.4" opacity=".62">
+          <ellipse cx="450" cy="278" rx="354" ry="104" transform="rotate(-13 450 278)" />
+          <ellipse cx="450" cy="278" rx="310" ry="145" transform="rotate(23 450 278)" strokeDasharray="4 9" />
         </g>
 
         <g className="globe-core">
-          <circle cx="450" cy="278" r="194" fill="#193e6e" opacity=".18" />
-          <circle cx="450" cy="278" r="190" fill="url(#eqisi-globe-fill)" stroke="url(#eqisi-globe-edge)" strokeWidth="3" />
-          <g clipPath="url(#eqisi-globe-clip)">
-            <g className="globe-spin">
-              <g fill="none" stroke="#eaf4ff" strokeWidth="1.5" opacity=".52">
-                <ellipse cx="450" cy="278" rx="62" ry="190" />
-                <ellipse cx="450" cy="278" rx="125" ry="190" />
-                <ellipse cx="450" cy="278" rx="178" ry="190" />
-                <ellipse cx="450" cy="278" rx="190" ry="60" />
-                <ellipse cx="450" cy="278" rx="190" ry="122" />
-                <path d="M260 278H640M274 210H626M274 346H626" />
-              </g>
-              <g fill="#f2f7fc" opacity=".82" stroke="#6d93c1" strokeWidth="1.2">
-                <path d="M332 142l26 9 17 23-7 20 21 12 4 20-22 13-11 30-25 5-17-25-29-9-5-27 20-16-5-25z" />
-                <path d="M390 268l24 8 15 26-9 30 11 23-15 45-20 30-18-26 4-34-16-27 6-42z" />
-                <path d="M464 145l33-13 40 11 19 25 36 5 22 28-18 20-35-7-14 21-28-5-15 23-24-12-18-35-25-13 5-26z" />
-                <path d="M515 276l38-18 43 15 17 33-19 35-31 7-22 31-24-13-14-39z" />
-                <path d="M595 388l22 8 9 19-20 11-22-12z" />
-              </g>
-              <g fill="none" stroke="#ffffff" strokeWidth="2" opacity=".35">
-                <path d="M295 242q95-72 186-34t153 4M304 321q90 50 168 12t160 4" />
-              </g>
+          <circle cx="450" cy="278" r="185" fill="url(#eqisi-wire-globe-glow)" />
+          <circle cx="450" cy="278" r="184" fill="none" stroke="#1c3478" strokeWidth="4" opacity=".9" />
+          <g clipPath="url(#eqisi-wire-globe-clip)">
+            <g className="globe-spin" fill="none" stroke="#1b3479" strokeWidth="3" strokeLinecap="round" opacity=".88">
+              {/* Meridians: curved longitude lines like the EQISI logo mark. */}
+              <ellipse cx="450" cy="278" rx="54" ry="183" />
+              <ellipse cx="450" cy="278" rx="105" ry="183" />
+              <ellipse cx="450" cy="278" rx="151" ry="183" />
+              <path d="M450 94 C370 132 338 204 338 278 C338 352 370 424 450 462" opacity=".8" />
+              <path d="M450 94 C530 132 562 204 562 278 C562 352 530 424 450 462" opacity=".8" />
+
+              {/* Curved latitude bands create the recognizable wireframe sphere. */}
+              <path d="M274 205 C365 238 535 238 626 205" />
+              <path d="M266 246 C365 267 535 267 634 246" />
+              <path d="M266 310 C365 289 535 289 634 310" />
+              <path d="M274 351 C365 318 535 318 626 351" />
+              <path d="M296 160 C370 191 530 191 604 160" opacity=".7" />
+              <path d="M296 396 C370 365 530 365 604 396" opacity=".7" />
+              <path d="M267 278 H633" strokeWidth="2.5" opacity=".72" />
             </g>
-            <g fill="#fff">
-              <circle cx="365" cy="220" r="4" />
-              <circle cx="510" cy="190" r="4" />
-              <circle cx="546" cy="330" r="4" />
-              <circle cx="418" cy="370" r="3.5" />
-            </g>
-            <g fill="none" stroke="#fff" strokeWidth="1.5" opacity=".75">
-              <path d="M365 220Q430 160 510 190T546 330Q480 390 418 370" strokeDasharray="3 7" />
+
+            {/* Fine inner arcs add depth without filling the globe with a map. */}
+            <g fill="none" stroke="#5575b6" strokeWidth="1.25" opacity=".52">
+              <path d="M314 130 Q450 204 586 130" />
+              <path d="M286 178 Q450 244 614 178" />
+              <path d="M286 378 Q450 312 614 378" />
+              <path d="M314 426 Q450 352 586 426" />
             </g>
           </g>
-          <circle cx="450" cy="278" r="190" fill="none" stroke="#fff" strokeWidth="2" opacity=".48" />
-          <ellipse cx="392" cy="190" rx="80" ry="35" fill="#fff" opacity=".13" transform="rotate(-28 392 190)" />
+          <circle cx="450" cy="278" r="184" fill="none" stroke="#172d70" strokeWidth="2.5" opacity=".9" />
+          <path d="M330 150 C370 116 410 100 450 96" fill="none" stroke="#ffffff" strokeWidth="5" strokeLinecap="round" opacity=".7" />
         </g>
 
         <g className="globe-float">
-          <circle cx="246" cy="260" r="7" fill="#f5a623" />
-          <circle className="globe-pulse" cx="246" cy="260" r="14" fill="none" stroke="#f5a623" strokeWidth="2" />
-          <path d="M246 260Q320 170 365 220" fill="none" stroke="#f5a623" strokeWidth="1.5" strokeDasharray="4 6" />
+          <circle cx="263" cy="260" r="6" fill="#f15a2a" />
+          <circle className="globe-pulse" cx="263" cy="260" r="13" fill="none" stroke="#f15a2a" strokeWidth="2" />
+          <path d="M263 260 Q330 182 365 220" fill="none" stroke="#f15a2a" strokeWidth="1.5" strokeDasharray="4 6" />
         </g>
         <g className="globe-float">
-          <circle cx="660" cy="303" r="7" fill="#f5a623" />
-          <circle className="globe-pulse" cx="660" cy="303" r="14" fill="none" stroke="#f5a623" strokeWidth="2" />
-          <path d="M660 303Q602 375 546 330" fill="none" stroke="#f5a623" strokeWidth="1.5" strokeDasharray="4 6" />
+          <circle cx="637" cy="303" r="6" fill="#f15a2a" />
+          <circle className="globe-pulse" cx="637" cy="303" r="13" fill="none" stroke="#f15a2a" strokeWidth="2" />
+          <path d="M637 303 Q575 370 535 330" fill="none" stroke="#f15a2a" strokeWidth="1.5" strokeDasharray="4 6" />
         </g>
+
         <g className="globe-float">
           <rect x="86" y="180" width="148" height="62" rx="13" fill="#fff" stroke="#d9e2ef" />
-          <circle cx="108" cy="202" r="6" fill="#f5a623" />
+          <circle cx="108" cy="202" r="6" fill="#f15a2a" />
           <text x="124" y="206" fontSize="12" fontWeight="700" fill="#1e3554">CONNECTED</text>
           <text x="104" y="226" fontSize="10" fill="#64748b">People &amp; operations</text>
         </g>
