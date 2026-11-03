@@ -108,6 +108,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal:not(.is-visible) {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
   *,
   *::before,
   *::after {
@@ -118,18 +124,9 @@
   }
 }
 
-/* Scroll reveal: toggled by <Reveal />. */
-.reveal {
+/* Scroll reveal visibility is controlled by GSAP in <Reveal />. */
+.reveal:not(.is-visible) {
   opacity: 0;
-  transform: translateY(1.25rem);
-  transition:
-    opacity 600ms ease-out,
-    transform 600ms ease-out;
-  transition-delay: var(--reveal-delay, 0ms);
-}
-.reveal.is-visible {
-  opacity: 1;
-  transform: none;
 }
 
 @keyframes float {
