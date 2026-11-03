@@ -1,14 +1,11 @@
-import { ArrowRight, Clock, Mail, Menu, Phone, X } from 'lucide-react'
+import { ArrowRight, Menu, X } from 'lucide-react'
 import { useEffect, useId, useRef, useState } from 'react'
 import { animate } from 'animejs'
 import { Link, NavLink } from 'react-router'
 import { buttonStyles } from '@/components/ui/button-styles'
 import { siteConfig } from '@/config/site'
-import * as c from '@/content/eqisi'
 import { cn } from '@/lib/cn'
 import { Logo } from './Logo'
-
-const topLink = 'inline-flex items-center gap-2 transition-colors hover:text-white'
 
 export function Header() {
   const [open, setOpen] = useState(false)
@@ -68,26 +65,6 @@ export function Header() {
 
   return (
     <>
-      {/* Utility bar: desktop only, scrolls away with the page. */}
-      <div className="hidden bg-fg text-sm text-white/85 md:block">
-        <div className="mx-auto flex h-10 w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <p className="flex items-center gap-2">
-            <Clock aria-hidden="true" className="size-4 text-highlight" />
-            Mon &ndash; Fri, 8:00 AM &ndash; 5:00 PM (Philippine time)
-          </p>
-          <div className="flex items-center gap-6">
-            <a href={c.contact.phone.href} className={topLink}>
-              <Phone aria-hidden="true" className="size-4 text-highlight" />
-              {c.contact.phone.label}
-            </a>
-            <a href={`mailto:${c.contact.email}`} className={cn(topLink, 'hidden lg:inline-flex')}>
-              <Mail aria-hidden="true" className="size-4 text-highlight" />
-              {c.contact.email}
-            </a>
-          </div>
-        </div>
-      </div>
-
       <header
         className={cn(
           'sticky top-0 z-40 border-b border-border backdrop-blur transition-all duration-200',
