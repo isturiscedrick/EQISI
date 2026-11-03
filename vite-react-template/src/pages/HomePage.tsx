@@ -29,52 +29,92 @@ export function Component() {
       <PageHero
         id="home-hero"
         large
-        eyebrow="Company Profile 2025"
-        title={siteConfig.tagline}
-        description="EQISI delivers integrated warehousing, manpower, logistics, and facility solutions backed by automation systems that keep payroll, people, and inventory moving on time."
+        centered
+        eyebrow="Integrated Industrial &amp; Workforce Solutions"
+        title="We deliver with automation."
+        description="Smarter warehousing, manpower, logistics and facility solutions—connected by technology, powered by people, and built around your operations."
         actions={
           <>
             <Link to="/services" className={buttonStyles({ size: 'lg' })}>
-              Our Services &amp; Systems
+              Explore our solutions
               <ArrowRight aria-hidden="true" className="size-5 transition-transform duration-200 group-hover:translate-x-1" />
             </Link>
             <Link to="/contacts" className={buttonStyles({ size: 'lg', variant: 'secondary' })}>
-              Contact Us
+              Talk to our team
             </Link>
           </>
         }
         visual={
-          <div className="relative">
-            <img
-              src={asset('factory.webp')}
-              alt="Inside a busy manufacturing and warehouse facility"
-              width={900}
-              height={1029}
-              className="aspect-16/10 w-full rounded-2xl border-b-8 border-highlight object-cover shadow-elevated lg:aspect-4/5"
-            />
-            <div className="animate-float absolute bottom-6 left-4 flex items-center gap-3 rounded-xl border border-border bg-surface px-4 py-3 shadow-elevated">
-              <span className="grid size-10 place-items-center rounded-lg bg-highlight/15 text-accent">
-                <ShieldCheck aria-hidden="true" className="size-5" />
-              </span>
-              <div>
-                <p className="text-sm font-bold text-fg">DO-174 Compliant</p>
-                <p className="text-xs text-fg-muted">Full DOLE compliance</p>
+          <div className="premium-frame relative mx-auto mt-5 max-w-5xl">
+            <div className="relative overflow-hidden rounded-[1.75rem] border border-border bg-surface shadow-modal">
+              <img
+                src={asset('factory.webp')}
+                alt="Modern industrial warehouse and manufacturing operations"
+                width={1600}
+                height={900}
+                fetchPriority="high"
+                className="premium-image aspect-[16/8] w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-fg/45 via-transparent to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4 flex flex-wrap items-end justify-between gap-3 sm:bottom-7 sm:left-7 sm:right-7">
+                <div className="rounded-2xl border border-white/30 bg-white/90 px-4 py-3 text-left shadow-elevated backdrop-blur-md sm:px-5">
+                  <p className="text-[10px] font-bold tracking-[0.18em] text-warning uppercase">Built on experience</p>
+                  <p className="mt-1 text-xl font-extrabold text-fg sm:text-2xl">Since 1986</p>
+                  <p className="text-xs text-fg-muted">A legacy of industrial service</p>
+                </div>
+                <div className="rounded-2xl border border-white/30 bg-white/90 px-4 py-3 text-left shadow-elevated backdrop-blur-md sm:px-5">
+                  <div className="flex items-center gap-2">
+                    <span className="grid size-8 place-items-center rounded-lg bg-highlight/15 text-accent">
+                      <ShieldCheck aria-hidden="true" className="size-4" />
+                    </span>
+                    <div>
+                      <p className="text-sm font-bold text-fg">DO-174 Compliant</p>
+                      <p className="text-xs text-fg-muted">People-first operations</p>
+                    </div>
+                  </div>
+                </div>
               </div>
+            </div>
+            <div className="animate-float absolute -left-3 top-1/4 hidden rounded-xl border border-border bg-surface/95 px-4 py-3 text-left shadow-elevated backdrop-blur sm:block lg:-left-10">
+              <p className="text-[10px] font-bold tracking-widest text-fg-muted uppercase">Connected systems</p>
+              <p className="mt-1 text-sm font-bold text-primary">People · Payroll · Inventory</p>
+            </div>
+            <div className="animate-float absolute -right-3 top-1/3 hidden rounded-xl border border-border bg-surface/95 px-4 py-3 text-left shadow-elevated backdrop-blur sm:block lg:-right-10" style={{ animationDelay: '-2.5s' }}>
+              <p className="text-[10px] font-bold tracking-widest text-fg-muted uppercase">One integrated partner</p>
+              <p className="mt-1 text-sm font-bold text-fg">Workforce + Supply Chain</p>
             </div>
           </div>
         }
       />
 
       {/* Key stats: a card that overlaps the hero */}
-      <section className="relative z-10 -mt-10 pb-16" aria-label="Key Highlights">
+      <section className="relative z-10 py-12 sm:py-16" aria-label="Key Highlights">
         <Container>
-          <div className="grid grid-cols-2 gap-6 rounded-2xl border border-border bg-surface p-6 shadow-elevated sm:p-8 md:grid-cols-4">
+          <div className="grid grid-cols-2 gap-6 rounded-3xl border border-border/80 bg-surface p-6 shadow-card sm:p-8 md:grid-cols-4">
             {stats.map((s, i) => (
               <Reveal key={s.label} delay={i * 100} className={cn('border-l-4 pl-4', s.tone)}>
                 <s.icon aria-hidden="true" className="mb-2 size-5 text-fg-muted" />
                 <p className="text-3xl font-extrabold text-primary sm:text-4xl">{s.value}</p>
                 <p className="mt-1 text-sm font-medium text-fg-muted">{s.label}</p>
               </Reveal>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-y border-border/70 bg-surface py-8" aria-label="Selected clients">
+        <Container>
+          <p className="mb-6 text-center text-xs font-bold tracking-[0.18em] text-fg-muted uppercase">Trusted by teams across industries</p>
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-5 sm:gap-x-12">
+            {c.clients.slice(0, 8).map((client) => (
+              <img
+                key={client.name}
+                src={asset(client.logo)}
+                alt={client.name}
+                title={client.name}
+                loading="lazy"
+                className={cn('h-7 max-w-24 object-contain grayscale opacity-65 transition-all duration-300 hover:grayscale-0 hover:opacity-100 sm:h-8', client.padded && 'p-1')}
+              />
             ))}
           </div>
         </Container>
