@@ -5,7 +5,7 @@ import { Container } from './Container'
 interface PageHeroProps {
   id: string
   eyebrow: string
-  title: string
+  title: ReactNode
   description?: ReactNode
   actions?: ReactNode
   visual?: ReactNode
