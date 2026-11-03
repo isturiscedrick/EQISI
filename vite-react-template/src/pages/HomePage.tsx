@@ -45,7 +45,7 @@ export function Component() {
             </Link>
           </>
         }
-        visual={<GlobeVisual />
+        visual={<GlobeVisual />}
       />
 
       {/* Key stats: a card that overlaps the hero */}
