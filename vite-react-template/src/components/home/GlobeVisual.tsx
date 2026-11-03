@@ -16,6 +16,8 @@ export function GlobeVisual() {
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const animeAnimations: Array<{ pause: () => void }> = []
+    let onPointerMove: ((event: PointerEvent) => void) | undefined
+    let onPointerLeave: (() => void) | undefined
 
     const ctx = gsap.context(() => {
       if (reduceMotion) return
@@ -47,23 +49,20 @@ export function GlobeVisual() {
       // Pointer movement gives the hero globe a restrained sense of depth.
       const moveX = gsap.quickTo('.globe-parallax', 'x', { duration: 0.8, ease: 'power3.out' })
       const moveY = gsap.quickTo('.globe-parallax', 'y', { duration: 0.8, ease: 'power3.out' })
-      const onPointerMove = (event: PointerEvent) => {
+      onPointerMove = (event: PointerEvent) => {
         const bounds = element.getBoundingClientRect()
+        if (!bounds.width || !bounds.height) return
         const x = (event.clientX - bounds.left) / bounds.width - 0.5
         const y = (event.clientY - bounds.top) / bounds.height - 0.5
         moveX(x * 13)
         moveY(y * 9)
       }
-      const onPointerLeave = () => {
+      onPointerLeave = () => {
         moveX(0)
         moveY(0)
       }
       element.addEventListener('pointermove', onPointerMove)
       element.addEventListener('pointerleave', onPointerLeave)
-      ctx.add(() => {
-        element.removeEventListener('pointermove', onPointerMove)
-        element.removeEventListener('pointerleave', onPointerLeave)
-      })
     }, element)
 
     if (!reduceMotion) {
@@ -135,6 +134,8 @@ export function GlobeVisual() {
 
     return () => {
       animeAnimations.forEach((animation) => animation.pause())
+      if (onPointerMove) element.removeEventListener('pointermove', onPointerMove)
+      if (onPointerLeave) element.removeEventListener('pointerleave', onPointerLeave)
       ctx.revert()
     }
   }, [])
