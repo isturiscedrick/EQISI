@@ -2,54 +2,41 @@
 
 /*
  * Design tokens
- * 1. Raw values live on :root (light) and are redefined for dark mode.
+ * 1. Raw values live on :root.
  * 2. @theme inline maps them to Tailwind utilities (bg-canvas, text-fg-muted, ...).
  * Change the look of the whole app by editing the values in this file only.
  *
- * Brand colors come from the EQISI logo: blue #4860AC and orange #F05424.
+ * 60-30-10, built only from the EQISI logo colors (blue #4860AC, orange #F05424):
+ *   60%  white and a pale tint of the logo blue (canvas, surface, surface-muted)
+ *   30%  logo blue (primary)
+ *   10%  logo orange (highlight; a darker shade of it, accent/warning, for small text)
+ * Light mode only, so the brand colors always show regardless of the OS theme.
  */
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
 
-  --canvas: #f7f8fa;
+  /* 60%: neutrals */
+  --canvas: #ffffff;
   --surface: #ffffff;
-  --surface-muted: #eceff4;
-  --fg: #172033;
-  --fg-muted: #4b5668;
-  --border: #cfd6e0;
+  --surface-muted: #eef1f9; /* pale tint of the logo blue */
+  --fg: #1a2342; /* deep shade of the logo blue */
+  --fg-muted: #4a5578;
+  --border: #d3daee;
 
-  --primary: #4860ac; /* logo blue; 5.9:1 on white */
+  /* 30%: logo blue */
+  --primary: #4860ac; /* 5.9:1 on white */
   --primary-fg: #ffffff;
-  --accent: #b93a0f; /* dark logo orange; safe for text */
   --ring: #4860ac;
-  --highlight: #f05424; /* logo orange: decorative only (borders, bars), too light for text */
 
+  /* 10%: logo orange */
+  --highlight: #f05424; /* exact logo orange: decorative only (borders, bars, dots) */
+  --accent: #b93a0f; /* dark shade of the logo orange; safe for small text */
+  --warning: #b93a0f; /* 5.7:1 on white, 5.0:1 on surface-muted */
+
+  /* Functional status colors (not brand) */
   --success: #15803d;
-  --warning: #b93a0f; /* dark logo orange; 5.7:1 on white, 4.9:1 on surface-muted */
-  --danger: #c81e3a; /* crimson, kept distinct from the orange warning */
+  --danger: #c81e3a;
   --info: #1d5fbf;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --canvas: #0f1623;
-    --surface: #172033;
-    --surface-muted: #1f2a40;
-    --fg: #e8ecf4;
-    --fg-muted: #a9b4c7;
-    --border: #2f3d58;
-
-    --primary: #9db0f0; /* light tint of the logo blue */
-    --primary-fg: #0f1623;
-    --accent: #ff8a5c;
-    --ring: #9db0f0;
-    --highlight: #f5693a;
-
-    --success: #4ade80;
-    --warning: #ff9a70;
-    --danger: #f87171;
-    --info: #7cb4ff;
-  }
 }
 
 @theme inline {
@@ -87,10 +74,10 @@
   --radius-xl: 1.5rem;
 
   /* Shadows */
-  --shadow-subtle: 0 1px 2px rgb(15 22 35 / 0.06);
-  --shadow-card: 0 2px 8px rgb(15 22 35 / 0.08);
-  --shadow-elevated: 0 8px 24px rgb(15 22 35 / 0.12);
-  --shadow-modal: 0 24px 64px rgb(15 22 35 / 0.24);
+  --shadow-subtle: 0 1px 2px rgb(26 35 66 / 0.06);
+  --shadow-card: 0 2px 8px rgb(26 35 66 / 0.08);
+  --shadow-elevated: 0 8px 24px rgb(26 35 66 / 0.12);
+  --shadow-modal: 0 24px 64px rgb(26 35 66 / 0.24);
 }
 
 @layer base {

@@ -9,7 +9,7 @@ export function Logo({ className }: { className?: string }) {
       alt="EQISI"
       width={592}
       height={213}
-      className={cn('w-auto rounded-md dark:bg-white dark:px-2 dark:py-1', className)}
+      className={cn('w-auto', className)}
     />
   )
 }
