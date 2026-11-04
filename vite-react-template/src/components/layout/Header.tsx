@@ -169,10 +169,10 @@ export function Header() {
             </Link>
           </nav>
 
-          <Link to="/contacts" viewTransition className={cn(buttonStyles(), 'hidden shrink-0 lg:inline-flex')}>
-            <MessageCircle aria-hidden="true" className="size-4" />
-            Request a Consultation
-            <ArrowRight aria-hidden="true" className="size-4 transition-transform duration-200 group-hover:translate-x-1" />
+          <Link to="/contacts" viewTransition className={cn(buttonStyles({ size: 'md' }), 'hidden shrink-0 gap-1.5 px-3 text-xs min-[1024px]:inline-flex max-[767px]:hidden')}>
+            <MessageCircle aria-hidden="true" className="size-3.5" />
+            <span>Request a Consultation</span>
+            <ArrowRight aria-hidden="true" className="size-3.5 transition-transform duration-200 group-hover:translate-x-1" />
           </Link>
         </div>
 
