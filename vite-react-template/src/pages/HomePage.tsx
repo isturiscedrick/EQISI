@@ -34,7 +34,7 @@ export function Component() {
         id="home-hero"
         large
         centered
-        eyebrow="Integrated Industrial &amp; Workforce Solutions"
+        eyebrow="Integrated Industrial & Workforce Solutions"
         title={<>We deliver with<br className="hidden sm:block" /> automation.</>}
         description="Smarter warehousing, manpower, logistics and facility solutions—connected by technology, powered by people, and built around your operations."
         actions={
