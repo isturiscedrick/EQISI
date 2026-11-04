@@ -34,8 +34,8 @@ export function Component() {
       <PageHero
         id="services-hero"
         eyebrow="Integrated Solutions"
-        title="End-to-End Warehousing, Workforce & Automation"
-        description="We engineer specialized operational frameworks tailored to your supply chain requirements. By combining proprietary management software with trained industrial personnel, we ensure reliable, high-yield results."
+        title="Integrated Workforce & Supply Chain Solutions"
+        description="Explore the services and systems behind connected operations."
         actions={
           <>
             <Link to="/contacts" className={buttonStyles({ size: 'lg' })}>
