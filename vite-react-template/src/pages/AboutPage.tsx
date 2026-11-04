@@ -70,13 +70,15 @@ export function Component() {
           </>
         }
         visual={
-          <div className="aspect-[4/5] w-full overflow-hidden rounded-2xl border border-border bg-surface-muted shadow-elevated sm:aspect-[5/4]">
+          <div className="relative flex aspect-[16/10] w-full items-center justify-center overflow-hidden rounded-2xl border border-border bg-surface-muted shadow-elevated sm:aspect-[5/4] lg:aspect-[4/3]">
             <img
               src={asset('industry.webp')}
               alt="Industrial manufacturing and warehousing facility"
               width={900}
               height={1012}
-              className="h-full w-full object-cover object-center transition-transform duration-500 motion-safe:hover:scale-[1.03]"
+              loading="eager"
+              decoding="async"
+              className="h-full w-full object-contain object-center"
             />
           </div>
         }
