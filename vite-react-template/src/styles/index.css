@@ -420,3 +420,9 @@ body {
   .hero-mesh { animation: none; }
   .motion-border::after { transition: none; }
 }
+
+.faq-panel {
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
