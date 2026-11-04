@@ -12,14 +12,17 @@ import manuel from '@/assets/eqisi/team/manuel.png'
 import tugas from '@/assets/eqisi/team/tugas.png'
 
 const portraits = [
-  { src: ann, side: 'left', className: 'left-[0%] bottom-[15%] w-[16%] max-w-[180px]' },
-  { src: malaca, side: 'left', className: 'left-[8%] bottom-[27%] w-[17%] max-w-[195px]' },
-  { src: joy, side: 'left', className: 'left-[13%] bottom-[4%] w-[17%] max-w-[195px]' },
-  { src: alfariz, side: 'left', className: 'left-[20%] bottom-[7%] w-[15%] max-w-[175px]' },
-  { src: flores, side: 'right', className: 'right-[0%] bottom-[15%] w-[16%] max-w-[180px]' },
-  { src: cajigal, side: 'right', className: 'right-[8%] bottom-[27%] w-[17%] max-w-[195px]' },
-  { src: manuel, side: 'right', className: 'right-[13%] bottom-[4%] w-[17%] max-w-[195px]' },
-  { src: tugas, side: 'right', className: 'right-[20%] bottom-[7%] w-[15%] max-w-[175px]' },
+  // Back row: keep the outer people slightly higher and farther from the globe.
+  { src: ann, side: 'left', className: 'left-[1%] bottom-[18%] h-[48%] w-[13%] max-w-[150px] z-10' },
+  { src: malaca, side: 'left', className: 'left-[10%] bottom-[25%] h-[56%] w-[14%] max-w-[165px] z-10' },
+  { src: flores, side: 'right', className: 'right-[1%] bottom-[18%] h-[48%] w-[13%] max-w-[150px] z-10' },
+  { src: cajigal, side: 'right', className: 'right-[10%] bottom-[25%] h-[56%] w-[14%] max-w-[165px] z-10' },
+
+  // Front row: lower portraits frame the globe without covering its center.
+  { src: joy, side: 'left', className: 'left-[17%] bottom-[4%] h-[48%] w-[14%] max-w-[165px] z-20' },
+  { src: alfariz, side: 'left', className: 'left-[5%] bottom-[3%] h-[42%] w-[13%] max-w-[150px] z-20' },
+  { src: manuel, side: 'right', className: 'right-[17%] bottom-[4%] h-[48%]] w-[14%] max-w-[165px] z-20' },
+  { src: tugas, side: 'right', className: 'right-[5%] bottom-[3%] h-[42%] w-[13%] max-w-[150px] z-20' },
 ] as const
 
 export function HeroTeamVisual() {
@@ -52,7 +55,7 @@ export function HeroTeamVisual() {
         <div
           key={portrait.src}
           data-team-portrait
-          className={`absolute z-20 flex h-[38%] items-end justify-center opacity-0 sm:h-[55%] lg:h-[66%] ${portrait.className} ${portrait.side === 'left' ? 'origin-bottom-left' : 'origin-bottom-right'}`}
+          className={`absolute flex items-end justify-center opacity-0 ${portrait.className} ${portrait.side === 'left' ? 'origin-bottom-left' : 'origin-bottom-right'}`}
           style={{ animationDelay: `${index * 80}ms` }}
         >
           <img
