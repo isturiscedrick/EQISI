@@ -69,6 +69,16 @@ export function Reveal({ delay = 0, className, style, children, ...rest }: Revea
     const images = Array.from(node.querySelectorAll<HTMLImageElement>('img'))
     const imageContext = gsap.context(() => {
       if (!images.length) return
+      gsap.fromTo(images, { yPercent: 0 }, {
+        yPercent: -5,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: node,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 0.8,
+        },
+      })
       gsap.fromTo(
         images,
         { clipPath: 'inset(0 0 12% 0)', scale: 1.035 },
