@@ -268,13 +268,13 @@ export function GlobeVisual() {
     ))
 
   return (
-    <div ref={root} className="relative mx-auto w-full max-w-5xl" aria-label="Animated EQISI wireframe globe">
+    <div ref={root} className="relative mx-auto w-full max-w-4xl" aria-label="Animated EQISI wireframe globe">
       <div className="globe-halo pointer-events-none absolute inset-x-[18%] top-[14%] h-[68%] rounded-full bg-primary/10 blur-3xl" />
       <svg
         viewBox="0 0 900 560"
         role="img"
         aria-labelledby="eqisi-globe-title"
-        className="globe-parallax relative z-10 mx-auto block h-[clamp(330px,42vh,450px)] w-full max-w-[860px] overflow-visible"
+        className="globe-parallax relative z-10 mx-auto block h-[clamp(250px,32vh,350px)] w-full max-w-[760px] overflow-visible"
       >
         <title id="eqisi-globe-title">EQISI animated rotating wireframe globe with an orbiting satellite</title>
         <defs>
@@ -354,7 +354,7 @@ export function GlobeVisual() {
           <text x="688" y="396" fontSize="10" fill="#64748b">Supply chain systems</text>
         </g>
       </svg>
-      <p className="relative z-10 -mt-3 text-center text-xs font-semibold tracking-[0.22em] text-fg-muted uppercase sm:text-sm">
+      <p className="relative z-10 -mt-1 text-center text-xs font-semibold tracking-[0.22em] text-fg-muted uppercase sm:text-sm">
         One connected world · One integrated partner
       </p>
     </div>
