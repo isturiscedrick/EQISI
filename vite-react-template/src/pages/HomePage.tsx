@@ -127,7 +127,7 @@ export function Component() {
         muted
         eyebrow="Core Competencies"
         title="Six systems that run your workforce and supply chain"
-        lead="Our integrated software platforms streamline daily operations, minimize human error, and provide real-time management visibility."
+        lead="Explore each system when you need the details."
       >
         <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain pb-5 [scrollbar-color:var(--primary)_transparent] [scrollbar-width:thin]">
           {c.systems.map((system, i) => {
@@ -143,7 +143,15 @@ export function Component() {
                       {String(i + 1).padStart(2, '0')}
                     </span>
                   </div>
-                  <h3 className="mt-4 text-lg font-semibold text-fg">{system}</h3>
+                  <details className="group/system mt-4">
+                    <summary className="flex cursor-pointer list-none items-center justify-between gap-2 text-left outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 [&::-webkit-details-marker]:hidden">
+                      <span className="text-base font-semibold text-fg">{system}</span>
+                      <span className="shrink-0 text-xs font-bold text-primary underline underline-offset-4 group-open/system:hidden">View details</span>
+                      <span className="hidden shrink-0 text-xs font-bold text-primary underline underline-offset-4 group-open/system:inline">Hide details</span>
+                    </summary>
+                    <p className="mt-3 text-sm leading-relaxed text-fg-muted">Discover how this system supports connected workforce and supply-chain operations.</p>
+                    <Link to="/services#systems" className="mt-3 inline-flex items-center gap-2 text-sm font-bold text-primary hover:underline">Full details <ArrowRight aria-hidden="true" className="size-4" /></Link>
+                  </details>
                 </div>
               </Reveal>
             )
@@ -168,14 +176,10 @@ export function Component() {
             <h2 id="home-about-heading" className="mt-2 text-3xl font-bold tracking-tight text-primary sm:text-4xl">
               Innovative services for manufacturers and warehouses
             </h2>
-            {c.about.map((p) => (
-              <p key={p} className="mt-4 text-base leading-relaxed text-fg-muted">
-                {p}
-              </p>
-            ))}
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-fg-muted">Integrated workforce, warehousing and operational support backed by decades of industry experience.</p>
             <div className="mt-8">
               <Link to="/about" className={buttonStyles()}>
-                Learn More About Our Heritage &amp; Team
+                View our story
                 <ArrowRight aria-hidden="true" className="size-4 transition-transform duration-200 group-hover:translate-x-1" />
               </Link>
             </div>
@@ -215,11 +219,11 @@ export function Component() {
               Real-time pay, welfare and fast recruitment
             </h2>
             <p className="mt-4 text-base leading-relaxed text-fg-muted">
-              We empower our workforce with automated mobile-accessible payroll, emergency financial support, and real-time payslips. For clients, our streamlined 15-day deployment pipeline ensures qualified talent is ready without delay.
+              Workforce support, accessible payroll tools and a streamlined recruitment process.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link to="/careers" className={buttonStyles()}>
-                View Careers &amp; Benefits
+                Explore careers
               </Link>
               <Link to="/contacts" className={buttonStyles({ variant: 'secondary' })}>
                 Deploy a Team
@@ -231,7 +235,7 @@ export function Component() {
 
       <CtaBanner
         title="Ready to upgrade your supply chain & workforce?"
-        description="Get in touch with President Rodulfo Mejes Malaca and our leadership team to discuss how EQISI can optimize your operations."
+        description="Let’s find the right support for your operation."
       >
         <Link to="/contacts" className={bannerButton}>
           Contact Our Team
