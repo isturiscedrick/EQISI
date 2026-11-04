@@ -383,6 +383,9 @@ export function GlobeVisual() {
           </div>
         </div>
       </div>
+      <p className="mx-auto mt-2 max-w-xl px-3 text-center text-[10px] leading-relaxed text-fg-muted">
+        Illustrative global connection points for the globe animation; locations shown are not a directory of EQISI offices or confirmed client sites.
+      </p>
     </div>
   )
 }
