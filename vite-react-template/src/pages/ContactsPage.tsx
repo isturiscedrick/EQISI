@@ -6,6 +6,7 @@ import { Section } from '@/components/layout/Section'
 import { PageMeta } from '@/components/seo/PageMeta'
 import { Reveal } from '@/components/ui/Reveal'
 import { FAQList } from '@/components/ui/FAQList'
+import { SmartInquiryForm } from '@/components/ui/SmartInquiryForm'
 import * as c from '@/content/eqisi'
 
 const contactRow =
@@ -111,6 +112,10 @@ export function Component() {
             ))}
           </div>
         </div>
+      </Section>
+
+      <Section id="guided-inquiry" eyebrow="Start a conversation" title="Tell us about your requirements" lead="Use this short guided inquiry to prepare a message for the EQISI executive office.">
+        <div className="mx-auto max-w-4xl"><SmartInquiryForm /></div>
       </Section>
 
       <Section id="contact-faq" muted eyebrow="Quick Answers" title="Common questions before getting in touch">
