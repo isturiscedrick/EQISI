@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import { animate } from 'animejs'
 import { gsap } from '@/lib/gsap'
 
@@ -16,14 +16,6 @@ const ORBIT_B = 78
 const ORBIT_ROT = -16 * D2R
 const ORBIT_SPEED = 0.85 // rad/s
 const TRAIL = 9
-
-const LOCATIONS = [
-  { name: 'Manila', region: 'Philippines', detail: 'EQISI home market and strategic operations hub.', color: '#f15a2a' },
-  { name: 'Singapore', region: 'Southeast Asia', detail: 'A regional connection point for integrated supply-chain activity.', color: '#4860ac' },
-  { name: 'Tokyo', region: 'Japan', detail: 'A connected Asia-Pacific business destination.', color: '#4860ac' },
-  { name: 'Sydney', region: 'Australia', detail: 'An Asia-Pacific route represented in the globe visual.', color: '#f15a2a' },
-  { name: 'Dubai', region: 'United Arab Emirates', detail: 'A global trade and logistics connection point.', color: '#f15a2a' },
-]
 
 const NODES = [
   { lat: 14.6, lon: 121, color: '#f15a2a' },
@@ -105,8 +97,6 @@ function orbitPoint(theta: number) {
  */
 export function GlobeVisual() {
   const root = useRef<HTMLDivElement>(null)
-  const [activeLocation, setActiveLocation] = useState(0)
-  const location = LOCATIONS[activeLocation] ?? LOCATIONS[0]
 
   useLayoutEffect(() => {
     const element = root.current
@@ -278,13 +268,13 @@ export function GlobeVisual() {
     ))
 
   return (
-    <div ref={root} className="relative mx-auto w-full max-w-4xl px-1 sm:px-0" aria-label="Animated EQISI wireframe globe">
+    <div ref={root} className="relative mx-auto -mt-6 w-full max-w-5xl px-0 sm:-mt-10" aria-label="Animated EQISI wireframe globe">
       <div className="globe-halo pointer-events-none absolute inset-x-[18%] top-[14%] h-[68%] rounded-full bg-primary/10 blur-3xl" />
       <svg
         viewBox="0 0 900 560"
         role="img"
         aria-labelledby="eqisi-globe-title"
-        className="globe-parallax relative z-10 mx-auto block h-[clamp(190px,42vw,260px)] w-full max-w-[760px] sm:h-[clamp(250px,32vh,350px)] overflow-visible"
+        className="globe-parallax relative z-10 mx-auto block h-[clamp(230px,45vw,310px)] w-full max-w-[820px] overflow-visible sm:h-[clamp(300px,38vh,390px)]"
       >
         <title id="eqisi-globe-title">EQISI animated rotating wireframe globe with an orbiting satellite</title>
         <defs>
@@ -366,25 +356,6 @@ export function GlobeVisual() {
       </svg>
       <p className="relative z-10 -mt-1 px-2 text-center text-[9px] font-semibold tracking-[0.14em] text-fg-muted uppercase sm:text-sm sm:tracking-[0.22em]">
         One connected world · One integrated partner
-      </p>
-      <div className="relative z-20 mx-auto mt-5 max-w-2xl rounded-2xl border border-border/80 bg-surface/95 p-3 shadow-card backdrop-blur sm:p-4" aria-label="Explore globe locations">
-        <div className="flex flex-wrap justify-center gap-2">
-          {LOCATIONS.map((item, index) => (
-            <button key={item.name} type="button" aria-pressed={activeLocation === index} onClick={() => setActiveLocation(index)} className={`rounded-full border px-3 py-1.5 text-xs font-bold transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${activeLocation === index ? 'border-primary bg-primary text-primary-fg shadow-subtle' : 'border-border bg-canvas text-fg hover:border-primary/50'}`}>
-              {item.name}
-            </button>
-          ))}
-        </div>
-        <div className="mt-3 flex items-start gap-3 border-t border-border pt-3 text-left">
-          <span className="mt-1 size-2.5 shrink-0 rounded-full" style={{ backgroundColor: location.color }} />
-          <div aria-live="polite" className="min-w-0">
-            <p className="text-sm font-bold text-fg">{location.name} <span className="font-medium text-fg-muted">· {location.region}</span></p>
-            <p className="mt-1 text-xs leading-relaxed text-fg-muted">{location.detail}</p>
-          </div>
-        </div>
-      </div>
-      <p className="mx-auto mt-2 max-w-xl px-3 text-center text-[10px] leading-relaxed text-fg-muted">
-        Illustrative global connection points for the globe animation; locations shown are not a directory of EQISI offices or confirmed client sites.
       </p>
     </div>
   )
