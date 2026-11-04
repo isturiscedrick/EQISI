@@ -56,7 +56,7 @@ export function ScrollStory({ eyebrow, title, description, steps, visual }: Scro
       const art = section.querySelector<HTMLElement>('[data-story-visual]')
       if (art) timeline.to(art, { y: -12, rotate: -1.2, scale: 1.025, duration: 1 }, 0)
 
-      return () => timeline.scrollTrigger?.kill()
+      return () => timeline.kill()
     })
 
     return () => mm.revert()
