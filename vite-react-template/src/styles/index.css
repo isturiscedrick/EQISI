@@ -426,3 +426,57 @@ body {
   opacity: 0;
   overflow: hidden;
 }
+
+
+/* Interactive details, subtle stats feedback, and keyboard parity for hover states. */
+.service-card-content {
+  animation: service-card-open 320ms cubic-bezier(.2,.7,.2,1) both;
+}
+@keyframes service-card-open {
+  from { opacity: 0; transform: translateY(-7px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.stat-accent {
+  display: block;
+  width: 100%;
+  height: 3px;
+  margin-top: 0.9rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+}
+.stat-accent::after {
+  display: block;
+  width: 42%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--primary), var(--highlight));
+  content: "";
+  transform-origin: left;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .stat-accent::after { animation: stat-accent-sweep 2.8s ease-in-out infinite alternate; }
+}
+@keyframes stat-accent-sweep {
+  from { transform: translateX(0) scaleX(.72); }
+  to { transform: translateX(135%) scaleX(1); }
+}
+.hero-mesh::before {
+  position: absolute;
+  inset: -20%;
+  background: conic-gradient(from 210deg at 50% 50%, transparent 0 28%, rgb(72 96 172 / .045) 35%, transparent 44% 65%, rgb(240 84 36 / .04) 73%, transparent 82%);
+  content: "";
+  filter: blur(18px);
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-mesh::before { animation: hero-ray-drift 26s linear infinite; }
+}
+@keyframes hero-ray-drift {
+  to { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .service-card-content { animation: none; }
+  .stat-accent::after { animation: none; }
+  .hero-mesh::before { animation: none; }
+}
