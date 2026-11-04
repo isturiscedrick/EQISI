@@ -22,8 +22,8 @@ export function FAQList({ items }: FAQListProps) {
     panelRefs.current.forEach((panel, index) => {
       if (!panel) return
       const isOpen = active === index
-      if (isOpen) {
-        panel.hidden = false
+      if (isOpen && panel.dataset.expanded !== 'true') {
+        panel.dataset.expanded = 'true'
         const targetHeight = panel.scrollHeight
         const animation = animate(panel, {
           height: [0, targetHeight],
@@ -33,14 +33,14 @@ export function FAQList({ items }: FAQListProps) {
           onComplete: () => { panel.style.height = 'auto' },
         })
         animations.push(animation)
-      } else if (!panel.hidden) {
+      } else if (!isOpen && panel.dataset.expanded === 'true') {
         const currentHeight = panel.getBoundingClientRect().height
         const animation = animate(panel, {
           height: [currentHeight, 0],
           opacity: [1, 0],
           duration: 240,
           ease: 'in(2)',
-          onComplete: () => { panel.hidden = true },
+          onComplete: () => { panel.dataset.expanded = 'false' },
         })
         animations.push(animation)
       }
@@ -73,7 +73,7 @@ export function FAQList({ items }: FAQListProps) {
               ref={(node) => { panelRefs.current[index] = node }}
               hidden={!isOpen}
               aria-hidden={!isOpen}
-              className="overflow-hidden"
+              className="faq-panel overflow-hidden"
             >
               <p className="max-w-3xl pb-5 pr-8 text-sm leading-relaxed text-fg-muted">{item.answer}</p>
             </div>
