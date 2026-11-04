@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { Outlet, ScrollRestoration, useLocation } from 'react-router'
 import { BackToTop } from '@/components/ui/BackToTop'
+import { PointerGlow } from '@/components/ui/PointerGlow'
 import { gsap, ScrollTrigger } from '@/lib/gsap'
 import { useMagneticButtons } from '@/lib/useMagneticButtons'
 import { Footer } from './Footer'
@@ -75,6 +76,7 @@ export function RootLayout() {
       </a>
 
       <SiteLoader />
+      <PointerGlow />
       <NavigationProgress />
       <Header />
 
