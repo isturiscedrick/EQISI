@@ -85,12 +85,12 @@ export function Component() {
         title="Six systems that run your workforce and supply chain"
         lead="Our integrated software platforms streamline daily operations, minimize human error, and provide real-time management visibility."
       >
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain pb-5 [scrollbar-color:var(--primary)_transparent] [scrollbar-width:thin]">
           {c.systems.map((system, i) => {
             const Icon = systemIcon(system)
             return (
-              <Reveal key={system} delay={(i % 3) * 100} className="h-full">
-                <div className={card}>
+              <Reveal key={system} delay={(i % 3) * 100} className="h-full w-[min(82vw,300px)] shrink-0 snap-start sm:w-[320px] lg:w-[calc((100%-2rem)/3)]">
+                <div className={cn(card, "motion-border")}>
                   <div className="flex items-center justify-between">
                     <span className={iconTile}>
                       <Icon aria-hidden="true" className="size-6" />
