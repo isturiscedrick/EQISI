@@ -24,7 +24,7 @@ export function Header() {
 
     const menuAnimation = animate(nav, {
       opacity: [0, 1],
-      translateY: [-8, 0],
+      translateX: [24, 0],
       duration: 240,
       ease: 'out(3)',
     })
@@ -85,6 +85,7 @@ export function Header() {
 
   return (
     <>
+      {open && <button type="button" aria-label="Close navigation menu" onClick={() => setOpen(false)} className="fixed inset-0 z-40 bg-slate-950/45 backdrop-blur-[2px] md:hidden" />}
       <header
         className={cn(
           'sticky top-0 z-40 border-b border-border backdrop-blur transition-all duration-200',
@@ -119,10 +120,16 @@ export function Header() {
             aria-label="Main"
             className={cn(
               open ? 'flex' : 'hidden',
-              'absolute inset-x-0 top-full flex-col gap-2 border-b border-border bg-canvas p-4 pb-5 shadow-elevated sm:px-6',
-              'md:static md:flex md:flex-row md:items-center md:gap-1 md:rounded-full md:border md:border-border/70 md:bg-surface-muted/75 md:px-2 md:py-1 md:shadow-none',
+              'fixed inset-y-0 right-0 z-50 h-dvh w-[min(86vw,360px)] flex-col gap-2 overflow-y-auto border-l border-border bg-canvas px-5 pb-6 pt-5 shadow-elevated md:static md:z-auto md:h-auto md:w-auto md:overflow-visible md:border-0 md:p-1',
+              'md:flex md:flex-row md:items-center md:gap-1 md:rounded-full md:border md:border-border/70 md:bg-surface-muted/75 md:px-2 md:py-1 md:shadow-none',
             )}
           >
+            <div className="mb-4 flex items-center justify-between border-b border-border pb-4 md:hidden">
+              <span className="text-xs font-bold tracking-[0.18em] text-fg-muted uppercase">Main menu</span>
+              <button type="button" onClick={() => setOpen(false)} aria-label="Close menu" className="inline-flex size-10 items-center justify-center rounded-full bg-surface-muted text-fg transition-colors hover:bg-border">
+                <X aria-hidden="true" className="size-5" />
+              </button>
+            </div>
             {siteConfig.nav.map((item) => (
               <NavLink
                 key={item.to}
