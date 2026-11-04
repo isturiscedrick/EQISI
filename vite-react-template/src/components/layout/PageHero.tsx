@@ -50,7 +50,6 @@ export function PageHero({ id, eyebrow, title, description, actions, visual, lar
             },
           })
         })
-      })
       return () => timeline.kill()
     }, section)
 
@@ -80,7 +79,7 @@ export function PageHero({ id, eyebrow, title, description, actions, visual, lar
             id={`${id}-heading`}
             data-hero-step="title"
             className={cn(
-              ' mt-4 font-extrabold tracking-tight text-fg',
+              'mt-4 font-extrabold tracking-tight text-fg',
               large ? 'text-[clamp(2.3rem,9.6vw,5.25rem)] leading-[0.98] text-balance sm:text-[clamp(3.25rem,5.6vw,5.25rem)]' : 'text-3xl sm:text-5xl',
               centered && 'mx-auto max-w-3xl',
             )}
