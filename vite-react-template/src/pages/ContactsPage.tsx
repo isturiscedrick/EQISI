@@ -112,6 +112,29 @@ export function Component() {
         </div>
       </Section>
 
+      <Section id="contact-faq" muted eyebrow="Quick Answers" title="Common questions before getting in touch">
+        <div className="mx-auto max-w-4xl">
+          <FAQList items={[
+            {
+              question: 'What services can EQISI help our company with?',
+              answer: 'EQISI provides warehousing, manpower, logistics, facility support, and integrated workforce and supply-chain management systems. Share your operational requirements so the team can discuss a suitable service model.',
+            },
+            {
+              question: 'How can we request a manpower deployment or consultation?',
+              answer: 'Contact the executive office by phone or email using the details on this page. Include your facility location, workforce requirements, and preferred start date so the team can understand your request.',
+            },
+            {
+              question: 'Where are EQISI offices located?',
+              answer: 'EQISI lists its strategic office in Quezon City, satellite office in Cabuyao, Laguna, and headquarters in San Jose del Monte, Bulacan. Use the map links above for directions.',
+            },
+            {
+              question: 'When can we reach the executive office?',
+              answer: 'The listed operational hours are Monday to Friday, 8:00 AM to 5:00 PM Philippine Standard Time.',
+            },
+          ]} />
+        </div>
+      </Section>
+
       <CtaBanner
         title="Have an urgent requirement or facility visit request?"
         description={
