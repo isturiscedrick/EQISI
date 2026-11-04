@@ -17,7 +17,8 @@ export function SystemsScroll() {
     const scene = root.current
     const rail = track.current
     const bar = progress.current
-    if (!scene || !rail || !bar || c.systems.length < 2) return
+    const section = scene?.closest<HTMLElement>('#systems-preview')
+    if (!scene || !rail || !bar || !section || c.systems.length < 2) return
 
     const mm = gsap.matchMedia()
     mm.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => {
@@ -26,11 +27,11 @@ export function SystemsScroll() {
         x: () => -getDistance(),
         ease: 'none',
         scrollTrigger: {
-          trigger: scene,
+          trigger: section,
           start: 'top top+=88',
           end: () => '+=' + getDistance(),
           scrub: 1,
-          pin: true,
+          pin: section,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
@@ -39,7 +40,7 @@ export function SystemsScroll() {
         scaleX: 1,
         ease: 'none',
         scrollTrigger: {
-          trigger: scene,
+          trigger: section,
           start: 'top top+=88',
           end: () => '+=' + getDistance(),
           scrub: 1,
