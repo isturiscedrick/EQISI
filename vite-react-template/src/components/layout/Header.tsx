@@ -24,7 +24,7 @@ export function Header() {
 
     const menuAnimation = animate(nav, {
       opacity: [0, 1],
-      translateX: [24, 0],
+      translateX: [-24, 0],
       duration: 240,
       ease: 'out(3)',
     })
@@ -98,10 +98,6 @@ export function Header() {
             scrolled ? 'h-14' : 'h-16',
           )}
         >
-          <Link to="/" viewTransition aria-label={`${siteConfig.name} home`} className="shrink-0 rounded-md">
-            <Logo className={cn('transition-all duration-200', scrolled ? 'h-9' : 'h-11')} />
-          </Link>
-
           <button
             ref={toggleRef}
             type="button"
@@ -109,10 +105,14 @@ export function Header() {
             aria-controls={menuId}
             aria-label={open ? 'Close menu' : 'Open menu'}
             onClick={() => setOpen((value) => !value)}
-            className="ml-auto inline-flex size-11 items-center justify-center rounded-md transition-colors hover:bg-surface-muted md:hidden"
+            className="mr-2 inline-flex size-11 items-center justify-center rounded-md transition-colors hover:bg-surface-muted md:hidden"
           >
             {open ? <X aria-hidden="true" className="size-5" /> : <Menu aria-hidden="true" className="size-5" />}
           </button>
+
+          <Link to="/" viewTransition aria-label={`${siteConfig.name} home`} className="shrink-0 rounded-md">
+            <Logo className={cn('transition-all duration-200', scrolled ? 'h-9' : 'h-11')} />
+          </Link>
 
           <nav
             ref={navRef}
@@ -120,7 +120,7 @@ export function Header() {
             aria-label="Main"
             className={cn(
               open ? 'flex' : 'hidden',
-              'fixed inset-y-0 right-0 left-auto z-50 h-dvh w-[min(86vw,360px)] flex-col gap-2 overflow-y-auto border-l border-border bg-canvas px-5 pb-6 pt-5 shadow-elevated md:static md:z-auto md:h-auto md:w-auto md:overflow-visible md:border-0 md:p-1',
+              'fixed inset-y-0 left-0 right-auto z-50 h-dvh w-[min(86vw,360px)] flex-col gap-2 overflow-y-auto border-r border-border bg-canvas px-5 pb-6 pt-5 shadow-elevated md:static md:z-auto md:h-auto md:w-auto md:overflow-visible md:border-0 md:p-1',
               'md:flex md:flex-row md:items-center md:gap-1 md:rounded-full md:border md:border-border/70 md:bg-surface-muted/75 md:px-2 md:py-1 md:shadow-none',
             )}
           >
