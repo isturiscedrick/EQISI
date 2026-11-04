@@ -67,7 +67,8 @@ export function Reveal({ delay = 0, className, style, children, ...rest }: Revea
       (child): child is HTMLElement => child instanceof HTMLElement,
     )
     const images = Array.from(node.querySelectorAll<HTMLImageElement>('img'))
-    if (images.length) {
+    const imageContext = gsap.context(() => {
+      if (!images.length) return
       gsap.fromTo(
         images,
         { clipPath: 'inset(0 0 12% 0)', scale: 1.035 },
@@ -80,7 +81,7 @@ export function Reveal({ delay = 0, className, style, children, ...rest }: Revea
           clearProps: 'clipPath,transform',
         },
       )
-    }
+    }, node)
 
     const childAnimation =
       childrenToAnimate.length > 0
@@ -126,6 +127,7 @@ export function Reveal({ delay = 0, className, style, children, ...rest }: Revea
       })
       hoverAnimations.forEach((animation) => animation.revert())
       hoverAnimations.clear()
+      imageContext.revert()
       context.revert()
       childAnimation?.revert()
     }
