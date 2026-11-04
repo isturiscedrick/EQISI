@@ -60,8 +60,8 @@ export function Component() {
       <PageHero
         id="careers-hero"
         eyebrow="People & Culture"
-        title="Real-Time Pay & Benefits, From Any Phone"
-        description="At EQISI, our people are the core of our business. We leverage modern cloud systems so our employees can view their schedules, access payslips, receive emergency assistance, and track statutory benefits right from their mobile devices."
+        title="Build Your Career with EQISI"
+        description="Discover opportunities, employee support, and the path to joining our team."
         actions={
           <>
             <a href="#recruitment-process" className={buttonStyles({ size: 'lg' })}>
