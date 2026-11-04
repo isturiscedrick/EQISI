@@ -66,6 +66,21 @@ export function Reveal({ delay = 0, className, style, children, ...rest }: Revea
     const childrenToAnimate = Array.from(node.children).filter(
       (child): child is HTMLElement => child instanceof HTMLElement,
     )
+    const images = Array.from(node.querySelectorAll<HTMLImageElement>('img'))
+    if (images.length) {
+      gsap.fromTo(
+        images,
+        { clipPath: 'inset(0 0 12% 0)', scale: 1.035 },
+        {
+          clipPath: 'inset(0 0 0% 0)',
+          scale: 1,
+          duration: 0.9,
+          stagger: 0.08,
+          ease: 'power2.out',
+          clearProps: 'clipPath,transform',
+        },
+      )
+    }
 
     const childAnimation =
       childrenToAnimate.length > 0
