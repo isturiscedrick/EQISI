@@ -35,8 +35,8 @@ export function PageHero({ id, eyebrow, title, description, actions, visual, lar
       const setSpotY = gsap.quickTo(section, '--spot-y', { duration: 0.55, ease: 'power3.out' })
       const onPointerMove = (event: PointerEvent) => {
         const bounds = section.getBoundingClientRect()
-        setSpotX(`${event.clientX - bounds.left}px`)
-        setSpotY(`${event.clientY - bounds.top}px`)
+        setSpotX(event.clientX - bounds.left)
+        setSpotY(event.clientY - bounds.top)
       }
       if (pointerFine) section.addEventListener('pointermove', onPointerMove, { passive: true })
       const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } })
