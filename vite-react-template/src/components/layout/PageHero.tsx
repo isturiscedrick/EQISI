@@ -68,7 +68,11 @@ export function PageHero({ id, eyebrow, title, description, actions, visual, lar
             },
           })
         })
-      return () => {\n        timeline.kill()\n        titleSplit?.revert()\n        section.removeEventListener('pointermove', onPointerMove)\n      }
+      return () => {
+        timeline.kill()
+        titleSplit?.revert()
+        section.removeEventListener('pointermove', onPointerMove)
+      }
     }, section)
 
     // Kills the tweens and their ScrollTriggers when the route changes.
@@ -82,7 +86,8 @@ export function PageHero({ id, eyebrow, title, description, actions, visual, lar
       aria-labelledby={`${id}-heading`}
     >
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="hero-mesh absolute inset-0" />\n        <div className="hero-spotlight absolute inset-0" />
+        <div className="hero-mesh absolute inset-0" />
+        <div className="hero-spotlight absolute inset-0" />
         <div className="bg-dots absolute inset-0 opacity-60" />
         <div data-parallax="35" className="absolute -top-32 right-1/4 size-96 rounded-full bg-primary/10 blur-3xl" />
         <div data-parallax="15" className="absolute -bottom-24 left-1/4 size-72 rounded-full bg-highlight/10 blur-3xl" />
