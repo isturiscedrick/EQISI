@@ -109,7 +109,7 @@ export function Header() {
             aria-controls={menuId}
             aria-label={open ? 'Close menu' : 'Open menu'}
             onClick={() => setOpen((value) => !value)}
-            className="inline-flex size-11 items-center justify-center rounded-md transition-colors hover:bg-surface-muted md:hidden"
+            className="ml-auto inline-flex size-11 items-center justify-center rounded-md transition-colors hover:bg-surface-muted md:hidden"
           >
             {open ? <X aria-hidden="true" className="size-5" /> : <Menu aria-hidden="true" className="size-5" />}
           </button>
@@ -120,11 +120,11 @@ export function Header() {
             aria-label="Main"
             className={cn(
               open ? 'flex' : 'hidden',
-              'fixed inset-y-0 right-0 z-50 h-dvh w-[min(86vw,360px)] flex-col gap-2 overflow-y-auto border-l border-border bg-canvas px-5 pb-6 pt-5 shadow-elevated md:static md:z-auto md:h-auto md:w-auto md:overflow-visible md:border-0 md:p-1',
+              'fixed inset-y-0 right-0 left-auto z-50 h-dvh w-[min(86vw,360px)] flex-col gap-2 overflow-y-auto border-l border-border bg-canvas px-5 pb-6 pt-5 shadow-elevated md:static md:z-auto md:h-auto md:w-auto md:overflow-visible md:border-0 md:p-1',
               'md:flex md:flex-row md:items-center md:gap-1 md:rounded-full md:border md:border-border/70 md:bg-surface-muted/75 md:px-2 md:py-1 md:shadow-none',
             )}
           >
-            <div className="mb-4 flex items-center justify-between border-b border-border pb-4 md:hidden">
+            <div className="mb-4 flex items-center justify-between border-b border-border pb-4 text-right md:hidden">
               <span className="text-xs font-bold tracking-[0.18em] text-fg-muted uppercase">Main menu</span>
               <button type="button" onClick={() => setOpen(false)} aria-label="Close menu" className="inline-flex size-10 items-center justify-center rounded-full bg-surface-muted text-fg transition-colors hover:bg-border">
                 <X aria-hidden="true" className="size-5" />
