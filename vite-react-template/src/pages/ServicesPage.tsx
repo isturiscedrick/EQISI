@@ -7,6 +7,7 @@ import { Section } from '@/components/layout/Section'
 import { PageMeta } from '@/components/seo/PageMeta'
 import { buttonStyles } from '@/components/ui/button-styles'
 import { Reveal } from '@/components/ui/Reveal'
+import { ServiceExplorer } from '@/components/ui/ServiceExplorer'
 import { bannerButton, card, chip, iconTile } from '@/components/ui/surface-styles'
 import * as c from '@/content/eqisi'
 import { asset } from '@/lib/assets'
@@ -48,6 +49,10 @@ export function Component() {
         }
         visual={<AutomationIllustration className="mx-auto w-full max-w-lg" />}
       />
+
+      <Section id="capability-explorer" eyebrow="Choose a capability" title="Explore our integrated service model" lead="Start with the operational area you need help with and discover the capabilities EQISI brings together.">
+        <ServiceExplorer />
+      </Section>
 
       {/* Six Systems Section */}
       <Section
