@@ -1,6 +1,6 @@
 import { ArrowRight, BriefcaseBusiness, Building2, Home, Mail, Menu, MessageCircle, UsersRound, X } from 'lucide-react'
 import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
-import { animate } from 'animejs'
+import { animate, stagger } from 'animejs'
 import { Link, NavLink } from 'react-router'
 import { buttonStyles } from '@/components/ui/button-styles'
 import { siteConfig } from '@/config/site'
@@ -33,12 +33,20 @@ export function Header() {
     const menuAnimation = animate(nav, {
       opacity: [0, 1],
       translateX: [-24, 0],
-      duration: 240,
+      duration: 280,
+      ease: 'out(3)',
+    })
+    const menuItems = animate(nav.querySelectorAll('a'), {
+      opacity: [0, 1],
+      translateX: [-10, 0],
+      duration: 260,
+      delay: stagger(38, { start: 45 }),
       ease: 'out(3)',
     })
 
     return () => {
       menuAnimation.revert()
+      menuItems.revert()
     }
   }, [open])
 
