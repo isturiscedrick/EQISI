@@ -62,20 +62,28 @@ export function Component() {
             const Icon = systemIcon(name)
             return (
               <Reveal key={name} delay={(i % 3) * 100} className="h-full">
-                <div className={cn(card, 'border-t-4 border-t-primary')}>
-                  <div className="flex items-center gap-4">
-                    <span className={iconTile}>
-                      <Icon aria-hidden="true" className="size-6" />
+                <details className={cn(card, 'group/service motion-border border-t-4 border-t-primary open:shadow-elevated')}>
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 [&::-webkit-details-marker]:hidden">
+                    <span className="flex min-w-0 items-center gap-4">
+                      <span className={iconTile}>
+                        <Icon aria-hidden="true" className="size-6" />
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block text-xs font-extrabold tracking-widest text-warning">SYSTEM {String(i + 1).padStart(2, '0')}</span>
+                        <span className="mt-1 block text-base font-bold leading-snug text-fg sm:text-lg">{name}</span>
+                      </span>
                     </span>
-                    <span className="text-sm font-extrabold tracking-widest text-warning">
-                      SYSTEM {String(i + 1).padStart(2, '0')}
-                    </span>
+                    <span aria-hidden="true" className="grid size-8 shrink-0 place-items-center rounded-full border border-border text-primary transition-transform duration-300 group-open/service:rotate-45">+</span>
+                  </summary>
+                  <div className="service-card-content">
+                    <p className="mt-5 border-t border-border pt-4 text-sm leading-relaxed text-fg-muted">
+                      {systemDetails[name] ?? 'Enterprise-grade software designed to optimize productivity and eliminate operational friction.'}
+                    </p>
+                    <Link to="/contacts" className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-primary underline-offset-4 hover:underline">
+                      Discuss this system <ArrowRight aria-hidden="true" className="size-4" />
+                    </Link>
                   </div>
-                  <h3 className="mt-4 text-xl font-bold text-fg">{name}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-fg-muted">
-                    {systemDetails[name] ?? 'Enterprise-grade software designed to optimize productivity and eliminate operational friction.'}
-                  </p>
-                </div>
+                </details>
               </Reveal>
             )
           })}
