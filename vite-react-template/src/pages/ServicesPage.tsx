@@ -94,7 +94,7 @@ export function Component() {
             const Icon = industryIcon(ind)
             return (
               <Reveal key={ind} delay={(i % 4) * 80} className="h-full">
-                <div className={card}>
+                <div className={cn(card, "motion-border")}>
                   <div className="flex items-center justify-between">
                     <span className={iconTile}>
                       <Icon aria-hidden="true" className="size-6" />
