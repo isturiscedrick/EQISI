@@ -1,7 +1,7 @@
 import { ArrowRight, CalendarDays, Cpu, Handshake, ShieldCheck } from 'lucide-react'
 import { Link } from 'react-router'
 import { Container } from '@/components/layout/Container'
-import { HeroTeamVisual } from '@/components/home/HeroTeamVisual'
+import { GlobeVisual } from '@/components/home/GlobeVisual'
 import { LogoMarquee } from '@/components/home/LogoMarquee'
 import { CtaBanner } from '@/components/layout/CtaBanner'
 import { PageHero } from '@/components/layout/PageHero'
@@ -48,7 +48,7 @@ export function Component() {
             </Link>
           </>
         }
-        visual={<HeroTeamVisual />}
+        visual={<GlobeVisual />}
       />
 
       {/* Key stats: a card that overlaps the hero */}
