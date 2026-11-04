@@ -136,14 +136,14 @@ export function Component() {
               </Link>
             </div>
           </Reveal>
-          <Reveal delay={150} className="overflow-hidden rounded-2xl border border-border shadow-card">
+          <Reveal delay={150} className="aspect-[4/5] w-full overflow-hidden rounded-2xl border border-border bg-surface-muted shadow-card sm:aspect-[5/4]">
             <img
               src={asset('industry.webp')}
               alt="Industrial plant with steel structures"
               width={900}
               height={1012}
               loading="lazy"
-              className="max-h-104 w-full object-cover transition-transform duration-500 motion-safe:hover:scale-105"
+              className="h-full w-full object-cover object-center transition-transform duration-500 motion-safe:hover:scale-[1.03]"
             />
           </Reveal>
         </Container>
@@ -152,14 +152,14 @@ export function Component() {
       {/* Careers & Benefits Teaser */}
       <section className="border-b border-border bg-surface-muted py-16 sm:py-20" aria-labelledby="home-careers-heading">
         <Container className="grid items-center gap-12 lg:grid-cols-2">
-          <Reveal className="overflow-hidden rounded-2xl border border-border shadow-card">
+          <Reveal className="aspect-[16/10] w-full overflow-hidden rounded-2xl border border-border bg-surface-muted shadow-card">
             <img
               src={asset('benefits.webp')}
               alt="Workers on a production floor"
               width={900}
               height={507}
               loading="lazy"
-              className="w-full object-cover transition-transform duration-500 motion-safe:hover:scale-105"
+              className="h-full w-full object-cover object-center transition-transform duration-500 motion-safe:hover:scale-[1.03]"
             />
           </Reveal>
           <Reveal delay={150}>
