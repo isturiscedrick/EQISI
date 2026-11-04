@@ -2,62 +2,97 @@ import { useLayoutEffect, useRef } from 'react'
 import { animate } from 'animejs'
 import { gsap } from 'gsap'
 
-// Globe geometry (SVG units). The pole is tilted toward the upper right, like the EQISI logo.
+const D2R = Math.PI / 180
 const CX = 450
 const CY = 278
 const R = 184
-const AXIS_TILT = 32 // degrees, clockwise
-const ELEVATION = (24 * Math.PI) / 180 // how far the north pole leans toward the viewer
-const MERIDIAN_COUNT = 6
-const LATITUDES = [-45, -15, 15, 45]
-const BLUE = '#4860ac'
+const TILT = 24 * D2R // pole tips toward the viewer, like the logo
+const ROLL = -40 * D2R // leans the axis to the right (use a positive value to lean left)
+const SPIN = (Math.PI * 2) / 36 // one full turn every 36 s
 
-const cosE = Math.cos(ELEVATION)
-const sinE = Math.sin(ELEVATION)
+// Orange orbit (ellipse in a frame rotated by ORBIT_ROT around the globe center)
+const ORBIT_A = 268
+const ORBIT_B = 78
+const ORBIT_ROT = -16 * D2R
+const ORBIT_SPEED = 0.85 // rad/s
+const TRAIL = 9
 
-/** Projects a point on the sphere. `visible` is true on the side facing the viewer. */
-function project(lat: number, lon: number) {
-  const x = Math.cos(lat) * Math.sin(lon)
-  const y = Math.sin(lat)
-  const z = Math.cos(lat) * Math.cos(lon)
-  const y2 = y * cosE - z * sinE
-  const z2 = y * sinE + z * cosE
-  return { X: CX + R * x, Y: CY - R * y2, visible: z2 > 0 }
+const NODES = [
+  { lat: 14.6, lon: 121, color: '#f15a2a' },
+  { lat: 1.3, lon: 103.8, color: '#416da5' },
+  { lat: 35.7, lon: 139.7, color: '#416da5' },
+  { lat: -33.9, lon: 151.2, color: '#f15a2a' },
+  { lat: 25.2, lon: 55.3, color: '#f15a2a' },
+]
+
+// Static wireframe geometry as [lat, lon] polylines (fewer lines, so thick strokes read like the logo).
+const LINES: Array<Array<[number, number]>> = []
+for (let lon = 0; lon < 360; lon += 40) {
+  const line: Array<[number, number]> = []
+  for (let lat = -90; lat <= 90; lat += 6) line.push([lat, lon])
+  LINES.push(line)
+}
+for (const lat of [-45, 0, 45]) {
+  const line: Array<[number, number]> = []
+  for (let lon = 0; lon <= 360; lon += 6) line.push([lat, lon])
+  LINES.push(line)
 }
 
-/** Builds an SVG path from samples, keeping only the front-facing segments. */
-function buildPath(samples: ReturnType<typeof project>[]) {
-  let d = ''
-  let prevVisible = false
-  for (const p of samples) {
-    if (p.visible) d += `${prevVisible ? 'L' : 'M'}${p.X.toFixed(1)} ${p.Y.toFixed(1)}`
-    prevVisible = p.visible
+/** Orthographic projection of a lat/lon point. z > 0 means the point faces the viewer. */
+function project(latDeg: number, lonDeg: number, rot: number) {
+  const la = latDeg * D2R
+  const lo = lonDeg * D2R + rot
+  const x = Math.cos(la) * Math.sin(lo)
+  const y = Math.sin(la)
+  const z = Math.cos(la) * Math.cos(lo)
+  const y2 = y * Math.cos(TILT) - z * Math.sin(TILT)
+  const z2 = y * Math.sin(TILT) + z * Math.cos(TILT)
+  // Roll the whole globe so the axis leans, like the logo.
+  const xr = x * Math.cos(ROLL) - y2 * Math.sin(ROLL)
+  const yr = x * Math.sin(ROLL) + y2 * Math.cos(ROLL)
+  return { x: CX + R * xr, y: CY - R * yr, z: z2 }
+}
+
+function buildWireframe(rot: number) {
+  let front = ''
+  let back = ''
+  for (const line of LINES) {
+    let prev: ReturnType<typeof project> | null = null
+    let mode = ''
+    for (const [lat, lon] of line) {
+      const p = project(lat, lon, rot)
+      if (prev) {
+        const isFront = prev.z + p.z >= 0
+        const next = isFront ? 'f' : 'b'
+        let d = ''
+        if (mode !== next) {
+          d += `M${prev.x.toFixed(1)} ${prev.y.toFixed(1)}`
+          mode = next
+        }
+        d += `L${p.x.toFixed(1)} ${p.y.toFixed(1)}`
+        if (isFront) front += d
+        else back += d
+      }
+      prev = p
+    }
   }
-  return d
+  return { front, back }
 }
 
-function meridianPath(lon: number) {
-  const steps = 72
-  const samples = Array.from({ length: steps + 1 }, (_, i) => project(-Math.PI / 2 + (Math.PI * i) / steps, lon))
-  return buildPath(samples)
+/** Position on the orange orbit. `front` is true on the half that passes in front of the globe. */
+function orbitPoint(theta: number) {
+  const lx = ORBIT_A * Math.cos(theta)
+  const ly = ORBIT_B * Math.sin(theta)
+  const c = Math.cos(ORBIT_ROT)
+  const s = Math.sin(ORBIT_ROT)
+  return { x: CX + lx * c - ly * s, y: CY + lx * s + ly * c, front: Math.sin(theta) > 0 }
 }
-
-function latitudePath(latDeg: number) {
-  const lat = (latDeg * Math.PI) / 180
-  const steps = 120
-  const samples = Array.from({ length: steps + 1 }, (_, i) => project(lat, (2 * Math.PI * i) / steps))
-  return buildPath(samples)
-}
-
-const latitudeD = LATITUDES.map(latitudePath)
-const meridianIndexes = Array.from({ length: MERIDIAN_COUNT }, (_, k) => k)
-const INITIAL_ROTATION = 0.35
 
 /**
- * Brand-led animated EQISI globe, drawn in the style of the logo mark:
- * bold blue meridians and latitude bands with white gaps where they cross.
- * The meridians are recomputed on a GSAP ticker, so the globe turns in 3D
- * around its tilted axis. Anime.js handles pulses, nodes and floating callouts.
+ * Brand-led animated EQISI globe.
+ * A real 3D-projected wireframe spins on a tilted, leaning axis, surface nodes ride with it,
+ * and an orange satellite orbits, passing behind and in front of the sphere.
+ * GSAP drives the frame loop and pointer parallax; Anime.js floats the data cards.
  */
 export function GlobeVisual() {
   const root = useRef<HTMLDivElement>(null)
@@ -67,130 +102,145 @@ export function GlobeVisual() {
     if (!element) return
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const animeAnimations: Array<{ pause: () => void }> = []
-    let onPointerMove: ((event: PointerEvent) => void) | undefined
-    let onPointerLeave: (() => void) | undefined
-    let tick: ((time: number, deltaTime: number) => void) | undefined
 
-    const meridianNodes = Array.from(element.querySelectorAll<SVGPathElement>('[data-meridian]'))
-    let rotation = INITIAL_ROTATION
+    const frontPath = element.querySelector<SVGPathElement>('.globe-lines-front')
+    const backPath = element.querySelector<SVGPathElement>('.globe-lines-back')
+    const nodes = Array.from(element.querySelectorAll<SVGGElement>('.globe-node'))
+    const rings = Array.from(element.querySelectorAll<SVGEllipseElement>('.globe-orbit-ring'))
+    const satFront = Array.from(element.querySelectorAll<SVGCircleElement>('.sat-front'))
+    const satBack = Array.from(element.querySelectorAll<SVGCircleElement>('.sat-back'))
+    const satHalo = element.querySelector<SVGCircleElement>('.sat-halo')
 
-    function drawMeridians() {
-      for (const node of meridianNodes) {
-        const k = Number(node.dataset.meridian)
-        node.setAttribute('d', meridianPath(rotation + (k * Math.PI) / (MERIDIAN_COUNT / 2)))
+    function render(t: number) {
+      const rot = t * SPIN
+
+      const lines = buildWireframe(rot)
+      frontPath?.setAttribute('d', lines.front)
+      backPath?.setAttribute('d', lines.back)
+
+      nodes.forEach((node, i) => {
+        const n = NODES[i]
+        if (!n) return
+        const p = project(n.lat, n.lon, rot)
+        const visible = Math.max(0, Math.min(1, p.z * 4))
+        const phase = ((t + i * 0.55) % 2.2) / 2.2
+        const core = node.querySelector<SVGCircleElement>('.node-core')
+        const ring = node.querySelector<SVGCircleElement>('.node-ring')
+        if (core) {
+          core.setAttribute('cx', p.x.toFixed(1))
+          core.setAttribute('cy', p.y.toFixed(1))
+          core.setAttribute('opacity', visible.toFixed(2))
+        }
+        if (ring) {
+          ring.setAttribute('cx', p.x.toFixed(1))
+          ring.setAttribute('cy', p.y.toFixed(1))
+          ring.setAttribute('r', (5 + 17 * phase).toFixed(1))
+          ring.setAttribute('opacity', (0.7 * (1 - phase) * visible).toFixed(2))
+        }
+      })
+
+      // Blue guide orbits: slow dash drift.
+      rings.forEach((ring, i) => ring.setAttribute('stroke-dashoffset', String(-t * (6 + i * 3))))
+
+      // Orange satellite plus a fading trail, split between the back and front layers.
+      const theta = t * ORBIT_SPEED
+      for (let i = 0; i < TRAIL; i++) {
+        const p = orbitPoint(theta - i * 0.075)
+        const fade = 1 - i / TRAIL
+        const radius = (i === 0 ? 6 : 4.5) * (0.5 + 0.5 * fade)
+        const on = p.front ? satFront[i] : satBack[i]
+        const off = p.front ? satBack[i] : satFront[i]
+        if (on) {
+          on.setAttribute('cx', p.x.toFixed(1))
+          on.setAttribute('cy', p.y.toFixed(1))
+          on.setAttribute('r', radius.toFixed(1))
+          on.setAttribute('opacity', (fade * (p.front ? 1 : 0.55)).toFixed(2))
+        }
+        off?.setAttribute('opacity', '0')
+        if (i === 0 && satHalo) {
+          satHalo.setAttribute('cx', p.x.toFixed(1))
+          satHalo.setAttribute('cy', p.y.toFixed(1))
+          satHalo.setAttribute('opacity', p.front ? '0.28' : '0.12')
+        }
       }
     }
 
-    const ctx = gsap.context(() => {
-      if (reduceMotion) return
+    render(0)
+    if (reduceMotion) return
 
-      // True 3D turn: about one revolution per minute.
-      tick = (_time, deltaTime) => {
-        rotation += (deltaTime / 1000) * 0.105
-        drawMeridians()
-      }
-      gsap.ticker.add(tick)
+    // Skip work while the globe is off-screen.
+    let onScreen = true
+    const observer =
+      typeof IntersectionObserver === 'undefined'
+        ? null
+        : new IntersectionObserver(([entry]) => {
+            onScreen = entry?.isIntersecting ?? true
+          })
+    observer?.observe(element)
 
-      gsap.to('.globe-orbit', {
-        rotation: -360,
-        transformOrigin: '50% 50%',
-        duration: 48,
-        repeat: -1,
-        ease: 'none',
-      })
-      gsap.to('.globe-core', {
-        scale: 1.018,
-        transformOrigin: '50% 50%',
-        duration: 5,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-      })
+    const tick = (time: number) => {
+      if (onScreen) render(time)
+    }
+    gsap.ticker.add(tick)
 
-      // Pointer movement gives the hero globe a restrained sense of depth.
-      const moveX = gsap.quickTo('.globe-parallax', 'x', { duration: 0.8, ease: 'power3.out' })
-      const moveY = gsap.quickTo('.globe-parallax', 'y', { duration: 0.8, ease: 'power3.out' })
-      onPointerMove = (event: PointerEvent) => {
-        const bounds = element.getBoundingClientRect()
-        if (!bounds.width || !bounds.height) return
-        const x = (event.clientX - bounds.left) / bounds.width - 0.5
-        const y = (event.clientY - bounds.top) / bounds.height - 0.5
-        moveX(x * 13)
-        moveY(y * 9)
-      }
-      onPointerLeave = () => {
-        moveX(0)
-        moveY(0)
-      }
-      element.addEventListener('pointermove', onPointerMove)
-      element.addEventListener('pointerleave', onPointerLeave)
-    }, element)
+    // Pointer parallax.
+    const moveX = gsap.quickTo('.globe-parallax', 'x', { duration: 0.8, ease: 'power3.out' })
+    const moveY = gsap.quickTo('.globe-parallax', 'y', { duration: 0.8, ease: 'power3.out' })
+    const onPointerMove = (event: PointerEvent) => {
+      const bounds = element.getBoundingClientRect()
+      if (!bounds.width || !bounds.height) return
+      moveX(((event.clientX - bounds.left) / bounds.width - 0.5) * 13)
+      moveY(((event.clientY - bounds.top) / bounds.height - 0.5) * 9)
+    }
+    const onPointerLeave = () => {
+      moveX(0)
+      moveY(0)
+    }
+    element.addEventListener('pointermove', onPointerMove)
+    element.addEventListener('pointerleave', onPointerLeave)
 
-    if (!reduceMotion) {
-      element.querySelectorAll('.globe-anime-pulse').forEach((node, index) => {
-        animeAnimations.push(
-          animate(node, {
-            scale: [0.72, 1.75],
-            opacity: [0.85, 0],
-            duration: 1900,
-            delay: index * 620,
-            loop: true,
-            ease: 'out(3)',
-          }),
-        )
-      })
-
-      element.querySelectorAll('.globe-anime-node').forEach((node, index) => {
-        animeAnimations.push(
-          animate(node, {
-            scale: [1, 1.38, 1],
-            opacity: [0.72, 1, 0.72],
-            duration: 2200,
-            delay: index * 360,
-            loop: true,
-            ease: 'inOut(2)',
-          }),
-        )
-      })
-
-      element.querySelectorAll('.globe-anime-card').forEach((node, index) => {
-        animeAnimations.push(
-          animate(node, {
-            translateY: [0, -9, 0],
-            duration: 3600,
-            delay: index * 520,
-            loop: true,
-            ease: 'inOut(2)',
-          }),
-        )
-      })
-
-      const halo = element.querySelector('.globe-halo')
-      if (halo) {
-        animeAnimations.push(
-          animate(halo, {
-            opacity: [0.22, 0.48, 0.22],
-            scale: [0.96, 1.06, 0.96],
-            duration: 4800,
-            loop: true,
-            ease: 'inOut(2)',
-          }),
-        )
-      }
+    // Anime.js: floating cards and the soft halo.
+    const animations: Array<{ pause: () => void }> = []
+    element.querySelectorAll('.globe-anime-card').forEach((node, index) => {
+      animations.push(
+        animate(node, {
+          translateY: [0, -9, 0],
+          duration: 3600,
+          delay: index * 520,
+          loop: true,
+          ease: 'inOut(2)',
+        }),
+      )
+    })
+    const halo = element.querySelector('.globe-halo')
+    if (halo) {
+      animations.push(
+        animate(halo, {
+          opacity: [0.22, 0.48, 0.22],
+          scale: [0.96, 1.06, 0.96],
+          duration: 4800,
+          loop: true,
+          ease: 'inOut(2)',
+        }),
+      )
     }
 
     return () => {
-      if (tick) gsap.ticker.remove(tick)
-      animeAnimations.forEach((animation) => animation.pause())
-      if (onPointerMove) element.removeEventListener('pointermove', onPointerMove)
-      if (onPointerLeave) element.removeEventListener('pointerleave', onPointerLeave)
-      ctx.revert()
+      gsap.ticker.remove(tick)
+      observer?.disconnect()
+      animations.forEach((animation) => animation.pause())
+      element.removeEventListener('pointermove', onPointerMove)
+      element.removeEventListener('pointerleave', onPointerLeave)
     }
   }, [])
 
+  const satellite = (className: string) =>
+    Array.from({ length: TRAIL }, (_, i) => (
+      <circle key={i} className={className} r="4" fill="#f15a2a" opacity="0" />
+    ))
+
   return (
-    <div ref={root} className="relative mx-auto w-full max-w-5xl" aria-label="Animated EQISI globe">
+    <div ref={root} className="relative mx-auto w-full max-w-5xl" aria-label="Animated EQISI wireframe globe">
       <div className="globe-halo pointer-events-none absolute inset-x-[18%] top-[14%] h-[68%] rounded-full bg-primary/10 blur-3xl" />
       <svg
         viewBox="0 0 900 560"
@@ -198,77 +248,82 @@ export function GlobeVisual() {
         aria-labelledby="eqisi-globe-title"
         className="globe-parallax relative z-10 mx-auto block h-[clamp(330px,42vh,450px)] w-full max-w-[860px] overflow-visible"
       >
-        <title id="eqisi-globe-title">EQISI animated blue globe</title>
+        <title id="eqisi-globe-title">EQISI animated rotating wireframe globe with an orbiting satellite</title>
         <defs>
-          <radialGradient id="eqisi-globe-fill" cx="38%" cy="32%" r="75%">
-            <stop offset="0%" stopColor="#ffffff" />
-            <stop offset="100%" stopColor="#e3e9f7" />
+          <radialGradient id="eqisi-wire-globe-glow" cx="38%" cy="34%" r="68%">
+            <stop offset="0%" stopColor="#ffffff" stopOpacity=".9" />
+            <stop offset="72%" stopColor="#dbe8fb" stopOpacity=".25" />
+            <stop offset="100%" stopColor="#9db8e8" stopOpacity=".06" />
           </radialGradient>
-          <clipPath id="eqisi-globe-clip">
-            <circle cx={CX} cy={CY} r={R} />
-          </clipPath>
-          <filter id="eqisi-globe-shadow" x="-40%" y="-40%" width="180%" height="180%">
+          <filter id="eqisi-wire-globe-shadow" x="-40%" y="-40%" width="180%" height="180%">
             <feGaussianBlur stdDeviation="17" />
           </filter>
         </defs>
 
-        <ellipse cx={CX} cy="484" rx="205" ry="20" fill="#1b326e" opacity=".10" filter="url(#eqisi-globe-shadow)" />
+        <ellipse cx="450" cy="484" rx="205" ry="20" fill="#1b326e" opacity=".10" filter="url(#eqisi-wire-globe-shadow)" />
 
-        {/* Orbit rings keep the orange accent from the brand palette. */}
-        <g className="globe-orbit" fill="none" stroke="#f05424" strokeWidth="2" opacity=".5">
-          <ellipse cx={CX} cy={CY} rx="354" ry="104" transform="rotate(-13 450 278)" strokeDasharray="7 12" />
-          <ellipse cx={CX} cy={CY} rx="310" ry="145" transform="rotate(23 450 278)" strokeDasharray="4 10" opacity=".6" />
+        {/* BEHIND the globe: blue guide orbits, far half of the orange orbit, far satellite */}
+        <g transform={`rotate(-13 ${CX} ${CY})`} fill="none" stroke="#7894cb" strokeWidth="1.5" opacity=".6">
+          <ellipse className="globe-orbit-ring" cx={CX} cy={CY} rx="354" ry="104" strokeDasharray="7 12" />
+        </g>
+        <g transform={`rotate(23 ${CX} ${CY})`} fill="none" stroke="#7894cb" strokeWidth="1.5" opacity=".5">
+          <ellipse className="globe-orbit-ring" cx={CX} cy={CY} rx="310" ry="145" strokeDasharray="4 10" />
         </g>
 
-        <g className="globe-core">
-          <circle cx={CX} cy={CY} r={R} fill="url(#eqisi-globe-fill)" />
+        <g transform={`rotate(${ORBIT_ROT / D2R} ${CX} ${CY})`}>
+          <path
+            d={`M${CX - ORBIT_A} ${CY} A${ORBIT_A} ${ORBIT_B} 0 0 1 ${CX + ORBIT_A} ${CY}`}
+            fill="none"
+            stroke="#f15a2a"
+            strokeWidth="2"
+            strokeDasharray="3 8"
+            strokeLinecap="round"
+            opacity=".5"
+          />
+        </g>
+        <g>{satellite('sat-back')}</g>
 
-          <g clipPath="url(#eqisi-globe-clip)">
-            <g transform={`rotate(${AXIS_TILT} ${CX} ${CY})`} fill="none" strokeLinecap="round" strokeLinejoin="round">
-              {/* Latitude bands, bold blue with a white edge. */}
-              {latitudeD.map((d, i) => (
-                <g key={LATITUDES[i]}>
-                  <path d={d} stroke="#ffffff" strokeWidth="15" />
-                  <path d={d} stroke={BLUE} strokeWidth="8" />
-                </g>
-              ))}
+        {/* GLOBE */}
+        <circle cx={CX} cy={CY} r={R} fill="#f4f8ff" />
+        <circle cx={CX} cy={CY} r={R + 1} fill="url(#eqisi-wire-globe-glow)" />
+        <path className="globe-lines-back" fill="none" stroke="#5575b6" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" opacity=".25" />
+        <path className="globe-lines-front" fill="none" stroke="#4860ac" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx={CX} cy={CY} r={R} fill="none" stroke="#4860ac" strokeWidth="11" />
 
-              {/* Meridians cross over the latitudes with a white gap, like the logo. */}
-              {meridianIndexes.map((k) => {
-                const d = meridianPath(INITIAL_ROTATION + (k * Math.PI) / (MERIDIAN_COUNT / 2))
-                return (
-                  <g key={k}>
-                    <path data-meridian={k} d={d} stroke="#ffffff" strokeWidth="15" />
-                    <path data-meridian={k} d={d} stroke={BLUE} strokeWidth="8" />
-                  </g>
-                )
-              })}
-            </g>
+        {/* Surface nodes that rotate with the globe */}
+        {NODES.map((n) => (
+          <g key={`${n.lat}-${n.lon}`} className="globe-node">
+            <circle className="node-ring" r="6" fill="none" stroke={n.color} strokeWidth="2" opacity="0" />
+            <circle className="node-core" r="5" fill={n.color} opacity="0" />
           </g>
+        ))}
 
-          {/* Bold rim, separated from the lines by a thin white gap. */}
-          <circle cx={CX} cy={CY} r={R - 1} fill="none" stroke="#ffffff" strokeWidth="6" />
-          <circle cx={CX} cy={CY} r={R + 4} fill="none" stroke={BLUE} strokeWidth="10" />
+        {/* IN FRONT of the globe: near half of the orange orbit, near satellite */}
+        <g transform={`rotate(${ORBIT_ROT / D2R} ${CX} ${CY})`}>
+          <path
+            d={`M${CX - ORBIT_A} ${CY} A${ORBIT_A} ${ORBIT_B} 0 0 0 ${CX + ORBIT_A} ${CY}`}
+            fill="none"
+            stroke="#f15a2a"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            opacity=".95"
+          />
         </g>
+        <circle className="sat-halo" r="13" fill="#f15a2a" opacity="0" />
+        <g>{satellite('sat-front')}</g>
 
-        <g>
-          <circle className="globe-anime-node" cx="352" cy="214" r="5" fill="#f05424" />
-          <circle className="globe-anime-pulse" cx="352" cy="214" r="10" fill="none" stroke="#f05424" strokeWidth="2" />
-          <circle className="globe-anime-node" cx="548" cy="332" r="5" fill="#f05424" />
-          <circle className="globe-anime-pulse" cx="548" cy="332" r="10" fill="none" stroke="#f05424" strokeWidth="2" />
-        </g>
-
+        {/* Floating data callouts */}
         <g className="globe-anime-card">
-          <rect x="86" y="180" width="148" height="62" rx="13" fill="#fff" stroke="#d3daee" />
-          <circle cx="108" cy="202" r="6" fill="#f05424" />
-          <text x="124" y="206" fontSize="12" fontWeight="700" fill="#1a2342">CONNECTED</text>
-          <text x="104" y="226" fontSize="10" fill="#4a5578">People &amp; operations</text>
+          <rect x="86" y="180" width="148" height="62" rx="13" fill="#fff" stroke="#d9e2ef" />
+          <circle cx="108" cy="202" r="6" fill="#f15a2a" />
+          <text x="124" y="206" fontSize="12" fontWeight="700" fill="#1e3554">CONNECTED</text>
+          <text x="104" y="226" fontSize="10" fill="#64748b">People &amp; operations</text>
         </g>
         <g className="globe-anime-card">
-          <rect x="670" y="350" width="145" height="62" rx="13" fill="#fff" stroke="#d3daee" />
-          <circle cx="692" cy="372" r="6" fill={BLUE} />
-          <text x="708" y="376" fontSize="12" fontWeight="700" fill="#1a2342">INTEGRATED</text>
-          <text x="688" y="396" fontSize="10" fill="#4a5578">Supply chain systems</text>
+          <rect x="670" y="350" width="145" height="62" rx="13" fill="#fff" stroke="#d9e2ef" />
+          <circle cx="692" cy="372" r="6" fill="#416da5" />
+          <text x="708" y="376" fontSize="12" fontWeight="700" fill="#1e3554">INTEGRATED</text>
+          <text x="688" y="396" fontSize="10" fill="#64748b">Supply chain systems</text>
         </g>
       </svg>
       <p className="relative z-10 -mt-3 text-center text-xs font-semibold tracking-[0.22em] text-fg-muted uppercase sm:text-sm">
