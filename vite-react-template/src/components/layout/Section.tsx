@@ -74,7 +74,7 @@ export function Section({ id, eyebrow, title, lead, muted = false, children }: S
     <section
       id={id}
       aria-labelledby={`${id}-heading`}
-      className={cn('relative overflow-hidden border-b border-border/60 py-20 sm:py-24 lg:py-28', muted ? 'bg-surface-muted/70' : 'bg-surface/75')}
+      className={cn('relative overflow-hidden border-b border-border/60 py-12 sm:py-20 lg:py-28', muted ? 'bg-surface-muted/70' : 'bg-surface/75')}
     >
       {muted && <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-dots opacity-40" />}
       <Container className="relative">
@@ -83,16 +83,16 @@ export function Section({ id, eyebrow, title, lead, muted = false, children }: S
             <span aria-hidden="true" className="h-[3px] w-12 rounded-full bg-gradient-to-r from-highlight to-highlight/20" />
             {eyebrow}
           </p>
-          <h2 data-reveal="title" id={`${id}-heading`} className="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-fg sm:text-4xl lg:text-5xl">
+          <h2 data-reveal="title" id={`${id}-heading`} className="mt-3 text-[clamp(1.8rem,7vw,2.35rem)] font-extrabold leading-tight tracking-tight text-fg sm:mt-4 sm:text-4xl lg:text-5xl">
             {title}
           </h2>
           {lead && (
-            <p data-reveal="lead" className="mt-5 max-w-2xl text-base leading-8 text-fg-muted sm:text-lg">
+            <p data-reveal="lead" className="mt-4 max-w-2xl text-sm leading-7 text-fg-muted sm:mt-5 sm:text-lg sm:leading-8">
               {lead}
             </p>
           )}
         </div>
-        <div className="mt-12 sm:mt-14">{children}</div>
+        <div className="mt-8 sm:mt-12 sm:mt-14">{children}</div>
       </Container>
     </section>
   )
