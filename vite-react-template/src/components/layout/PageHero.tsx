@@ -34,8 +34,8 @@ export function PageHero({ id, eyebrow, title, description, actions, visual, lar
       timeline
         .fromTo(eyebrow, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.5 })
         .fromTo(title, { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.78 }, '-=0.2')
-        .fromTo(description, { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: 0.55 }, '-=0.38')
-        .fromTo(actions, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.48 }, '-=0.3')
+      if (description) timeline.fromTo(description, { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: 0.55 }, '-=0.38')
+      if (actions) timeline.fromTo(actions, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.48 }, '-=0.3')
       if (visual) timeline.fromTo(visual, { autoAlpha: 0, y: 22, scale: 0.985 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.85 }, '-=0.4')
 
       gsap.utils.toArray<HTMLElement>('[data-parallax]', section).forEach((el) => {
