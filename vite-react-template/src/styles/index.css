@@ -514,3 +514,81 @@ body {
 @media (pointer: coarse), (prefers-reduced-motion: reduce) {
   .pointer-glow { display: none !important; }
 }
+
+
+/* Core competency cards: reveal, tactile hover, icon response and expandable details. */
+.systems-carousel {
+  scroll-padding-inline: 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--primary) 68%, transparent) transparent;
+}
+.systems-carousel::-webkit-scrollbar { height: 6px; }
+.systems-carousel::-webkit-scrollbar-track { background: transparent; }
+.systems-carousel::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 58%, transparent);
+}
+.systems-feature-card {
+  height: 100%;
+  transform: translateZ(0);
+  transition: transform 320ms cubic-bezier(.2,.7,.2,1), box-shadow 320ms ease, border-color 320ms ease;
+}
+.systems-feature-card .systems-icon-tile {
+  transition: transform 360ms cubic-bezier(.2,.8,.2,1), background-color 280ms ease, box-shadow 280ms ease;
+  transform-origin: center;
+}
+.systems-card-number {
+  transition: transform 280ms ease, letter-spacing 280ms ease;
+}
+.systems-card-summary {
+  min-height: 2.5rem;
+  border-radius: .5rem;
+}
+.systems-card-summary:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 4px;
+}
+.systems-card-expanded {
+  transform-origin: top;
+}
+.systems-card-details[open] .systems-card-expanded {
+  animation: systems-details-in 360ms cubic-bezier(.2,.7,.2,1) both;
+}
+.systems-card-details[open] .systems-card-summary {
+  color: var(--primary);
+}
+@keyframes systems-details-in {
+  from { opacity: 0; transform: translateY(-8px); clip-path: inset(0 0 100% 0); }
+  to { opacity: 1; transform: translateY(0); clip-path: inset(0); }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .systems-feature-card:hover,
+  .systems-feature-card:focus-within {
+    transform: translateY(-6px);
+    border-color: color-mix(in srgb, var(--primary) 42%, var(--border));
+    box-shadow: 0 18px 38px -22px rgb(31 47 92 / .42);
+  }
+  .systems-feature-card:hover .systems-icon-tile,
+  .systems-feature-card:focus-within .systems-icon-tile {
+    transform: rotate(-7deg) scale(1.08);
+    background-color: color-mix(in srgb, var(--highlight) 18%, var(--surface));
+    box-shadow: 0 7px 16px -10px rgb(240 84 36 / .65);
+  }
+  .systems-feature-card:hover .systems-card-number,
+  .systems-feature-card:focus-within .systems-card-number {
+    transform: translateX(-3px);
+    letter-spacing: .14em;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .systems-feature-card,
+  .systems-feature-card .systems-icon-tile,
+  .systems-card-number {
+    transition: none !important;
+    transform: none !important;
+  }
+  .systems-card-details[open] .systems-card-expanded {
+    animation: none !important;
+  }
+  .systems-carousel { scroll-behavior: auto; }
+}
