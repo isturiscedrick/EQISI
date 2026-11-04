@@ -25,8 +25,8 @@ export function Component() {
       <PageHero
         id="contact-hero"
         eyebrow="Direct Communication"
-        title="Get in Touch with EQISI"
-        description="Whether you are exploring warehouse automation, require manpower deployments, or have general business inquiries, our executive team is ready to assist you."
+        title="Let’s Talk About Your Operations"
+        description="Connect with our team or find the right office for your inquiry."
         visual={<LocationIllustration className="mx-auto w-full max-w-lg" />}
       />
 
