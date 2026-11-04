@@ -60,7 +60,7 @@ export function PageHero({ id, eyebrow, title, description, actions, visual, lar
         <div data-parallax="15" className="absolute -bottom-24 left-1/4 size-72 rounded-full bg-highlight/10 blur-3xl" />
       </div>
 
-      <Container className={cn('relative items-center gap-12', centered ? 'flex min-h-[515px] flex-col text-center gap-3 sm:min-h-[660px] sm:gap-6 lg:min-h-[700px]' : visual ? 'grid lg:grid-cols-2' : 'flex')}>
+      <Container className={cn('relative items-center gap-12', centered ? 'flex min-h-[495px] flex-col text-center gap-3 sm:min-h-[660px] sm:gap-6 lg:min-h-[700px]' : visual ? 'grid lg:grid-cols-2' : 'flex')}>
         <div className={cn('relative z-20', centered ? 'mx-auto max-w-3xl' : !visual && 'max-w-3xl')}>
           <div className={cn('animate-hero-in inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-1.5 text-xs font-bold tracking-wider text-warning uppercase shadow-subtle', centered && 'mx-auto')}>
             <span className="size-2 rounded-full bg-highlight" />
