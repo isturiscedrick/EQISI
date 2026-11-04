@@ -64,6 +64,7 @@ export function Component() {
                   from={s.from}
                   className="block text-[1.55rem] font-extrabold tabular-nums leading-none text-primary sm:text-4xl"
                 />
+                <span aria-hidden="true" className="stat-accent" />
                 <p className="mt-2 text-[11px] font-medium leading-snug text-fg-muted sm:text-sm">{s.label}</p>
               </Reveal>
             ))}
