@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { ArrowRight, CalendarDays, Church, Eye, HeartHandshake, ShieldCheck, Sparkles, Target, type LucideIcon } from 'lucide-react'
 import { Link } from 'react-router'
 import { Container } from '@/components/layout/Container'
@@ -8,6 +9,7 @@ import { PageMeta } from '@/components/seo/PageMeta'
 import { buttonStyles } from '@/components/ui/button-styles'
 import { Reveal } from '@/components/ui/Reveal'
 import { ScrollProgressTrack } from '@/components/ui/ScrollProgressTrack'
+import { ExecutiveProfileDialog } from '@/components/ui/ExecutiveProfileDialog'
 import { bannerButton, card, iconTile } from '@/components/ui/surface-styles'
 import * as c from '@/content/eqisi'
 import { asset } from '@/lib/assets'
@@ -39,6 +41,8 @@ const valueIcons: Record<string, LucideIcon> = {
 }
 
 export function Component() {
+  const [selectedExecutive, setSelectedExecutive] = useState<(typeof executiveTeam)[number] | null>(null)
+
   return (
     <>
       <PageMeta
@@ -178,7 +182,7 @@ export function Component() {
             {executiveTeam.filter((member) => member.group === 'executive').map((member, i) => (
               <li key={member.name}>
                 <Reveal delay={i * 120} className="h-full">
-                  <article tabIndex={0} className="group relative isolate flex min-h-[190px] h-full overflow-hidden sm:min-h-[220px] rounded-2xl border border-border/80 bg-surface shadow-[0_8px_28px_-16px_rgba(20,35,75,0.35)] transition-all duration-500 hover:-translate-y-1.5 hover:border-primary/35 hover:shadow-[0_22px_48px_-22px_rgba(20,35,75,0.38)] focus-visible:-translate-y-1.5 focus-visible:border-primary/35 focus-visible:shadow-elevated">
+                  <article role="button" tabIndex={0} onClick={() => setSelectedExecutive(member)} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); setSelectedExecutive(member) } }} aria-label={`View profile for ${member.name}`} className="group relative isolate flex min-h-[190px] h-full cursor-pointer overflow-hidden sm:min-h-[220px] rounded-2xl border border-border/80 bg-surface shadow-[0_8px_28px_-16px_rgba(20,35,75,0.35)] transition-all duration-500 hover:-translate-y-1.5 hover:border-primary/35 hover:shadow-[0_22px_48px_-22px_rgba(20,35,75,0.38)] focus-visible:-translate-y-1.5 focus-visible:border-primary/35 focus-visible:shadow-elevated">
                     <span aria-hidden="true" className="absolute inset-y-0 left-0 z-20 w-1 bg-highlight transition-all duration-300 group-hover:w-1.5" />
                     <div className="relative w-[38%] min-w-[108px] shrink-0 sm:w-[42%] sm:min-w-[130px] overflow-hidden bg-surface-muted">
                       <img src={member.photo} alt={`Portrait of ${member.name}`} width={420} height={525} className="h-full min-h-[190px] w-full sm:min-h-[220px] object-cover object-top transition-transform duration-700 ease-out motion-safe:group-hover:scale-110" />
@@ -208,7 +212,7 @@ export function Component() {
               {executiveTeam.filter((member) => member.group === 'management').map((member, i) => (
                 <li key={member.name}>
                   <Reveal delay={(i % 3) * 90} className="h-full">
-                    <article tabIndex={0} className="group relative h-full overflow-hidden rounded-2xl border border-border/80 bg-surface shadow-[0_8px_24px_-16px_rgba(20,35,75,0.32)] transition-all duration-500 hover:-translate-y-1.5 hover:border-primary/35 hover:shadow-[0_20px_42px_-20px_rgba(20,35,75,0.38)] focus-visible:-translate-y-1.5 focus-visible:border-primary/35 focus-visible:shadow-elevated">
+                    <article role="button" tabIndex={0} onClick={() => setSelectedExecutive(member)} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); setSelectedExecutive(member) } }} aria-label={`View profile for ${member.name}`} className="group relative h-full cursor-pointer overflow-hidden rounded-2xl border border-border/80 bg-surface shadow-[0_8px_24px_-16px_rgba(20,35,75,0.32)] transition-all duration-500 hover:-translate-y-1.5 hover:border-primary/35 hover:shadow-[0_20px_42px_-20px_rgba(20,35,75,0.38)] focus-visible:-translate-y-1.5 focus-visible:border-primary/35 focus-visible:shadow-elevated">
                       <div className="relative aspect-[5/4] overflow-hidden sm:aspect-[4/3] bg-surface-muted">
                         <img src={member.photo} alt={`Portrait of ${member.name}`} width={420} height={525} loading="lazy" className="h-full w-full object-cover object-top transition-transform duration-700 ease-out motion-safe:group-hover:scale-105" />
                         <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-primary/35 to-transparent opacity-70 transition-opacity duration-300 group-hover:opacity-100" />
@@ -271,6 +275,8 @@ export function Component() {
           </Reveal>
         </Container>
       </section>
+
+      <ExecutiveProfileDialog profile={selectedExecutive} onClose={() => setSelectedExecutive(null)} />
 
       <CtaBanner
         title="Partner with our leadership team"
