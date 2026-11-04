@@ -31,7 +31,7 @@ export function PageHero({ id, eyebrow, title, description, actions, visual, lar
       const actions = section.querySelector<HTMLElement>('[data-hero-step="actions"]')
       const visual = section.querySelector<HTMLElement>('[data-hero-visual]')
       const pointerFine = window.matchMedia('(pointer: fine)').matches
-      const setSpotX = gsap.quickTo(section, '--spot-x', { duration: 0.55, ease: 'power3.out' })
+      const setSpotX = gsap.quickTo(section, '--spot-x', { duration: 0.55, ease: 'power3.out', unit: 'px' })
       const setSpotY = gsap.quickTo(section, '--spot-y', { duration: 0.55, ease: 'power3.out' })
       const onPointerMove = (event: PointerEvent) => {
         const bounds = section.getBoundingClientRect()
