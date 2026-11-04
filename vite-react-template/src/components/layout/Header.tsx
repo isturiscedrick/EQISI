@@ -172,14 +172,16 @@ export function Header() {
           <Link
             to="/contacts"
             viewTransition
+            aria-label="Request a Consultation"
+            title="Request a Consultation"
             className={cn(
               buttonStyles({ size: 'md' }),
-              'inline-flex min-h-9 shrink-0 gap-1 rounded-lg px-2 py-1 text-[10px] leading-none sm:gap-1.5 sm:px-2.5 sm:text-xs lg:min-h-11 lg:rounded-md lg:px-4 lg:text-sm',
+              'inline-flex size-10 min-h-10 shrink-0 items-center justify-center rounded-lg p-0 lg:h-11 lg:w-auto lg:gap-2 lg:rounded-md lg:px-4',
             )}
           >
-            <MessageCircle aria-hidden="true" className="size-3 shrink-0 sm:size-3.5" />
-            <span className="whitespace-nowrap">Request a Consultation</span>
-            <ArrowRight aria-hidden="true" className="size-3 shrink-0 sm:size-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+            <MessageCircle aria-hidden="true" className="size-4 shrink-0" />
+            <span className="hidden whitespace-nowrap lg:inline">Request a Consultation</span>
+            <ArrowRight aria-hidden="true" className="hidden size-3.5 shrink-0 transition-transform duration-200 group-hover:translate-x-1 lg:inline" />
           </Link>
         </div>
 
