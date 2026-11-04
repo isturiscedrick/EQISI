@@ -78,7 +78,39 @@ export function Reveal({ delay = 0, className, style, children, ...rest }: Revea
           })
         : null
 
+    // Anime.js adds a small pointer-only lift to interactive cards. Touch users
+    // keep the existing CSS feedback without hover-only movement.
+    const cards = Array.from(node.querySelectorAll<HTMLElement>('.group'))
+    const hoverAnimations = new Map<HTMLElement, { revert: () => void }>()
+    const onEnter = (event: PointerEvent) => {
+      if (event.pointerType === 'touch') return
+      const card = event.currentTarget as HTMLElement
+      hoverAnimations.get(card)?.revert()
+      hoverAnimations.set(card, animate(card, {
+        translateY: -4,
+        scale: 1.008,
+        duration: 220,
+        ease: 'out(3)',
+      }))
+    }
+    const onLeave = (event: PointerEvent) => {
+      const card = event.currentTarget as HTMLElement
+      hoverAnimations.get(card)?.revert()
+      hoverAnimations.delete(card)
+      animate(card, { translateY: 0, scale: 1, duration: 260, ease: 'out(3)' })
+    }
+    cards.forEach((card) => {
+      card.addEventListener('pointerenter', onEnter)
+      card.addEventListener('pointerleave', onLeave)
+    })
+
     return () => {
+      cards.forEach((card) => {
+        card.removeEventListener('pointerenter', onEnter)
+        card.removeEventListener('pointerleave', onLeave)
+      })
+      hoverAnimations.forEach((animation) => animation.revert())
+      hoverAnimations.clear()
       context.revert()
       childAnimation?.revert()
     }
