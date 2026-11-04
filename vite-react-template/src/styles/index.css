@@ -502,3 +502,15 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .service-explorer-panel { animation: none; }
 }
+
+
+/* Fine-pointer accent: never replaces or hides the native cursor. */
+.pointer-glow {
+  opacity: 0;
+  background: radial-gradient(circle, rgb(72 96 172 / 0.13), rgb(240 84 36 / 0.06) 42%, transparent 72%);
+  filter: blur(2px);
+  mix-blend-mode: multiply;
+}
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .pointer-glow { display: none !important; }
+}
