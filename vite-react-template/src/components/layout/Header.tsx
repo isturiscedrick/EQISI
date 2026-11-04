@@ -157,11 +157,10 @@ export function Header() {
                 onClick={() => setOpen(false)}
                 className={({ isActive }) =>
                   cn(
-                    'relative inline-flex min-h-12 w-full items-center rounded-xl px-4 text-sm font-semibold transition-all duration-200 hover:translate-x-0.5 md:min-h-9 md:w-auto md:rounded-full',
-                    'after:hidden',
+                    'group/nav relative inline-flex min-h-12 w-full items-center rounded-xl px-4 text-sm font-semibold transition-all duration-200 hover:translate-x-0.5 md:min-h-9 md:w-auto md:rounded-full',
                     isActive
-                      ? 'bg-surface text-primary shadow-subtle'
-                      : 'text-fg-muted hover:bg-surface hover:text-fg',
+                      ? 'bg-surface text-primary shadow-subtle after:absolute after:bottom-1 after:left-4 after:h-0.5 after:w-5 after:rounded-full after:bg-highlight md:after:bottom-0 md:after:left-1/2 md:after:w-5 md:after:-translate-x-1/2'
+                      : 'text-fg-muted after:absolute after:bottom-1 after:left-4 after:h-0.5 after:w-0 after:rounded-full after:bg-highlight after:transition-all after:duration-300 hover:bg-surface hover:text-fg hover:after:w-5 md:after:bottom-0 md:after:left-1/2 md:after:-translate-x-1/2',
                   )
                 }
               >
