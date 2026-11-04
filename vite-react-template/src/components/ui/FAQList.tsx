@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { animate } from 'animejs'
 
@@ -11,43 +11,42 @@ interface FAQListProps {
   items: FAQItem[]
 }
 
-/** Accessible single-open accordion with a measured Anime.js height transition. */
+/** Accessible single-open accordion with measured Anime.js height transitions. */
 export function FAQList({ items }: FAQListProps) {
-  const [active, setActive] = useState<number | null>(0)
+  const [active, setActive] = useState<number | null>(null)
   const panelRefs = useRef<Array<HTMLDivElement | null>>([])
+  const animations = useRef(new Map<number, { pause: () => void }>())
 
-  useLayoutEffect(() => {
-    const animations: Array<{ pause: () => void }> = []
+  useEffect(() => () => {
+    animations.current.forEach((animation) => animation.pause())
+    animations.current.clear()
+  }, [])
 
-    panelRefs.current.forEach((panel, index) => {
+  function toggle(index: number) {
+    const next = active === index ? null : index
+
+    panelRefs.current.forEach((panel, panelIndex) => {
       if (!panel) return
-      const isOpen = active === index
-      if (isOpen && panel.dataset.expanded !== 'true') {
-        panel.dataset.expanded = 'true'
-        const targetHeight = panel.scrollHeight
-        const animation = animate(panel, {
-          height: [0, targetHeight],
-          opacity: [0, 1],
-          duration: 320,
-          ease: 'out(3)',
-          onComplete: () => { panel.style.height = 'auto' },
-        })
-        animations.push(animation)
-      } else if (!isOpen && panel.dataset.expanded === 'true') {
-        const currentHeight = panel.getBoundingClientRect().height
-        const animation = animate(panel, {
-          height: [currentHeight, 0],
-          opacity: [1, 0],
-          duration: 240,
-          ease: 'in(2)',
-          onComplete: () => { panel.dataset.expanded = 'false' },
-        })
-        animations.push(animation)
-      }
+      animations.current.get(panelIndex)?.pause()
+
+      const opening = next === panelIndex
+      const currentHeight = panel.getBoundingClientRect().height
+      const targetHeight = opening ? panel.scrollHeight : 0
+      const animation = animate(panel, {
+        height: [currentHeight, targetHeight],
+        opacity: [opening ? 0 : 1, opening ? 1 : 0],
+        duration: opening ? 320 : 240,
+        ease: opening ? 'out(3)' : 'in(2)',
+        onComplete: () => {
+          panel.style.height = opening ? 'auto' : '0px'
+          panel.style.opacity = opening ? '1' : '0'
+        },
+      })
+      animations.current.set(panelIndex, animation)
     })
 
-    return () => animations.forEach((animation) => animation.pause())
-  }, [active])
+    setActive(next)
+  }
 
   return (
     <div className="divide-y divide-border overflow-hidden rounded-2xl border border-border bg-surface shadow-card">
@@ -61,7 +60,7 @@ export function FAQList({ items }: FAQListProps) {
                 type="button"
                 aria-expanded={isOpen}
                 aria-controls={panelId}
-                onClick={() => setActive(isOpen ? null : index)}
+                onClick={() => toggle(index)}
                 className="flex min-h-16 w-full items-center justify-between gap-4 py-4 text-left text-sm font-bold text-fg transition-colors hover:text-primary sm:text-base"
               >
                 {item.question}
