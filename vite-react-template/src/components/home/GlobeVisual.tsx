@@ -268,13 +268,13 @@ export function GlobeVisual() {
     ))
 
   return (
-    <div ref={root} className="relative mx-auto -mt-6 w-full max-w-5xl px-0 sm:-mt-10" aria-label="Animated EQISI wireframe globe">
+    <div ref={root} className="relative mx-auto w-full max-w-4xl px-0" aria-label="Animated EQISI wireframe globe">
       <div className="globe-halo pointer-events-none absolute inset-x-[18%] top-[14%] h-[68%] rounded-full bg-primary/10 blur-3xl" />
       <svg
         viewBox="0 0 900 560"
         role="img"
         aria-labelledby="eqisi-globe-title"
-        className="globe-parallax relative z-10 mx-auto block h-[clamp(230px,45vw,310px)] w-full max-w-[820px] overflow-visible sm:h-[clamp(300px,38vh,390px)]"
+        className="globe-parallax relative z-10 mx-auto block h-[clamp(220px,42vw,300px)] w-full max-w-[760px] overflow-visible sm:h-[clamp(290px,36vw,360px)]"
       >
         <title id="eqisi-globe-title">EQISI animated rotating wireframe globe with an orbiting satellite</title>
         <defs>
