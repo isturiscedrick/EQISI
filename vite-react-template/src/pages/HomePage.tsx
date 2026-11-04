@@ -4,6 +4,7 @@ import { Container } from '@/components/layout/Container'
 import { GlobeVisual } from '@/components/home/GlobeVisual'
 import { LogoMarquee } from '@/components/home/LogoMarquee'
 import { ScrollStory } from '@/components/ui/ScrollStory'
+import { ServiceExplorer } from '@/components/ui/ServiceExplorer'
 import { CtaBanner } from '@/components/layout/CtaBanner'
 import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
@@ -115,6 +116,10 @@ export function Component() {
           </div>
         }
       />
+
+      <Section id="service-explorer" eyebrow="Find the right support" title="Explore how EQISI can support your operation" lead="Select a capability to see how people, facilities, logistics and technology work together.">
+        <ServiceExplorer />
+      </Section>
 
       {/* Services Teaser */}
       <Section
