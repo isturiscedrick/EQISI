@@ -375,3 +375,48 @@ body {
     animation: none !important;
   }
 }
+
+
+/* Motion system additions: restrained EQISI blue/orange lighting and fine-pointer details. */
+.hero-mesh {
+  background:
+    radial-gradient(ellipse at 18% 18%, rgb(72 96 172 / 0.15), transparent 38%),
+    radial-gradient(ellipse at 82% 24%, rgb(240 84 36 / 0.10), transparent 34%),
+    radial-gradient(ellipse at 55% 88%, rgb(72 96 172 / 0.10), transparent 42%);
+  background-size: 140% 140%;
+  animation: hero-mesh-drift 18s ease-in-out infinite alternate;
+}
+.hero-spotlight {
+  background: radial-gradient(520px circle at var(--spot-x, 50%) var(--spot-y, 35%), rgb(72 96 172 / 0.10), transparent 72%);
+  opacity: .9;
+}
+@keyframes hero-mesh-drift {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 80%; }
+}
+.motion-border {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.motion-border::after {
+  position: absolute;
+  inset: 0;
+  border: 1px solid transparent;
+  border-radius: inherit;
+  background: linear-gradient(125deg, transparent 18%, rgb(72 96 172 / .45), rgb(240 84 36 / .55), transparent 82%) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 350ms ease;
+}
+.motion-border:hover::after,
+.motion-border:focus-within::after { opacity: 1; }
+.hero-word { display: inline-block; will-change: transform, opacity; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-mesh { animation: none; }
+  .motion-border::after { transition: none; }
+}
