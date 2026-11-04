@@ -10,6 +10,16 @@ import { Reveal } from '@/components/ui/Reveal'
 import { bannerButton, card, iconTile } from '@/components/ui/surface-styles'
 import * as c from '@/content/eqisi'
 import { asset } from '@/lib/assets'
+import alfariz from '@/assets/eqisi/team/alfariz.png'
+import ann from '@/assets/eqisi/team/ann.png'
+import cajigal from '@/assets/eqisi/team/cajigal.png'
+import flores from '@/assets/eqisi/team/flores.png'
+import joy from '@/assets/eqisi/team/joy.png'
+import malaca from '@/assets/eqisi/team/malaca.png'
+import manuel from '@/assets/eqisi/team/manuel.png'
+import tugas from '@/assets/eqisi/team/tugas.png'
+
+const executivePortraits = [cajigal, malaca, manuel, flores, alfariz, tugas, joy, ann]
 import { cn } from '@/lib/cn'
 
 const valueIcons: Record<string, LucideIcon> = {
@@ -123,7 +133,7 @@ export function Component() {
                 <div className="group h-full overflow-hidden rounded-xl border border-b-4 border-border border-b-highlight bg-surface shadow-subtle transition-all duration-200 hover:shadow-card motion-safe:hover:-translate-y-1">
                   <div className="overflow-hidden">
                     <img
-                      src={asset(m.photo)}
+                      src={executivePortraits[i] ?? asset(m.photo)}
                       alt={`Portrait of ${m.name}`}
                       width={420}
                       height={525}
