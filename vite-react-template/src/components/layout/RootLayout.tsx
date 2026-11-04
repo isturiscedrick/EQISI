@@ -4,6 +4,7 @@ import { BackToTop } from '@/components/ui/BackToTop'
 import { gsap, ScrollTrigger } from '@/lib/gsap'
 import { useMagneticButtons } from '@/lib/useMagneticButtons'
 import { Footer } from './Footer'
+import { SiteLoader } from './SiteLoader'
 import { Header } from './Header'
 import { NavigationProgress } from './NavigationProgress'
 
@@ -73,6 +74,7 @@ export function RootLayout() {
         Skip to main content
       </a>
 
+      <SiteLoader />
       <NavigationProgress />
       <Header />
 
