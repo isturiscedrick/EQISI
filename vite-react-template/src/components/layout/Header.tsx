@@ -1,10 +1,11 @@
 import { ArrowRight, Menu, X } from 'lucide-react'
-import { useEffect, useId, useRef, useState } from 'react'
+import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
 import { animate } from 'animejs'
 import { Link, NavLink } from 'react-router'
 import { buttonStyles } from '@/components/ui/button-styles'
 import { siteConfig } from '@/config/site'
 import { cn } from '@/lib/cn'
+import { gsap } from '@/lib/gsap'
 import { Logo } from './Logo'
 
 export function Header() {
@@ -45,24 +46,41 @@ export function Header() {
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [open])
 
-  // Shrinks the header after the first few pixels and drives the reading-progress bar.
-  // The bar is updated through a ref so scrolling never re-renders the header.
+  // Shrinks the header after the first few pixels.
   useEffect(() => {
     function onScroll() {
-      const y = window.scrollY
-      setScrolled(y > 8)
-      const max = document.documentElement.scrollHeight - window.innerHeight
-      if (barRef.current) {
-        barRef.current.style.transform = `scaleX(${max > 0 ? Math.min(y / max, 1) : 0})`
-      }
+      setScrolled(window.scrollY > 8)
     }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll)
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
-    }
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // Reading progress: a scrubbed tween across the whole document. ScrollTrigger re-measures the page
+  // on resize and when RootLayout refreshes it. This is progress, not decoration, so it also runs
+  // under reduced motion (it follows the scroll position exactly and has no easing).
+  useLayoutEffect(() => {
+    const bar = barRef.current
+    if (!bar) return
+
+    const context = gsap.context(() => {
+      gsap.fromTo(
+        bar,
+        { scaleX: 0 },
+        {
+          scaleX: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: document.documentElement,
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: true,
+          },
+        },
+      )
+    }, bar)
+
+    return () => context.revert()
   }, [])
 
   return (
@@ -79,7 +97,7 @@ export function Header() {
             scrolled ? 'h-14' : 'h-16',
           )}
         >
-          <Link to="/" aria-label={`${siteConfig.name} home`} className="shrink-0 rounded-md">
+          <Link to="/" viewTransition aria-label={`${siteConfig.name} home`} className="shrink-0 rounded-md">
             <Logo className={cn('transition-all duration-200', scrolled ? 'h-9' : 'h-11')} />
           </Link>
 
@@ -110,6 +128,7 @@ export function Header() {
                 key={item.to}
                 to={item.to}
                 end={item.to === '/'}
+                viewTransition
                 onClick={() => setOpen(false)}
                 className={({ isActive }) =>
                   cn(
@@ -124,13 +143,13 @@ export function Header() {
                 {item.label}
               </NavLink>
             ))}
-            <Link to="/contacts" onClick={() => setOpen(false)} className={cn(buttonStyles(), 'mt-2 md:hidden')}>
+            <Link to="/contacts" viewTransition onClick={() => setOpen(false)} className={cn(buttonStyles(), 'mt-2 md:hidden')}>
               Request a Consultation
               <ArrowRight aria-hidden="true" className="size-4 transition-transform duration-200 group-hover:translate-x-1" />
             </Link>
           </nav>
 
-          <Link to="/contacts" className={cn(buttonStyles(), 'hidden shrink-0 lg:inline-flex')}>
+          <Link to="/contacts" viewTransition className={cn(buttonStyles(), 'hidden shrink-0 lg:inline-flex')}>
             Request a Consultation
             <ArrowRight aria-hidden="true" className="size-4 transition-transform duration-200 group-hover:translate-x-1" />
           </Link>

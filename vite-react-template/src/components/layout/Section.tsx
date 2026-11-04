@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react'
-import { Reveal } from '@/components/ui/Reveal'
+import { useLayoutEffect, useRef, type ReactNode } from 'react'
+import { gsap, SplitText } from '@/lib/gsap'
 import { cn } from '@/lib/cn'
 import { Container } from './Container'
 
@@ -14,6 +14,62 @@ interface SectionProps {
 
 /** Consistent editorial section header and generous spacing across every route. */
 export function Section({ id, eyebrow, title, lead, muted = false, children }: SectionProps) {
+  const headerRef = useRef<HTMLDivElement>(null)
+
+  // Eyebrow and lead fade up; the title reveals line by line from a mask.
+  // Splitting waits for web fonts, otherwise the line breaks are measured with the fallback font.
+  useLayoutEffect(() => {
+    const root = headerRef.current
+    if (!root) return
+
+    const eyebrowEl = root.querySelector<HTMLElement>('[data-reveal="eyebrow"]')
+    const titleEl = root.querySelector<HTMLElement>('[data-reveal="title"]')
+    const leadEl = root.querySelector<HTMLElement>('[data-reveal="lead"]')
+    const mm = gsap.matchMedia()
+
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      const trigger = () => ({ trigger: root, start: 'top 85%', once: true })
+      let split: SplitText | undefined
+      let cancelled = false
+
+      if (eyebrowEl) {
+        gsap.from(eyebrowEl, { autoAlpha: 0, y: 16, duration: 0.7, ease: 'power3.out', clearProps: 'all', scrollTrigger: trigger() })
+      }
+      if (leadEl) {
+        gsap.from(leadEl, { autoAlpha: 0, y: 16, duration: 0.7, delay: 0.35, ease: 'power3.out', clearProps: 'all', scrollTrigger: trigger() })
+      }
+
+      if (titleEl) {
+        gsap.set(titleEl, { autoAlpha: 0 })
+        void document.fonts.ready.then(() => {
+          if (cancelled) return
+          split = SplitText.create(titleEl, {
+            type: 'lines',
+            mask: 'lines',
+            autoSplit: true, // re-splits if the width changes, e.g. on resize or rotation
+            onSplit: (self) => {
+              gsap.set(titleEl, { autoAlpha: 1 })
+              return gsap.from(self.lines, {
+                yPercent: 110,
+                duration: 0.85,
+                stagger: 0.09,
+                ease: 'power3.out',
+                scrollTrigger: trigger(),
+              })
+            },
+          })
+        })
+      }
+
+      return () => {
+        cancelled = true
+        split?.revert()
+      }
+    })
+
+    return () => mm.revert()
+  }, [])
+
   return (
     <section
       id={id}
@@ -22,18 +78,20 @@ export function Section({ id, eyebrow, title, lead, muted = false, children }: S
     >
       {muted && <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-dots opacity-40" />}
       <Container className="relative">
-        <Reveal>
-          <div className="max-w-3xl">
-            <p className="flex items-center gap-3 text-xs font-extrabold tracking-[0.2em] text-warning uppercase">
-              <span aria-hidden="true" className="h-[3px] w-12 rounded-full bg-gradient-to-r from-highlight to-highlight/20" />
-              {eyebrow}
+        <div ref={headerRef} className="max-w-3xl">
+          <p data-reveal="eyebrow" className="flex items-center gap-3 text-xs font-extrabold tracking-[0.2em] text-warning uppercase">
+            <span aria-hidden="true" className="h-[3px] w-12 rounded-full bg-gradient-to-r from-highlight to-highlight/20" />
+            {eyebrow}
+          </p>
+          <h2 data-reveal="title" id={`${id}-heading`} className="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-fg sm:text-4xl lg:text-5xl">
+            {title}
+          </h2>
+          {lead && (
+            <p data-reveal="lead" className="mt-5 max-w-2xl text-base leading-8 text-fg-muted sm:text-lg">
+              {lead}
             </p>
-            <h2 id={`${id}-heading`} className="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-fg sm:text-4xl lg:text-5xl">
-              {title}
-            </h2>
-            {lead && <p className="mt-5 max-w-2xl text-base leading-8 text-fg-muted sm:text-lg">{lead}</p>}
-          </div>
-        </Reveal>
+          )}
+        </div>
         <div className="mt-12 sm:mt-14">{children}</div>
       </Container>
     </section>

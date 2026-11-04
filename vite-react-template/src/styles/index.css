@@ -345,3 +345,29 @@ body {
     box-shadow: var(--shadow-elevated);
   }
 }
+
+/*
+ * Magnetic buttons are moved by GSAP through `transform`. This unlayered rule beats Tailwind's
+ * `transition-all`, so a CSS transition on `transform` doesn't lag behind GSAP. The `translate`
+ * property stays transitioned so the hover lift still animates.
+ */
+.magnetic {
+  transition-property: color, background-color, border-color, box-shadow, opacity, translate;
+}
+
+/* Route cross-fade (React Router's `viewTransition` prop). */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 220ms;
+    animation-timing-function: ease-out;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

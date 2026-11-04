@@ -27,6 +27,7 @@ import { Section } from '@/components/layout/Section'
 import { PageMeta } from '@/components/seo/PageMeta'
 import { buttonStyles } from '@/components/ui/button-styles'
 import { Reveal } from '@/components/ui/Reveal'
+import { ScrollProgressTrack } from '@/components/ui/ScrollProgressTrack'
 import { bannerButton, card, iconTile } from '@/components/ui/surface-styles'
 import * as c from '@/content/eqisi'
 import { asset } from '@/lib/assets'
@@ -135,38 +136,40 @@ export function Component() {
         title="From new client to deployed team in 15 days"
         lead="Our standardized 4-stage talent management process ensures comprehensive screening, complete 201 compliance, and rapid workplace deployment."
       >
-        <ol className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {c.recruitment.map((step, idx) => {
-            const Icon = stageIcons[idx] ?? Check
-            return (
-              <li key={step.title} className="h-full">
-                <Reveal delay={idx * 100} className="relative h-full">
-                  <div className={cn(card, 'border-t-4 border-t-primary')}>
-                    <div className="flex items-center justify-between">
-                      <span className={iconTile}>
-                        <Icon aria-hidden="true" className="size-6" />
-                      </span>
-                      <span className="rounded-full bg-surface-muted px-2.5 py-0.5 text-xs font-bold text-fg">
-                        {step.duration}
-                      </span>
+        <ScrollProgressTrack steps={c.recruitment.length}>
+          <ol className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {c.recruitment.map((step, idx) => {
+              const Icon = stageIcons[idx] ?? Check
+              return (
+                <li key={step.title} className="h-full">
+                  <Reveal delay={idx * 100} className="relative h-full">
+                    <div className={cn(card, 'border-t-4 border-t-primary')}>
+                      <div className="flex items-center justify-between">
+                        <span className={iconTile}>
+                          <Icon aria-hidden="true" className="size-6" />
+                        </span>
+                        <span className="rounded-full bg-surface-muted px-2.5 py-0.5 text-xs font-bold text-fg">
+                          {step.duration}
+                        </span>
+                      </div>
+                      <span className="mt-4 block text-xs font-bold tracking-widest text-primary">STAGE 0{idx + 1}</span>
+                      <h4 className="mt-1 text-lg font-bold text-fg">{step.title}</h4>
+                      <p className="mt-2 text-sm leading-relaxed text-fg-muted">{step.text}</p>
                     </div>
-                    <span className="mt-4 block text-xs font-bold tracking-widest text-primary">STAGE 0{idx + 1}</span>
-                    <h4 className="mt-1 text-lg font-bold text-fg">{step.title}</h4>
-                    <p className="mt-2 text-sm leading-relaxed text-fg-muted">{step.text}</p>
-                  </div>
-                  {idx < c.recruitment.length - 1 && (
-                    <span
-                      aria-hidden="true"
-                      className="absolute top-1/2 -right-4 z-10 hidden size-8 -translate-y-1/2 place-items-center rounded-full border border-border bg-surface text-primary shadow-subtle lg:grid"
-                    >
-                      <ChevronRight className="size-4" />
-                    </span>
-                  )}
-                </Reveal>
-              </li>
-            )
-          })}
-        </ol>
+                    {idx < c.recruitment.length - 1 && (
+                      <span
+                        aria-hidden="true"
+                        className="absolute top-1/2 -right-4 z-10 hidden size-8 -translate-y-1/2 place-items-center rounded-full border border-border bg-surface text-primary shadow-subtle lg:grid"
+                      >
+                        <ChevronRight className="size-4" />
+                      </span>
+                    )}
+                  </Reveal>
+                </li>
+              )
+            })}
+          </ol>
+        </ScrollProgressTrack>
 
         <Reveal className="mt-10 flex flex-col items-center justify-between gap-4 rounded-xl border border-border bg-surface p-6 shadow-subtle sm:flex-row">
           <div>

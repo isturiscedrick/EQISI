@@ -15,7 +15,8 @@ const base =
   'aria-disabled:cursor-not-allowed disabled:cursor-not-allowed disabled:opacity-60'
 
 const variants: Record<ButtonVariant, string> = {
-  primary: 'bg-primary text-primary-fg hover:bg-primary/90 hover:shadow-card active:bg-primary/80',
+  // `magnetic` is a marker class: useMagneticButtons() in RootLayout finds it and pulls the button toward the pointer.
+  primary: 'magnetic bg-primary text-primary-fg hover:bg-primary/90 hover:shadow-card active:bg-primary/80',
   secondary:
     'border border-border bg-surface text-fg hover:border-primary/50 hover:bg-surface-muted hover:shadow-subtle active:bg-surface-muted/70',
   ghost: 'text-fg hover:bg-surface-muted active:bg-surface-muted/70',

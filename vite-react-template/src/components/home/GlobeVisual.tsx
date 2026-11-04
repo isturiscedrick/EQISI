@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef } from 'react'
 import { animate } from 'animejs'
-import { gsap } from 'gsap'
+import { gsap } from '@/lib/gsap'
 
 const D2R = Math.PI / 180
 const CX = 450
@@ -92,7 +92,8 @@ function orbitPoint(theta: number) {
  * Brand-led animated EQISI globe.
  * A real 3D-projected wireframe spins on a tilted, leaning axis, surface nodes ride with it,
  * and an orange satellite orbits, passing behind and in front of the sphere.
- * GSAP drives the frame loop and pointer parallax; Anime.js floats the data cards.
+ * GSAP drives the frame loop and pointer parallax; ScrollTrigger scrubs an extra spin, scale and lift
+ * as the hero scrolls away; Anime.js floats the data cards.
  */
 export function GlobeVisual() {
   const root = useRef<HTMLDivElement>(null)
@@ -111,8 +112,11 @@ export function GlobeVisual() {
     const satBack = Array.from(element.querySelectorAll<SVGCircleElement>('.sat-back'))
     const satHalo = element.querySelector<SVGCircleElement>('.sat-halo')
 
+    // Extra rotation (radians) added on top of the constant spin. ScrollTrigger scrubs this value.
+    const scroll = { spin: 0 }
+
     function render(t: number) {
-      const rot = t * SPIN
+      const rot = t * SPIN + scroll.spin
 
       const lines = buildWireframe(rot)
       frontPath?.setAttribute('d', lines.front)
@@ -183,6 +187,29 @@ export function GlobeVisual() {
     }
     gsap.ticker.add(tick)
 
+    // ScrollTrigger: as the globe scrolls out of view it takes an extra half turn, shrinks and lifts.
+    // Scale and yPercent are separate from the x/y that the pointer parallax below animates,
+    // so the two effects combine instead of fighting.
+    const parallaxSvg = element.querySelector<SVGSVGElement>('.globe-parallax')
+    const scrollContext = gsap.context(() => {
+      const scrollTrigger = {
+        trigger: element,
+        start: 'top 35%',
+        end: 'bottom top',
+        scrub: 0.6,
+      }
+      gsap.to(scroll, { spin: Math.PI, ease: 'none', scrollTrigger })
+      if (parallaxSvg) {
+        gsap.to(parallaxSvg, {
+          scale: 0.86,
+          yPercent: -6,
+          transformOrigin: '50% 50%',
+          ease: 'none',
+          scrollTrigger,
+        })
+      }
+    }, element)
+
     // Pointer parallax.
     const moveX = gsap.quickTo('.globe-parallax', 'x', { duration: 0.8, ease: 'power3.out' })
     const moveY = gsap.quickTo('.globe-parallax', 'y', { duration: 0.8, ease: 'power3.out' })
@@ -227,6 +254,7 @@ export function GlobeVisual() {
 
     return () => {
       gsap.ticker.remove(tick)
+      scrollContext.revert()
       observer?.disconnect()
       animations.forEach((animation) => animation.pause())
       element.removeEventListener('pointermove', onPointerMove)

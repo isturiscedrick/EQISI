@@ -12,4 +12,4 @@ export const chip =
 
 /** Light button for use on the blue CTA banner. */
 export const bannerButton =
-  'group inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-surface px-6 font-semibold text-fg shadow-elevated transition-all duration-300 hover:-translate-y-0.5 hover:bg-surface-muted hover:shadow-modal motion-reduce:transform-none'
+  'magnetic group inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-surface px-6 font-semibold text-fg shadow-elevated transition-all duration-300 hover:-translate-y-0.5 hover:bg-surface-muted hover:shadow-modal motion-reduce:transform-none'

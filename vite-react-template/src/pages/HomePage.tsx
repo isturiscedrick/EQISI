@@ -2,11 +2,13 @@ import { ArrowRight, CalendarDays, Cpu, Handshake, ShieldCheck } from 'lucide-re
 import { Link } from 'react-router'
 import { Container } from '@/components/layout/Container'
 import { GlobeVisual } from '@/components/home/GlobeVisual'
+import { LogoMarquee } from '@/components/home/LogoMarquee'
 import { CtaBanner } from '@/components/layout/CtaBanner'
 import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
 import { PageMeta } from '@/components/seo/PageMeta'
 import { buttonStyles } from '@/components/ui/button-styles'
+import { CountUp } from '@/components/ui/CountUp'
 import { Reveal } from '@/components/ui/Reveal'
 import { bannerButton, card, iconTile } from '@/components/ui/surface-styles'
 import { siteConfig } from '@/config/site'
@@ -15,11 +17,12 @@ import { asset } from '@/lib/assets'
 import { cn } from '@/lib/cn'
 import { systemIcon } from '@/lib/icons'
 
+// `from` is the number the count-up starts at. "DO-174" is a regulation name, not a quantity, so it has none.
 const stats = [
-  { value: '1986', label: 'Industry Heritage (JRS Group)', icon: CalendarDays, tone: 'border-primary' },
-  { value: 'DO-174', label: 'Full DOLE Compliance', icon: ShieldCheck, tone: 'border-highlight' },
-  { value: '6', label: 'Core Management Systems', icon: Cpu, tone: 'border-primary' },
-  { value: '26+', label: 'Multinational & Local Clients', icon: Handshake, tone: 'border-highlight' },
+  { value: '1986', from: 1900, label: 'Industry Heritage (JRS Group)', icon: CalendarDays, tone: 'border-primary' },
+  { value: 'DO-174', from: undefined, label: 'Full DOLE Compliance', icon: ShieldCheck, tone: 'border-highlight' },
+  { value: '6', from: 0, label: 'Core Management Systems', icon: Cpu, tone: 'border-primary' },
+  { value: '26+', from: 0, label: 'Multinational & Local Clients', icon: Handshake, tone: 'border-highlight' },
 ]
 
 export function Component() {
@@ -55,7 +58,11 @@ export function Component() {
             {stats.map((s, i) => (
               <Reveal key={s.label} delay={i * 100} className={cn('border-l-4 pl-4', s.tone)}>
                 <s.icon aria-hidden="true" className="mb-2 size-5 text-fg-muted" />
-                <p className="text-3xl font-extrabold text-primary sm:text-4xl">{s.value}</p>
+                <CountUp
+                  value={s.value}
+                  from={s.from}
+                  className="text-3xl font-extrabold tabular-nums text-primary sm:text-4xl"
+                />
                 <p className="mt-1 text-sm font-medium text-fg-muted">{s.label}</p>
               </Reveal>
             ))}
@@ -66,18 +73,7 @@ export function Component() {
       <section className="border-y border-border/70 bg-surface py-8" aria-label="Selected clients">
         <Container>
           <p className="mb-6 text-center text-xs font-bold tracking-[0.18em] text-fg-muted uppercase">Trusted by teams across industries</p>
-          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-5 sm:gap-x-12">
-            {c.clients.slice(0, 8).map((client) => (
-              <img
-                key={client.name}
-                src={asset(client.logo)}
-                alt={client.name}
-                title={client.name}
-                loading="lazy"
-                className={cn('h-7 max-w-24 object-contain grayscale opacity-65 transition-all duration-300 hover:grayscale-0 hover:opacity-100 sm:h-8', client.padded && 'p-1')}
-              />
-            ))}
-          </div>
+          <LogoMarquee />
         </Container>
       </section>
 
