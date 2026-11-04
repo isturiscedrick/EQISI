@@ -78,15 +78,22 @@ export function ServiceExplorer() {
             <ActiveIcon aria-hidden="true" className="size-6" />
           </span>
           <h4 className="mt-5 text-xl font-bold text-fg sm:text-2xl">{selected.title}</h4>
-          <p className="mt-3 max-w-xl text-sm leading-relaxed text-fg-muted">{selected.description}</p>
-          <ul className="mt-5 grid gap-3 sm:grid-cols-2">
-            {selected.points.map((point) => (
-              <li key={point} className="flex items-start gap-2 text-sm font-medium text-fg">
-                <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-highlight" />
-                {point}
-              </li>
-            ))}
-          </ul>
+          <p className="mt-3 max-w-xl text-sm leading-relaxed text-fg-muted">{selected.label} solutions for connected operations.</p>
+          <details className="mt-5 rounded-xl border border-border/80 bg-surface/70 p-4 group/details">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-bold text-primary outline-none focus-visible:ring-2 focus-visible:ring-primary [&::-webkit-details-marker]:hidden">
+              View full details
+              <span aria-hidden="true" className="text-lg transition-transform group-open/details:rotate-45">+</span>
+            </summary>
+            <p className="mt-3 text-sm leading-relaxed text-fg-muted">{selected.description}</p>
+            <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+              {selected.points.map((point) => (
+                <li key={point} className="flex items-start gap-2 text-sm font-medium text-fg">
+                  <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-highlight" />
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </details>
         </div>
         <Link to="/contacts" className={cn(buttonStyles({ size: 'md' }), 'mt-8 w-fit')}>
           Discuss this capability <ArrowRight aria-hidden="true" className="size-4" />
