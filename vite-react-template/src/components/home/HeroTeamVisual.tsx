@@ -21,7 +21,7 @@ const portraits = [
   // Front row: lower portraits frame the globe without covering its center.
   { src: joy, side: 'left', className: 'left-[17%] bottom-[4%] h-[48%] w-[14%] max-w-[165px] z-20' },
   { src: alfariz, side: 'left', className: 'left-[5%] bottom-[3%] h-[42%] w-[13%] max-w-[150px] z-20' },
-  { src: manuel, side: 'right', className: 'right-[17%] bottom-[4%] h-[48%]] w-[14%] max-w-[165px] z-20' },
+  { src: manuel, side: 'right', className: 'right-[17%] bottom-[4%] h-[48%] w-[14%] max-w-[165px] z-20' },
   { src: tugas, side: 'right', className: 'right-[5%] bottom-[3%] h-[42%] w-[13%] max-w-[150px] z-20' },
 ] as const
 
