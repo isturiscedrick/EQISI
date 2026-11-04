@@ -10,10 +10,12 @@ interface SectionProps {
   lead?: string
   muted?: boolean
   children: ReactNode
+  /** Allow pinned scroll scenes to extend beyond the section's horizontal bounds. */
+  overflowVisible?: boolean
 }
 
 /** Consistent editorial section header and generous spacing across every route. */
-export function Section({ id, eyebrow, title, lead, muted = false, children }: SectionProps) {
+export function Section({ id, eyebrow, title, lead, muted = false, children, overflowVisible = false }: SectionProps) {
   const headerRef = useRef<HTMLDivElement>(null)
 
   // Eyebrow and lead fade up; the title reveals line by line from a mask.
@@ -74,7 +76,7 @@ export function Section({ id, eyebrow, title, lead, muted = false, children }: S
     <section
       id={id}
       aria-labelledby={`${id}-heading`}
-      className={cn('relative overflow-hidden border-b border-border/60 py-12 sm:py-20 lg:py-28', muted ? 'bg-surface-muted/70' : 'bg-surface/75')}
+      className={cn('relative border-b border-border/60 py-12 sm:py-20 lg:py-28', overflowVisible ? 'overflow-visible' : 'overflow-hidden', muted ? 'bg-surface-muted/70' : 'bg-surface/75')}
     >
       {muted && <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-dots opacity-40" />}
       <Container className="relative">
