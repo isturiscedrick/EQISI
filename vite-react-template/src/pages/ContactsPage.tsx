@@ -4,7 +4,8 @@ import { CtaBanner } from '@/components/layout/CtaBanner'
 import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
 import { PageMeta } from '@/components/seo/PageMeta'
-import { Reveal } from '@/components/ui/Reveal'\nimport { FAQList } from '@/components/ui/FAQList'
+import { Reveal } from '@/components/ui/Reveal'
+import { FAQList } from '@/components/ui/FAQList'
 import * as c from '@/content/eqisi'
 
 const contactRow =
