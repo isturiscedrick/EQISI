@@ -17,7 +17,7 @@ export function FAQList({ items }: FAQListProps) {
   const panelRefs = useRef<Array<HTMLDivElement | null>>([])
 
   useLayoutEffect(() => {
-    const animations: Array<{ revert: () => void }> = []
+    const animations: Array<{ pause: () => void }> = []
 
     panelRefs.current.forEach((panel, index) => {
       if (!panel) return
@@ -46,7 +46,7 @@ export function FAQList({ items }: FAQListProps) {
       }
     })
 
-    return () => animations.forEach((animation) => animation.revert())
+    return () => animations.forEach((animation) => animation.pause())
   }, [active])
 
   return (
