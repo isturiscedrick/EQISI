@@ -52,18 +52,18 @@ export function Component() {
       />
 
       {/* Key stats: a card that overlaps the hero */}
-      <section className="relative z-10 pt-7 pb-10 sm:py-16" aria-label="Key Highlights">
+      <section className="relative z-10 pt-4 pb-8 sm:py-16" aria-label="Key Highlights">
         <Container>
-          <div className="grid grid-cols-2 gap-x-3 gap-y-5 rounded-2xl border border-border/80 bg-surface p-4 shadow-[0_10px_30px_-18px_rgba(30,53,84,0.35)] sm:gap-6 sm:rounded-3xl sm:p-8 md:grid-cols-4">
+          <div className="grid grid-cols-2 gap-2.5 rounded-2xl border border-border/80 bg-surface p-3 shadow-[0_10px_30px_-18px_rgba(30,53,84,0.35)] sm:gap-4 sm:rounded-3xl sm:p-6 md:grid-cols-4">
             {stats.map((s, i) => (
-              <Reveal key={s.label} delay={i * 100} className={cn('min-w-0 border-l-[3px] pl-3 sm:border-l-4 sm:pl-4', s.tone)}>
-                <s.icon aria-hidden="true" className="mb-1.5 size-4 text-fg-muted sm:mb-2 sm:size-5" />
+              <Reveal key={s.label} delay={i * 100} className={cn('min-w-0 rounded-xl border border-border/70 bg-canvas/70 p-3 shadow-[0_3px_12px_-9px_rgba(30,53,84,0.28)] sm:rounded-2xl sm:p-4', s.tone)}>
+                <s.icon aria-hidden="true" className="mb-2 size-4 text-primary sm:size-5" />
                 <CountUp
                   value={s.value}
                   from={s.from}
-                  className="text-[1.7rem] font-extrabold tabular-nums leading-tight text-primary sm:text-4xl"
+                  className="block text-[1.55rem] font-extrabold tabular-nums leading-none text-primary sm:text-4xl"
                 />
-                <p className="mt-1 text-xs font-medium leading-snug text-fg-muted sm:text-sm">{s.label}</p>
+                <p className="mt-2 text-[11px] font-medium leading-snug text-fg-muted sm:text-sm">{s.label}</p>
               </Reveal>
             ))}
           </div>
