@@ -71,7 +71,6 @@ export function FAQList({ items }: FAQListProps) {
             <div
               id={panelId}
               ref={(node) => { panelRefs.current[index] = node }}
-              hidden={!isOpen}
               aria-hidden={!isOpen}
               className="faq-panel overflow-hidden"
             >
