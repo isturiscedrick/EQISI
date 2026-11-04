@@ -60,8 +60,8 @@ export function PageHero({ id, eyebrow, title, description, actions, visual, lar
         <div data-parallax="15" className="absolute -bottom-24 left-1/4 size-72 rounded-full bg-highlight/10 blur-3xl" />
       </div>
 
-      <Container className={cn('relative items-center gap-12', centered ? 'flex flex-col text-center gap-5 sm:gap-6' : visual ? 'grid lg:grid-cols-2' : 'flex')}>
-        <div className={cn(centered ? 'mx-auto max-w-3xl' : !visual && 'max-w-3xl')}>
+      <Container className={cn('relative items-center gap-12', centered ? 'flex min-h-[680px] flex-col text-center gap-5 sm:min-h-[760px] sm:gap-6 lg:min-h-[790px]' : visual ? 'grid lg:grid-cols-2' : 'flex')}>
+        <div className={cn('relative z-10', centered ? 'mx-auto max-w-3xl' : !visual && 'max-w-3xl')}>
           <div className={cn('animate-hero-in inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-1.5 text-xs font-bold tracking-wider text-warning uppercase shadow-subtle', centered && 'mx-auto')}>
             <span className="size-2 rounded-full bg-highlight" />
             {eyebrow}
@@ -83,7 +83,11 @@ export function PageHero({ id, eyebrow, title, description, actions, visual, lar
           )}
           {actions && <div className={cn('animate-hero-in hero-d3 mt-6 flex flex-wrap gap-3', centered && 'justify-center')}>{actions}</div>}
         </div>
-        {visual && <div className={cn('animate-hero-in hero-d2', centered ? 'mt-0 w-full' : 'w-full')}>{visual}</div>}
+        {visual && (
+          <div className={cn(centered ? 'pointer-events-none absolute inset-0 z-0' : 'animate-hero-in hero-d2 w-full')}>
+            {visual}
+          </div>
+        )}
       </Container>
     </section>
   )
