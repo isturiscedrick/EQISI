@@ -1,5 +1,6 @@
 import { ChevronRight, Mail, MapPin, Phone, ShieldCheck } from 'lucide-react'
-import type { ReactNode } from 'react'
+import { useLayoutEffect, useRef, type ReactNode } from 'react'
+import { gsap } from '@/lib/gsap'
 import { Link } from 'react-router'
 import { siteConfig } from '@/config/site'
 import * as c from '@/content/eqisi'
@@ -34,13 +35,30 @@ function FooterLink({ to, children }: { to: string; children: ReactNode }) {
 }
 
 export function Footer() {
+  const footerRef = useRef<HTMLElement>(null)
+
+  useLayoutEffect(() => {
+    const footer = footerRef.current
+    if (!footer) return
+    const mm = gsap.matchMedia()
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      const groups = footer.querySelectorAll<HTMLElement>('[data-footer-reveal]')
+      gsap.fromTo(groups, { autoAlpha: 0, y: 24 }, {
+        autoAlpha: 1, y: 0, duration: 0.75, stagger: 0.12, ease: 'power3.out',
+        scrollTrigger: { trigger: footer, start: 'top 88%', once: true },
+        clearProps: 'opacity,visibility,transform',
+      })
+    })
+    return () => mm.revert()
+  }, [])
+
   const hq = c.contact.offices.find((office) => office.name === 'Head Quarters') ?? c.contact.offices[0]
 
   return (
-    <footer className="bg-fg text-white/80">
+    <footer ref={footerRef} className="bg-fg text-white/80">
       <div aria-hidden="true" className="h-1 bg-linear-to-r from-primary via-highlight to-primary" />
 
-      <Container className="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.2fr_1.4fr]">
+      <Container data-footer-reveal className="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.2fr_1.4fr]">
         {/* Brand */}
         <div>
           <span className="inline-block rounded-lg bg-white p-2">
@@ -113,7 +131,7 @@ export function Footer() {
       </Container>
 
       <div className="border-t border-white/10">
-        <Container className="flex flex-col items-center justify-between gap-2 py-6 text-xs text-white/60 sm:flex-row">
+        <Container data-footer-reveal className="flex flex-col items-center justify-between gap-2 py-6 text-xs text-white/60 sm:flex-row">
           <p>
             &copy; {year} {siteConfig.name} &mdash; Excel Quality Integrated Solutions Inc. All rights reserved.
           </p>
