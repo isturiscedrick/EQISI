@@ -19,7 +19,16 @@ import malaca from '@/assets/eqisi/team/malaca.png'
 import manuel from '@/assets/eqisi/team/manuel.png'
 import tugas from '@/assets/eqisi/team/tugas.png'
 
-const executivePortraits = [cajigal, malaca, manuel, flores, alfariz, tugas, joy, ann]
+const executiveTeam = [
+  { name: 'Aniceto Apollo L. Cajigal Jr.', role: 'Chairman & CEO', photo: cajigal, group: 'executive' },
+  { name: 'Joy Catherine P. Lopez', role: 'President for Operations', photo: joy, group: 'executive' },
+  { name: 'Rodulfo Mejes Malaca', role: 'General Manager', photo: malaca, group: 'management' },
+  { name: 'Jelle Jasmin Manuel', role: 'Chief Operating Officer', photo: manuel, group: 'management' },
+  { name: 'Atty. Edgardo Flores Jr.', role: 'Chief Legal Officer', photo: flores, group: 'management' },
+  { name: 'Gretchen Alfariz', role: 'Chief Finance Officer', photo: alfariz, group: 'management' },
+  { name: 'Gigy Josephine Tugas', role: 'Chief HR Officer', photo: tugas, group: 'management' },
+  { name: 'Annabel S. Trinidad', role: 'Chief IT Officer', photo: ann, group: 'management' },
+] as const
 import { cn } from '@/lib/cn'
 
 const valueIcons: Record<string, LucideIcon> = {
@@ -126,30 +135,46 @@ export function Component() {
         title="Our Executive Team"
         lead="Meet the experienced executives guiding EQISI's strategy, client partnerships, compliance, and nationwide operations."
       >
-        <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {c.team.map((m, i) => (
-            <li key={m.name} className="h-full">
-              <Reveal delay={(i % 4) * 100} className="h-full">
-                <div className="group h-full overflow-hidden rounded-xl border border-b-4 border-border border-b-highlight bg-surface shadow-subtle transition-all duration-200 hover:shadow-card motion-safe:hover:-translate-y-1">
-                  <div className="overflow-hidden">
-                    <img
-                      src={executivePortraits[i] ?? asset(m.photo)}
-                      alt={`Portrait of ${m.name}`}
-                      width={420}
-                      height={525}
-                      loading="lazy"
-                      className="aspect-4/5 w-full object-cover object-top transition-transform duration-500 motion-safe:group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="p-5">
-                    <h4 className="font-bold text-fg">{m.name}</h4>
-                    <p className="mt-1 text-sm font-medium text-fg-muted">{m.role}</p>
-                  </div>
-                </div>
-              </Reveal>
-            </li>
-          ))}
-        </ul>
+        <div className="space-y-8">
+          <ul className="grid gap-4 md:grid-cols-2">
+            {executiveTeam.filter((member) => member.group === 'executive').map((member, i) => (
+              <li key={member.name}>
+                <Reveal delay={i * 100}>
+                  <article className="group flex min-h-40 overflow-hidden rounded-xl border border-border bg-surface shadow-subtle transition-all duration-300 hover:-translate-y-1 hover:shadow-card">
+                    <div className="w-[38%] shrink-0 overflow-hidden">
+                      <img src={member.photo} alt={`Portrait of ${member.name}`} width={420} height={525} className="h-full min-h-40 w-full object-cover object-top transition-transform duration-500 motion-safe:group-hover:scale-105" />
+                    </div>
+                    <div className="flex min-w-0 flex-1 flex-col justify-center p-5">
+                      <p className="text-[10px] font-bold tracking-[0.14em] text-primary uppercase">{member.role}</p>
+                      <h3 className="mt-2 text-lg font-bold leading-tight text-fg">{member.name}</h3>
+                    </div>
+                  </article>
+                </Reveal>
+              </li>
+            ))}
+          </ul>
+
+          <div>
+            <h3 className="mb-4 text-xs font-bold tracking-[0.16em] text-primary uppercase">Management Team</h3>
+            <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {executiveTeam.filter((member) => member.group === 'management').map((member, i) => (
+                <li key={member.name}>
+                  <Reveal delay={(i % 3) * 90}>
+                    <article className="group h-full overflow-hidden rounded-xl border border-border bg-surface shadow-subtle transition-all duration-300 hover:-translate-y-1 hover:shadow-card">
+                      <div className="overflow-hidden">
+                        <img src={member.photo} alt={`Portrait of ${member.name}`} width={420} height={525} loading="lazy" className="aspect-[4/3] w-full object-cover object-top transition-transform duration-500 motion-safe:group-hover:scale-105" />
+                      </div>
+                      <div className="p-4">
+                        <h4 className="font-bold text-fg">{member.name}</h4>
+                        <p className="mt-1 text-xs font-medium text-fg-muted">{member.role}</p>
+                      </div>
+                    </article>
+                  </Reveal>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </Section>
 
       {/* Market Edge */}
