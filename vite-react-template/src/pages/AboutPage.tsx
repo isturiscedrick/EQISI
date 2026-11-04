@@ -136,17 +136,21 @@ export function Component() {
         lead="Meet the experienced executives guiding EQISI's strategy, client partnerships, compliance, and nationwide operations."
       >
         <div className="space-y-8">
-          <ul className="grid gap-4 md:grid-cols-2">
+          <ul className="grid gap-5 md:grid-cols-2">
             {executiveTeam.filter((member) => member.group === 'executive').map((member, i) => (
               <li key={member.name}>
-                <Reveal delay={i * 100}>
-                  <article className="group flex min-h-40 overflow-hidden rounded-xl border border-border bg-surface shadow-subtle transition-all duration-300 hover:-translate-y-1 hover:shadow-card">
-                    <div className="w-[38%] shrink-0 overflow-hidden">
-                      <img src={member.photo} alt={`Portrait of ${member.name}`} width={420} height={525} className="h-full min-h-40 w-full object-cover object-top transition-transform duration-500 motion-safe:group-hover:scale-105" />
+                <Reveal delay={i * 120} className="h-full">
+                  <article className="group relative isolate flex min-h-[220px] h-full overflow-hidden rounded-2xl border border-border/80 bg-surface shadow-[0_8px_28px_-16px_rgba(20,35,75,0.35)] transition-all duration-500 hover:-translate-y-1.5 hover:border-primary/35 hover:shadow-[0_22px_48px_-22px_rgba(20,35,75,0.38)]">
+                    <span aria-hidden="true" className="absolute inset-y-0 left-0 z-20 w-1 bg-highlight transition-all duration-300 group-hover:w-1.5" />
+                    <div className="relative w-[42%] min-w-[130px] shrink-0 overflow-hidden bg-surface-muted">
+                      <img src={member.photo} alt={`Portrait of ${member.name}`} width={420} height={525} className="h-full min-h-[220px] w-full object-cover object-top transition-transform duration-700 ease-out motion-safe:group-hover:scale-110" />
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-surface/20" />
                     </div>
-                    <div className="flex min-w-0 flex-1 flex-col justify-center p-5">
-                      <p className="text-[10px] font-bold tracking-[0.14em] text-primary uppercase">{member.role}</p>
-                      <h3 className="mt-2 text-lg font-bold leading-tight text-fg">{member.name}</h3>
+                    <div className="relative flex min-w-0 flex-1 flex-col justify-center p-5 sm:p-7">
+                      <span className="mb-3 inline-flex w-fit items-center rounded-full border border-primary/15 bg-primary/5 px-2.5 py-1 text-[9px] font-bold tracking-[0.16em] text-primary uppercase">Executive Leadership</span>
+                      <p className="text-[10px] font-bold tracking-[0.14em] text-highlight uppercase">{member.role}</p>
+                      <h3 className="mt-2 text-lg font-extrabold leading-tight tracking-tight text-fg sm:text-xl">{member.name}</h3>
+                      <span aria-hidden="true" className="mt-4 h-[2px] w-8 rounded-full bg-highlight transition-all duration-300 group-hover:w-14" />
                     </div>
                   </article>
                 </Reveal>
@@ -155,18 +159,27 @@ export function Component() {
           </ul>
 
           <div>
-            <h3 className="mb-4 text-xs font-bold tracking-[0.16em] text-primary uppercase">Management Team</h3>
-            <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mb-5 flex items-end justify-between gap-4">
+              <div>
+                <h3 className="text-xs font-bold tracking-[0.18em] text-primary uppercase">Management Team</h3>
+                <p className="mt-1 text-sm text-fg-muted">The leaders behind our day-to-day excellence.</p>
+              </div>
+              <span className="hidden rounded-full border border-border bg-surface px-3 py-1 text-xs font-semibold text-fg-muted sm:inline-flex">06 Leaders</span>
+            </div>
+            <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {executiveTeam.filter((member) => member.group === 'management').map((member, i) => (
                 <li key={member.name}>
-                  <Reveal delay={(i % 3) * 90}>
-                    <article className="group h-full overflow-hidden rounded-xl border border-border bg-surface shadow-subtle transition-all duration-300 hover:-translate-y-1 hover:shadow-card">
-                      <div className="overflow-hidden">
-                        <img src={member.photo} alt={`Portrait of ${member.name}`} width={420} height={525} loading="lazy" className="aspect-[4/3] w-full object-cover object-top transition-transform duration-500 motion-safe:group-hover:scale-105" />
+                  <Reveal delay={(i % 3) * 90} className="h-full">
+                    <article className="group relative h-full overflow-hidden rounded-2xl border border-border/80 bg-surface shadow-[0_8px_24px_-16px_rgba(20,35,75,0.32)] transition-all duration-500 hover:-translate-y-1.5 hover:border-primary/35 hover:shadow-[0_20px_42px_-20px_rgba(20,35,75,0.38)]">
+                      <div className="relative aspect-[4/3] overflow-hidden bg-surface-muted">
+                        <img src={member.photo} alt={`Portrait of ${member.name}`} width={420} height={525} loading="lazy" className="h-full w-full object-cover object-top transition-transform duration-700 ease-out motion-safe:group-hover:scale-105" />
+                        <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-primary/35 to-transparent opacity-70 transition-opacity duration-300 group-hover:opacity-100" />
+                        <span className="absolute bottom-3 left-3 rounded-full border border-white/30 bg-white/90 px-2.5 py-1 text-[9px] font-bold tracking-[0.12em] text-primary uppercase shadow-sm backdrop-blur">Management</span>
                       </div>
-                      <div className="p-4">
-                        <h4 className="font-bold text-fg">{member.name}</h4>
-                        <p className="mt-1 text-xs font-medium text-fg-muted">{member.role}</p>
+                      <div className="relative min-h-[104px] p-4 sm:p-5">
+                        <span aria-hidden="true" className="absolute left-0 top-5 h-8 w-[3px] rounded-r-full bg-highlight transition-all duration-300 group-hover:h-11" />
+                        <h4 className="pl-2 text-base font-extrabold leading-snug tracking-tight text-fg">{member.name}</h4>
+                        <p className="mt-2 pl-2 text-xs font-medium leading-relaxed text-fg-muted">{member.role}</p>
                       </div>
                     </article>
                   </Reveal>
