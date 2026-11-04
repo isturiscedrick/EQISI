@@ -1,4 +1,4 @@
-import { ArrowRight, Menu, X } from 'lucide-react'
+import { ArrowRight, BriefcaseBusiness, Building2, Home, Mail, Menu, MessageCircle, UsersRound, X } from 'lucide-react'
 import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
 import { animate } from 'animejs'
 import { Link, NavLink } from 'react-router'
@@ -7,6 +7,14 @@ import { siteConfig } from '@/config/site'
 import { cn } from '@/lib/cn'
 import { gsap } from '@/lib/gsap'
 import { Logo } from './Logo'
+
+const navIcons = {
+  '/': Home,
+  '/about': Building2,
+  '/services': BriefcaseBusiness,
+  '/careers': UsersRound,
+  '/contacts': Mail,
+} as const
 
 export function Header() {
   const [open, setOpen] = useState(false)
@@ -130,7 +138,9 @@ export function Header() {
                 <X aria-hidden="true" className="size-5" />
               </button>
             </div>
-            {siteConfig.nav.map((item) => (
+            {siteConfig.nav.map((item) => {
+              const Icon = navIcons[item.to as keyof typeof navIcons] ?? ArrowRight
+              return (
               <NavLink
                 key={item.to}
                 to={item.to}
@@ -147,16 +157,20 @@ export function Header() {
                   )
                 }
               >
+                <Icon aria-hidden="true" className="mr-2 size-4 shrink-0" />
                 {item.label}
               </NavLink>
-            ))}
+              )
+            })}
             <Link to="/contacts" viewTransition onClick={() => setOpen(false)} className={cn(buttonStyles({ size: 'lg' }), 'mt-2 w-full justify-center md:hidden')}>
+              <MessageCircle aria-hidden="true" className="size-4" />
               Request a Consultation
               <ArrowRight aria-hidden="true" className="size-4 transition-transform duration-200 group-hover:translate-x-1" />
             </Link>
           </nav>
 
           <Link to="/contacts" viewTransition className={cn(buttonStyles(), 'hidden shrink-0 lg:inline-flex')}>
+            <MessageCircle aria-hidden="true" className="size-4" />
             Request a Consultation
             <ArrowRight aria-hidden="true" className="size-4 transition-transform duration-200 group-hover:translate-x-1" />
           </Link>
