@@ -94,21 +94,21 @@ export function Component() {
               <div className="flex items-center gap-3">
                 <span className="grid size-11 place-items-center rounded-xl bg-primary/10 text-primary"><UsersRound aria-hidden="true" className="size-5" /></span>
                 <div><p className="text-xs font-bold tracking-wider text-fg-muted uppercase">Workforce</p><p className="font-bold text-fg">People &amp; schedules</p></div>
-                <span className="ml-auto size-2 rounded-full bg-success" />
+                <span className="ml-auto size-2 rounded-full bg-highlight" />
               </div>
             </div>
             <div className="ml-7 rounded-2xl border border-border bg-surface p-5 shadow-card sm:ml-12">
               <div className="flex items-center gap-3">
                 <span className="grid size-11 place-items-center rounded-xl bg-highlight/15 text-accent"><Cpu aria-hidden="true" className="size-5" /></span>
                 <div><p className="text-xs font-bold tracking-wider text-fg-muted uppercase">Systems</p><p className="font-bold text-fg">Connected operations</p></div>
-                <span className="ml-auto size-2 rounded-full bg-success" />
+                <span className="ml-auto size-2 rounded-full bg-highlight" />
               </div>
             </div>
             <div className="rounded-2xl border border-border bg-surface p-5 shadow-card">
               <div className="flex items-center gap-3">
                 <span className="grid size-11 place-items-center rounded-xl bg-primary/10 text-primary"><ShieldCheck aria-hidden="true" className="size-5" /></span>
                 <div><p className="text-xs font-bold tracking-wider text-fg-muted uppercase">Management</p><p className="font-bold text-fg">Clearer visibility</p></div>
-                <span className="ml-auto size-2 rounded-full bg-success" />
+                <span className="ml-auto size-2 rounded-full bg-highlight" />
               </div>
             </div>
             <p className="pt-2 text-center text-[10px] font-bold tracking-[0.2em] text-fg-muted uppercase">Integrated service ecosystem</p>
