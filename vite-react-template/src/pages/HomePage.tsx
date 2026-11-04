@@ -1,8 +1,9 @@
-import { ArrowRight, CalendarDays, Cpu, Handshake, ShieldCheck } from 'lucide-react'
+import { ArrowRight, CalendarDays, Cpu, Handshake, ShieldCheck, UsersRound } from 'lucide-react'
 import { Link } from 'react-router'
 import { Container } from '@/components/layout/Container'
 import { GlobeVisual } from '@/components/home/GlobeVisual'
 import { LogoMarquee } from '@/components/home/LogoMarquee'
+import { ScrollStory } from '@/components/ui/ScrollStory'
 import { CtaBanner } from '@/components/layout/CtaBanner'
 import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/layout/Section'
@@ -76,6 +77,43 @@ export function Component() {
           <LogoMarquee />
         </Container>
       </section>
+
+      <ScrollStory
+        eyebrow="Connected Operations"
+        title="People, processes and technology working as one"
+        description="EQISI brings workforce services and operational systems together, helping teams coordinate day-to-day work with clearer visibility."
+        steps={[
+          { title: 'Organize the workforce', description: 'Coordinate people, schedules and employee information through connected workforce management practices.' },
+          { title: 'Connect operational systems', description: 'Bring payroll, human resources, warehouse, inventory, benefits and GPS management into one integrated service model.' },
+          { title: 'Support informed decisions', description: 'Give operations teams clearer information to manage service delivery, workforce needs and supply-chain activity.' },
+        ]}
+        visual={
+          <div className="grid gap-3">
+            <div className="rounded-2xl border border-border bg-surface p-5 shadow-card">
+              <div className="flex items-center gap-3">
+                <span className="grid size-11 place-items-center rounded-xl bg-primary/10 text-primary"><UsersRound aria-hidden="true" className="size-5" /></span>
+                <div><p className="text-xs font-bold tracking-wider text-fg-muted uppercase">Workforce</p><p className="font-bold text-fg">People &amp; schedules</p></div>
+                <span className="ml-auto size-2 rounded-full bg-success" />
+              </div>
+            </div>
+            <div className="ml-7 rounded-2xl border border-border bg-surface p-5 shadow-card sm:ml-12">
+              <div className="flex items-center gap-3">
+                <span className="grid size-11 place-items-center rounded-xl bg-highlight/15 text-accent"><Cpu aria-hidden="true" className="size-5" /></span>
+                <div><p className="text-xs font-bold tracking-wider text-fg-muted uppercase">Systems</p><p className="font-bold text-fg">Connected operations</p></div>
+                <span className="ml-auto size-2 rounded-full bg-success" />
+              </div>
+            </div>
+            <div className="rounded-2xl border border-border bg-surface p-5 shadow-card">
+              <div className="flex items-center gap-3">
+                <span className="grid size-11 place-items-center rounded-xl bg-primary/10 text-primary"><ShieldCheck aria-hidden="true" className="size-5" /></span>
+                <div><p className="text-xs font-bold tracking-wider text-fg-muted uppercase">Management</p><p className="font-bold text-fg">Clearer visibility</p></div>
+                <span className="ml-auto size-2 rounded-full bg-success" />
+              </div>
+            </div>
+            <p className="pt-2 text-center text-[10px] font-bold tracking-[0.2em] text-fg-muted uppercase">Integrated service ecosystem</p>
+          </div>
+        }
+      />
 
       {/* Services Teaser */}
       <Section
