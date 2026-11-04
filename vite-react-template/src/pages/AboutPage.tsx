@@ -70,13 +70,13 @@ export function Component() {
           </>
         }
         visual={
-          <div className="overflow-hidden rounded-2xl border border-border shadow-elevated">
+          <div className="aspect-[4/5] w-full overflow-hidden rounded-2xl border border-border bg-surface-muted shadow-elevated sm:aspect-[5/4]">
             <img
               src={asset('industry.webp')}
               alt="Industrial manufacturing and warehousing facility"
               width={900}
               height={1012}
-              className="max-h-120 w-full object-cover transition-transform duration-500 motion-safe:hover:scale-105"
+              className="h-full w-full object-cover object-center transition-transform duration-500 motion-safe:hover:scale-[1.03]"
             />
           </div>
         }
@@ -221,14 +221,14 @@ export function Component() {
               ))}
             </ol>
           </div>
-          <Reveal delay={150} className="overflow-hidden rounded-2xl border border-border shadow-elevated">
+          <Reveal delay={150} className="aspect-[16/10] w-full overflow-hidden rounded-2xl border border-border bg-surface-muted shadow-elevated">
             <img
               src={asset('edge.webp')}
               alt="High technology automation and robotics"
               width={900}
               height={506}
               loading="lazy"
-              className="w-full object-cover transition-transform duration-500 motion-safe:hover:scale-105"
+              className="h-full w-full object-cover object-center transition-transform duration-500 motion-safe:hover:scale-[1.03]"
             />
           </Reveal>
         </Container>
