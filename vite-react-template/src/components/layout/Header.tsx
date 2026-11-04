@@ -119,7 +119,7 @@ export function Header() {
             aria-label="Main"
             className={cn(
               open ? 'flex' : 'hidden',
-              'absolute inset-x-0 top-full flex-col gap-1 border-b border-border bg-canvas p-4 shadow-elevated',
+              'absolute inset-x-0 top-full flex-col gap-2 border-b border-border bg-canvas p-4 pb-5 shadow-elevated sm:px-6',
               'md:static md:flex md:flex-row md:items-center md:gap-1 md:rounded-full md:border md:border-border/70 md:bg-surface-muted/75 md:px-2 md:py-1 md:shadow-none',
             )}
           >
@@ -132,7 +132,7 @@ export function Header() {
                 onClick={() => setOpen(false)}
                 className={({ isActive }) =>
                   cn(
-                    'relative inline-flex min-h-9 items-center rounded-full px-4 text-sm font-medium transition-all duration-200',
+                    'relative inline-flex min-h-11 w-full items-center rounded-xl px-4 text-sm font-semibold transition-all duration-200 md:min-h-9 md:w-auto md:rounded-full',
                     'after:hidden',
                     isActive
                       ? 'bg-surface text-primary shadow-subtle'
@@ -143,7 +143,7 @@ export function Header() {
                 {item.label}
               </NavLink>
             ))}
-            <Link to="/contacts" viewTransition onClick={() => setOpen(false)} className={cn(buttonStyles(), 'mt-2 md:hidden')}>
+            <Link to="/contacts" viewTransition onClick={() => setOpen(false)} className={cn(buttonStyles({ size: 'lg' }), 'mt-2 w-full justify-center md:hidden')}>
               Request a Consultation
               <ArrowRight aria-hidden="true" className="size-4 transition-transform duration-200 group-hover:translate-x-1" />
             </Link>
