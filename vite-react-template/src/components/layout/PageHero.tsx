@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, type ReactNode } from 'react'
-import { gsap } from '@/lib/gsap'
+import { gsap, SplitText } from '@/lib/gsap'
 import { cn } from '@/lib/cn'
 import { Container } from './Container'
 
@@ -31,9 +31,18 @@ export function PageHero({ id, eyebrow, title, description, actions, visual, lar
       const actions = section.querySelector<HTMLElement>('[data-hero-step="actions"]')
       const visual = section.querySelector<HTMLElement>('[data-hero-visual]')
       const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } })
-      timeline
-        .fromTo(eyebrow, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.5 })
-        .fromTo(title, { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.78 }, '-=0.2')
+      let titleSplit: SplitText | undefined
+      timeline.fromTo(eyebrow, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.5 })
+      if (title) {
+        titleSplit = SplitText.create(title, { type: 'words', wordsClass: 'hero-word' })
+        timeline.from(titleSplit.words, {
+          autoAlpha: 0,
+          yPercent: 110,
+          duration: 0.68,
+          stagger: 0.045,
+          ease: 'power3.out',
+        }, '-=0.2')
+      }
       if (description) timeline.fromTo(description, { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: 0.55 }, '-=0.38')
       if (actions) timeline.fromTo(actions, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.48 }, '-=0.3')
       if (visual) timeline.fromTo(visual, { autoAlpha: 0, y: 22, scale: 0.985 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.85 }, '-=0.4')
@@ -50,7 +59,7 @@ export function PageHero({ id, eyebrow, title, description, actions, visual, lar
             },
           })
         })
-      return () => timeline.kill()
+      return () => {\n        timeline.kill()\n        titleSplit?.revert()\n      }
     }, section)
 
     // Kills the tweens and their ScrollTriggers when the route changes.
