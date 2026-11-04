@@ -54,16 +54,7 @@ export function Component() {
         id="about-hero"
         eyebrow="Company Heritage"
         title="Rooted in Heritage, Powered by Innovation"
-        description={
-          <div className="space-y-4">
-            {c.about.map((p) => (
-              <p key={p}>{p}</p>
-            ))}
-            <p>
-              From nationwide warehousing management to comprehensive technical staffing, our operational model combines deep industry experience with proprietary automation tools to deliver measurable business outcomes.
-            </p>
-          </div>
-        }
+        description="A legacy of service. A focus on what comes next."
         actions={
           <>
             <a href="#leadership" className={buttonStyles({ size: 'lg' })}>
@@ -88,6 +79,21 @@ export function Component() {
           </div>
         }
       />
+
+      <Section id="company-overview" muted eyebrow="Who We Are" title="Experience that moves businesses forward">
+        <div className="grid gap-5 md:grid-cols-2">
+          {c.about.map((paragraph, index) => (
+            <Reveal key={paragraph} delay={index * 90}>
+              <p className="h-full rounded-xl border border-border bg-surface p-6 text-sm leading-7 text-fg-muted shadow-subtle sm:p-7">{paragraph}</p>
+            </Reveal>
+          ))}
+          <Reveal className="md:col-span-2">
+            <p className="rounded-xl border border-primary/15 bg-primary/5 p-6 text-sm leading-7 text-fg sm:p-7">
+              From nationwide warehousing management to technical staffing, EQISI brings industry experience and integrated systems together to support connected operations.
+            </p>
+          </Reveal>
+        </div>
+      </Section>
 
       {/* Mission & Vision */}
       <Section id="mission-vision" muted eyebrow="Direction & Purpose" title="Where we are headed">
