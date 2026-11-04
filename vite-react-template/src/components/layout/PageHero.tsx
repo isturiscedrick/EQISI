@@ -51,7 +51,7 @@ export function PageHero({ id, eyebrow, title, description, actions, visual, lar
   return (
     <section
       ref={sectionRef}
-      className={cn('relative overflow-hidden border-b border-border bg-canvas', centered ? 'pt-6 pb-4 sm:pt-10 sm:pb-8 lg:pt-11 lg:pb-8' : 'py-12 sm:py-20 lg:py-24')}
+      className={cn('relative overflow-hidden border-b border-border bg-canvas', centered ? 'pt-5 pb-3 sm:pt-10 sm:pb-8 lg:pt-11 lg:pb-8' : 'py-12 sm:py-20 lg:py-24')}
       aria-labelledby={`${id}-heading`}
     >
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
@@ -60,7 +60,7 @@ export function PageHero({ id, eyebrow, title, description, actions, visual, lar
         <div data-parallax="15" className="absolute -bottom-24 left-1/4 size-72 rounded-full bg-highlight/10 blur-3xl" />
       </div>
 
-      <Container className={cn('relative items-center gap-12', centered ? 'flex min-h-[535px] flex-col text-center gap-3 sm:min-h-[660px] sm:gap-6 lg:min-h-[700px]' : visual ? 'grid lg:grid-cols-2' : 'flex')}>
+      <Container className={cn('relative items-center gap-12', centered ? 'flex min-h-[515px] flex-col text-center gap-3 sm:min-h-[660px] sm:gap-6 lg:min-h-[700px]' : visual ? 'grid lg:grid-cols-2' : 'flex')}>
         <div className={cn('relative z-20', centered ? 'mx-auto max-w-3xl' : !visual && 'max-w-3xl')}>
           <div className={cn('animate-hero-in inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-1.5 text-xs font-bold tracking-wider text-warning uppercase shadow-subtle', centered && 'mx-auto')}>
             <span className="size-2 rounded-full bg-highlight" />
