@@ -27,7 +27,7 @@ export function ScrollStory({ eyebrow, title, description, steps, visual }: Scro
     if (!section || steps.length < 2) return
 
     const mm = gsap.matchMedia()
-    mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
+    mm.add('(min-width: 1200px) and (min-height: 760px) and (prefers-reduced-motion: no-preference)', () => {
       const items = gsap.utils.toArray<HTMLElement>('[data-story-step]', section)
       if (!items.length) return
 
@@ -63,8 +63,8 @@ export function ScrollStory({ eyebrow, title, description, steps, visual }: Scro
   }, [steps.length])
 
   return (
-    <section ref={root} className="relative border-y border-border bg-canvas py-14 sm:py-20 lg:min-h-[78vh] lg:py-16">
-      <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
+    <section ref={root} className="relative border-y border-border bg-canvas py-14 sm:py-20 xl:min-h-[78vh] xl:py-16">
+      <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-4 sm:px-6 xl:grid-cols-2 xl:gap-16 xl:px-8">
         <div className="relative">
           <p className="flex items-center gap-3 text-xs font-extrabold tracking-[0.2em] text-warning uppercase">
             <span aria-hidden="true" className="h-[3px] w-10 rounded-full bg-highlight" />
