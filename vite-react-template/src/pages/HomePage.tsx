@@ -89,8 +89,8 @@ export function Component() {
             <h2 id="home-companies-heading" className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">
               A connected group of specialists
             </h2>
-            <p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-fg-muted">
-              Our group brings together Tektonix and Megatekton as distinct, specialized companies within one connected network. Each company has its own identity and focus, while working under a shared commitment to practical solutions, strong partnerships and dependable service. Together, they broaden the expertise and capabilities available across the group.
+            <p className="mt-4 text-base leading-relaxed text-fg-muted">
+              Explore the companies within our group and visit their websites to learn more.
             </p>
           </Reveal>
 
@@ -109,7 +109,8 @@ export function Component() {
                 <div className="mt-6 flex items-center justify-between gap-4">
                   <div>
                     <h3 className="text-xl font-bold text-fg">Tektonix</h3>
-                    <p className="mt-1 text-sm text-fg-muted">Visit company website</p>
+                    <p className="mt-2 max-w-sm text-sm leading-relaxed text-fg-muted">A manufacturing company within the group, contributing industrial production expertise and capabilities.</p>
+                    <p className="mt-3 text-xs font-semibold text-primary">Visit company website</p>
                   </div>
                   <span className="grid size-11 shrink-0 place-items-center rounded-full bg-primary/10 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white">
                     <ExternalLink aria-hidden="true" className="size-5" />
@@ -132,7 +133,8 @@ export function Component() {
                 <div className="mt-6 flex items-center justify-between gap-4">
                   <div>
                     <h3 className="text-xl font-bold text-fg">Megatekton</h3>
-                    <p className="mt-1 text-sm text-fg-muted">Visit company website</p>
+                    <p className="mt-2 max-w-sm text-sm leading-relaxed text-fg-muted">A group manufacturing company focused on supporting industrial production through its manufacturing capabilities.</p>
+                    <p className="mt-3 text-xs font-semibold text-primary">Visit company website</p>
                   </div>
                   <span className="grid size-11 shrink-0 place-items-center rounded-full bg-primary/10 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white">
                     <ExternalLink aria-hidden="true" className="size-5" />
