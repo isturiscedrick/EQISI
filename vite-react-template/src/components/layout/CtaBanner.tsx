@@ -44,7 +44,7 @@ export function CtaBanner({ title, description, children }: CtaBannerProps) {
   }, [])
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden rounded-none bg-primary py-12 text-primary-fg sm:py-20">
+    <section ref={sectionRef} className="relative overflow-hidden rounded-none bg-primary py-10 text-primary-fg sm:py-14">
       <div aria-hidden="true" data-parallax="18" className="pointer-events-none absolute -top-16 -left-16 size-64">
         <div className="animate-float size-full rounded-full bg-primary-fg/5" />
       </div>
@@ -54,8 +54,8 @@ export function CtaBanner({ title, description, children }: CtaBannerProps) {
       <Container className="relative text-center">
         <Reveal>
           <h2 className="mx-auto max-w-3xl text-2xl font-bold tracking-tight sm:text-4xl">{title}</h2>
-          {description && <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-primary-fg/90 sm:text-lg">{description}</p>}
-          {children && <div className="mt-7 flex flex-col justify-center gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:gap-4 [&>a]:w-full [&>a]:justify-center sm:[&>a]:w-auto">{children}</div>}
+          {description && <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-primary-fg/90 sm:text-lg">{description}</p>}
+          {children && <div className="mt-5 flex flex-col justify-center gap-3 sm:mt-6 sm:flex-row sm:flex-wrap sm:gap-4 [&>a]:w-full [&>a]:justify-center sm:[&>a]:w-auto">{children}</div>}
         </Reveal>
       </Container>
     </section>
