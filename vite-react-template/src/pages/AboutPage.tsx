@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ArrowRight, CalendarDays, Church, Eye, HeartHandshake, ShieldCheck, Sparkles, Target, type LucideIcon } from 'lucide-react'
+import { ArrowRight, Church, Eye, HeartHandshake, ShieldCheck, Sparkles, Target, type LucideIcon } from 'lucide-react'
 import { Link } from 'react-router'
 import { Container } from '@/components/layout/Container'
 import { CtaBanner } from '@/components/layout/CtaBanner'
@@ -8,7 +8,6 @@ import { Section } from '@/components/layout/Section'
 import { PageMeta } from '@/components/seo/PageMeta'
 import { buttonStyles } from '@/components/ui/button-styles'
 import { Reveal } from '@/components/ui/Reveal'
-import { ScrollProgressTrack } from '@/components/ui/ScrollProgressTrack'
 import { ExecutiveProfileDialog } from '@/components/ui/ExecutiveProfileDialog'
 import { ScrollStory } from '@/components/ui/ScrollStory'
 import { bannerButton, card, iconTile } from '@/components/ui/surface-styles'
@@ -160,41 +159,6 @@ export function Component() {
             )
           })}
         </div>
-      </Section>
-
-      <Section id="heritage-timeline" muted eyebrow="Our Journey" title="Experience built on a lasting foundation">
-        <ScrollProgressTrack steps={2}>
-          <ol className="grid gap-5 md:grid-cols-2">
-            <li>
-              <Reveal className="h-full">
-                <article className="motion-border h-full rounded-2xl border border-border bg-surface p-6 shadow-card sm:p-8">
-                  <span className="grid size-12 place-items-center rounded-xl bg-primary/10 text-primary">
-                    <CalendarDays aria-hidden="true" className="size-6" />
-                  </span>
-                  <p className="mt-5 text-sm font-extrabold tracking-[0.16em] text-warning uppercase">1986</p>
-                  <h3 className="mt-2 text-xl font-bold text-fg">The JRS Group was established</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-fg-muted">
-                    EQISI's industry heritage traces back to the establishment of the JRS (Jose R. Simeon) Group of Companies, formerly Matrix Group of Companies.
-                  </p>
-                </article>
-              </Reveal>
-            </li>
-            <li>
-              <Reveal delay={120} className="h-full">
-                <article className="motion-border h-full rounded-2xl border border-border bg-surface p-6 shadow-card sm:p-8">
-                  <span className="grid size-12 place-items-center rounded-xl bg-highlight/15 text-accent">
-                    <Target aria-hidden="true" className="size-6" />
-                  </span>
-                  <p className="mt-5 text-sm font-extrabold tracking-[0.16em] text-warning uppercase">Today</p>
-                  <h3 className="mt-2 text-xl font-bold text-fg">Integrated solutions for modern operations</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-fg-muted">
-                    EQISI combines warehousing, manpower, logistics, facility support, and management systems to help clients run connected operations.
-                  </p>
-                </article>
-              </Reveal>
-            </li>
-          </ol>
-        </ScrollProgressTrack>
       </Section>
 
       {/* Leadership Team */}
