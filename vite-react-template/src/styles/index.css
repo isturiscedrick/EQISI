@@ -893,3 +893,89 @@ header nav a::after {
   }
   .back-to-top-ring { transition: none; }
 }
+
+
+/* Navigation motion: elegant entrance, responsive hover feedback and mobile drawer polish. */
+.header-brand-mark {
+  transition: transform 360ms cubic-bezier(.2,.8,.2,1), filter 360ms ease;
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .header-brand-mark:hover {
+    transform: translateY(-1px) scale(1.025);
+    filter: drop-shadow(0 5px 9px rgb(72 96 172 / .14));
+  }
+}
+.nav-item-link {
+  isolation: isolate;
+  overflow: hidden;
+  transition: color 220ms ease, background-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
+}
+.nav-item-link::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(110deg, rgb(72 96 172 / .09), rgb(240 84 36 / .07));
+  content: "";
+  opacity: 0;
+  transform: scaleX(.72);
+  transform-origin: left center;
+  transition: opacity 260ms ease, transform 320ms cubic-bezier(.2,.8,.2,1);
+}
+.nav-item-link:hover::before,
+.nav-item-link:focus-visible::before { opacity: 1; transform: scaleX(1); }
+.nav-item-icon {
+  transition: transform 260ms cubic-bezier(.2,.8,.2,1), color 220ms ease;
+}
+.nav-item-link:hover .nav-item-icon,
+.nav-item-link:focus-visible .nav-item-icon {
+  transform: translateY(-1px) rotate(-7deg) scale(1.08);
+  color: var(--highlight);
+}
+.nav-item-link[aria-current="page"] .nav-item-icon {
+  color: var(--primary);
+}
+.nav-item-link::after {
+  transition: width 280ms cubic-bezier(.2,.8,.2,1), background-color 220ms ease;
+}
+.header-cta {
+  transition: box-shadow 260ms ease, background-color 220ms ease, color 220ms ease;
+}
+.header-cta svg:last-child {
+  transition: transform 260ms cubic-bezier(.2,.8,.2,1);
+}
+.header-cta:hover svg:last-child { transform: translateX(3px); }
+.header-menu-toggle svg {
+  transition: transform 260ms cubic-bezier(.2,.8,.2,1);
+}
+.header-menu-toggle.is-open svg { transform: rotate(90deg); }
+.mobile-nav-backdrop {
+  animation: nav-backdrop-in 220ms ease-out both;
+}
+@keyframes nav-backdrop-in {
+  from { opacity: 0; backdrop-filter: blur(0); }
+  to { opacity: 1; backdrop-filter: blur(2px); }
+}
+@media (max-width: 767px) {
+  nav[aria-label="Main"] .nav-item-link {
+    transform-origin: left center;
+  }
+  nav[aria-label="Main"] .nav-item-link:active {
+    background: var(--surface-muted);
+    transform: scale(.985);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .header-brand-mark,
+  .nav-item-link,
+  .nav-item-link::before,
+  .nav-item-icon,
+  .nav-item-link::after,
+  .header-cta,
+  .header-cta svg:last-child,
+  .header-menu-toggle svg {
+    transition: none !important;
+    transform: none !important;
+  }
+  .mobile-nav-backdrop { animation: none !important; }
+}
