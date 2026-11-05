@@ -127,7 +127,7 @@ export function Header() {
           </button>
 
           <Link to="/" viewTransition aria-label={`${siteConfig.name} home`} className="shrink-0 rounded-md">
-            <Logo className={cn('transition-all duration-200', scrolled ? 'h-9' : 'h-11')} />
+            <Logo className={cn('header-brand-mark transition-all duration-200', scrolled ? 'h-9' : 'h-11')} />
           </Link>
 
           <nav
@@ -183,7 +183,7 @@ export function Header() {
             title="Request a Consultation"
             className={cn(
               buttonStyles({ size: 'md' }),
-              'inline-flex size-10 min-h-10 shrink-0 items-center justify-center rounded-lg p-0 lg:h-11 lg:w-auto lg:gap-2 lg:rounded-md lg:px-4',
+              'magnetic inline-flex size-10 min-h-10 shrink-0 items-center justify-center rounded-lg p-0 lg:h-11 lg:w-auto lg:gap-2 lg:rounded-md lg:px-4',
             )}
           >
             <MessageCircle aria-hidden="true" className="size-4 shrink-0" />
