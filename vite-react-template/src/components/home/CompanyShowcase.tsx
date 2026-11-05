@@ -24,23 +24,32 @@ const companies = [
   },
 ]
 
+const headingWords = ['A', 'connected', 'group', 'of', 'specialists']
+
 export function CompanyShowcase() {
   const sectionRef = useRef<HTMLElement>(null)
   const headingRef = useRef<HTMLDivElement>(null)
   const cardsRef = useRef<HTMLDivElement>(null)
+  const connectorRef = useRef<SVGPathElement>(null)
+  const particleRef = useRef<SVGCircleElement>(null)
 
   useEffect(() => {
     const section = sectionRef.current
     const heading = headingRef.current
     const cards = cardsRef.current
+    const connector = connectorRef.current
+    const particle = particleRef.current
     if (!section || !heading || !cards) return
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reduceMotion) return
 
     const cardNodes = Array.from(cards.querySelectorAll<HTMLElement>('[data-company-card]'))
+    const wordNodes = Array.from(heading.querySelectorAll<HTMLElement>('[data-heading-word]'))
     const logoNodes = Array.from(cards.querySelectorAll<HTMLElement>('[data-company-logo]'))
     const hoverAnimations = new Map<HTMLElement, { revert: () => void }>()
+    const pointerFine = window.matchMedia('(hover: hover) and (pointer: fine)').matches
+    const tiltTweens: gsap.core.Tween[] = []
 
     const context = gsap.context(() => {
       const timeline = gsap.timeline({
@@ -55,19 +64,26 @@ export function CompanyShowcase() {
         .fromTo(
           heading.querySelector('[data-company-eyebrow]'),
           { autoAlpha: 0, y: 22, letterSpacing: '0.32em' },
-          { autoAlpha: 1, y: 0, letterSpacing: '0.18em', duration: 0.65, ease: 'power3.out' },
+          { autoAlpha: 1, y: 0, letterSpacing: '0.18em', duration: 0.6, ease: 'power3.out' },
         )
         .fromTo(
-          heading.querySelector('[data-company-title]'),
-          { autoAlpha: 0, y: 34, rotateX: -8, transformOrigin: '50% 100%' },
-          { autoAlpha: 1, y: 0, rotateX: 0, duration: 0.85, ease: 'power4.out' },
-          '-=0.35',
+          wordNodes,
+          { autoAlpha: 0, yPercent: 115, rotateX: -65, transformOrigin: '50% 100%' },
+          {
+            autoAlpha: 1,
+            yPercent: 0,
+            rotateX: 0,
+            duration: 0.72,
+            stagger: 0.075,
+            ease: 'power4.out',
+          },
+          '-=0.28',
         )
         .fromTo(
           heading.querySelector('[data-company-description]'),
           { autoAlpha: 0, y: 18, filter: 'blur(7px)' },
           { autoAlpha: 1, y: 0, filter: 'blur(0px)', duration: 0.7, ease: 'power2.out' },
-          '-=0.45',
+          '-=0.38',
         )
         .fromTo(
           cardNodes,
@@ -77,62 +93,113 @@ export function CompanyShowcase() {
             y: 0,
             rotateY: 0,
             scale: 1,
-            duration: 1,
-            stagger: 0.18,
+            duration: 0.95,
+            stagger: 0.16,
             ease: 'power4.out',
             clearProps: 'transform',
           },
-          '-=0.15',
+          '-=0.12',
         )
 
-      // Anime.js gives each logo a soft, staggered arrival after the card motion.
+      if (connector) {
+        const length = connector.getTotalLength()
+        gsap.set(connector, { strokeDasharray: length, strokeDashoffset: length })
+        timeline.to(connector, { strokeDashoffset: 0, duration: 1.1, ease: 'power2.inOut' }, '-=0.72')
+      }
+
+      if (particle) {
+        timeline.fromTo(
+          particle,
+          { autoAlpha: 0, scale: 0.4 },
+          { autoAlpha: 1, scale: 1, duration: 0.3, ease: 'back.out(2)' },
+          '-=0.45',
+        )
+        timeline.to(particle, {
+          x: 500,
+          y: 0,
+          duration: 1.4,
+          ease: 'sine.inOut',
+          repeat: 1,
+          yoyo: true,
+        }, '-=0.1')
+      }
+
+      // A clipped reveal gives each supplied company logo a clean, editorial entrance.
       timeline.call(() => {
         animate(logoNodes, {
           opacity: [0, 1],
-          scale: [0.88, 1],
-          rotate: [-1.5, 0],
-          delay: stagger(140),
-          duration: 850,
+          scale: [0.94, 1],
+          clipPath: ['inset(0 100% 0 0)', 'inset(0 0% 0 0)'],
+          delay: stagger(150),
+          duration: 900,
           ease: 'out(4)',
         })
-      }, undefined, '-=0.65')
+      }, undefined, '-=0.72')
     }, section)
 
-    const onEnter = (event: PointerEvent) => {
+    const onPointerMove = (event: PointerEvent) => {
+      if (!pointerFine) return
+      const card = event.currentTarget as HTMLElement
+      const bounds = card.getBoundingClientRect()
+      const x = (event.clientX - bounds.left) / bounds.width
+      const y = (event.clientY - bounds.top) / bounds.height
+      card.style.setProperty('--spot-x', `${x * 100}%`)
+      card.style.setProperty('--spot-y', `${y * 100}%`)
+
+      const rotateY = (x - 0.5) * 5
+      const rotateX = (0.5 - y) * 4
+      const tween = gsap.to(card, {
+        rotateX,
+        rotateY,
+        transformPerspective: 900,
+        transformOrigin: 'center',
+        duration: 0.35,
+        ease: 'power2.out',
+        overwrite: true,
+      })
+      tiltTweens.push(tween)
+    }
+
+    const onPointerEnter = (event: PointerEvent) => {
       if (event.pointerType === 'touch') return
       const card = event.currentTarget as HTMLElement
       const logo = card.querySelector<HTMLElement>('[data-company-logo]')
       if (!logo) return
       hoverAnimations.get(logo)?.revert()
       hoverAnimations.set(logo, animate(logo, {
-        scale: 1.055,
-        rotate: 1.2,
+        scale: 1.045,
         duration: 420,
         ease: 'out(3)',
       }))
     }
 
-    const onLeave = (event: PointerEvent) => {
+    const onPointerLeave = (event: PointerEvent) => {
       const card = event.currentTarget as HTMLElement
       const logo = card.querySelector<HTMLElement>('[data-company-logo]')
+      gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.55, ease: 'power3.out', overwrite: true })
+      card.style.setProperty('--spot-x', '50%')
+      card.style.setProperty('--spot-y', '50%')
       if (!logo) return
       hoverAnimations.get(logo)?.revert()
       hoverAnimations.delete(logo)
-      animate(logo, { scale: 1, rotate: 0, duration: 520, ease: 'out(3)' })
+      animate(logo, { scale: 1, duration: 520, ease: 'out(3)' })
     }
 
     cardNodes.forEach((card) => {
-      card.addEventListener('pointerenter', onEnter)
-      card.addEventListener('pointerleave', onLeave)
+      card.addEventListener('pointermove', onPointerMove)
+      card.addEventListener('pointerenter', onPointerEnter)
+      card.addEventListener('pointerleave', onPointerLeave)
     })
 
     return () => {
       cardNodes.forEach((card) => {
-        card.removeEventListener('pointerenter', onEnter)
-        card.removeEventListener('pointerleave', onLeave)
+        card.removeEventListener('pointermove', onPointerMove)
+        card.removeEventListener('pointerenter', onPointerEnter)
+        card.removeEventListener('pointerleave', onPointerLeave)
       })
       hoverAnimations.forEach((animation) => animation.revert())
       hoverAnimations.clear()
+      tiltTweens.forEach((tween) => tween.kill())
       context.revert()
     }
   }, [])
@@ -147,15 +214,36 @@ export function CompanyShowcase() {
       <Container>
         <div ref={headingRef} className="mx-auto mb-10 max-w-3xl text-center sm:mb-14">
           <p data-company-eyebrow className="mb-3 text-sm font-bold tracking-[0.18em] text-warning uppercase">Our Companies</p>
-          <h2 data-company-title id="home-companies-heading" className="text-3xl font-bold tracking-tight text-primary sm:text-4xl lg:text-5xl">
-            A connected group of specialists
+          <h2 data-company-title id="home-companies-heading" className="company-showcase-heading text-3xl font-bold tracking-tight text-primary sm:text-4xl lg:text-5xl">
+            {headingWords.map((word, index) => (
+              <span key={word} className="company-heading-word-wrap">
+                <span data-heading-word className="company-heading-word">{word}</span>
+                {index < headingWords.length - 1 ? ' ' : ''}
+              </span>
+            ))}
           </h2>
           <p data-company-description className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-fg-muted sm:text-lg">
             Explore the companies within our group and visit their websites to learn more.
           </p>
         </div>
 
-        <div ref={cardsRef} className="mx-auto grid max-w-5xl gap-5 md:grid-cols-2 md:gap-7">
+        <div className="company-showcase-network" aria-hidden="true">
+          <svg viewBox="0 0 1000 180" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="company-network-gradient" x1="0" x2="1">
+                <stop offset="0%" stopColor="#4860AC" stopOpacity=".15" />
+                <stop offset="50%" stopColor="#F05424" stopOpacity=".75" />
+                <stop offset="100%" stopColor="#4860AC" stopOpacity=".15" />
+              </linearGradient>
+            </defs>
+            <path ref={connectorRef} d="M120 90 C330 12 670 168 880 90" />
+            <circle cx="120" cy="90" r="5" />
+            <circle cx="880" cy="90" r="5" />
+            <circle ref={particleRef} cx="120" cy="90" r="4" />
+          </svg>
+        </div>
+
+        <div ref={cardsRef} className="company-showcase-grid relative mx-auto grid max-w-5xl gap-5 md:grid-cols-2 md:gap-7">
           {companies.map((company, index) => (
             <a
               key={company.name}
@@ -173,7 +261,7 @@ export function CompanyShowcase() {
                   src={company.logo}
                   alt={`${company.name} logo`}
                   loading="lazy"
-                  className="max-h-32 w-full object-contain"
+                  className="company-showcase-logo max-h-32 w-full object-contain"
                 />
               </div>
               <div className="mt-6 flex items-start justify-between gap-4">
