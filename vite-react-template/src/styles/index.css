@@ -979,3 +979,82 @@ header nav a::after {
   }
   .mobile-nav-backdrop { animation: none !important; }
 }
+
+
+/* Refined navbar hover choreography: lift, icon response, animated underline and CTA sheen. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .nav-item-link {
+    translate: 0 0;
+    will-change: translate;
+  }
+  .nav-item-link:hover,
+  .nav-item-link:focus-visible {
+    translate: 0 -2px;
+    box-shadow: 0 7px 16px -12px rgb(26 35 66 / .45);
+  }
+  .nav-item-link:hover .nav-item-icon,
+  .nav-item-link:focus-visible .nav-item-icon {
+    animation: nav-icon-pop 420ms cubic-bezier(.2,.8,.2,1) both;
+  }
+  .nav-item-link::after {
+    height: 2px;
+    box-shadow: 0 0 9px rgb(240 84 36 / .28);
+  }
+  .header-cta {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    translate: 0 0;
+    box-shadow: 0 4px 12px -8px rgb(72 96 172 / .65);
+  }
+  .header-cta::before {
+    position: absolute;
+    z-index: -1;
+    inset: -20% auto -20% -45%;
+    width: 34%;
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / .28), transparent);
+    content: "";
+    pointer-events: none;
+    transform: skewX(-20deg);
+    transition: left 560ms cubic-bezier(.2,.8,.2,1);
+  }
+  .header-cta:hover,
+  .header-cta:focus-visible {
+    translate: 0 -2px;
+    box-shadow: 0 10px 22px -12px rgb(72 96 172 / .72), 0 4px 12px -8px rgb(240 84 36 / .55);
+  }
+  .header-cta:hover::before,
+  .header-cta:focus-visible::before { left: 125%; }
+  .header-cta:active {
+    translate: 0 0;
+    scale: .98;
+  }
+  .header-menu-toggle:hover {
+    background: color-mix(in srgb, var(--primary) 9%, var(--surface));
+    color: var(--primary);
+  }
+}
+@keyframes nav-icon-pop {
+  0% { transform: translateY(0) rotate(0) scale(1); }
+  45% { transform: translateY(-3px) rotate(-12deg) scale(1.16); }
+  100% { transform: translateY(-1px) rotate(-7deg) scale(1.08); }
+}
+@media (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+  nav[aria-label="Main"] .nav-item-link {
+    transition: background-color 220ms ease, color 220ms ease, translate 220ms ease;
+  }
+  nav[aria-label="Main"] .nav-item-link:active {
+    translate: 3px 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .header-cta::before { display: none; }
+  .nav-item-link:hover,
+  .nav-item-link:focus-visible,
+  .header-cta:hover,
+  .header-cta:focus-visible,
+  .header-cta:active {
+    translate: none !important;
+    scale: none !important;
+  }
+}
