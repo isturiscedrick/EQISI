@@ -35,6 +35,7 @@ export function Component() {
 
       <PageHero
         id="home-hero"
+        className="home-showcase-hero"
         large
         centered
         eyebrow="Integrated Industrial & Workforce Solutions"
@@ -55,11 +56,11 @@ export function Component() {
       />
 
       {/* Key stats: a card that overlaps the hero */}
-      <section className="relative z-10 pt-4 pb-8 sm:py-16" aria-label="Key Highlights">
+      <section className="home-showcase-stats relative z-10 border-b border-border/70 bg-surface-muted/55 py-8 sm:py-10" aria-label="Key Highlights">
         <Container>
-          <div className="grid grid-cols-2 gap-2.5 rounded-2xl border border-border/80 bg-surface p-3 shadow-[0_10px_30px_-18px_rgba(30,53,84,0.35)] sm:gap-4 sm:rounded-3xl sm:p-6 md:grid-cols-4">
+          <div className="mx-auto grid max-w-5xl grid-cols-2 gap-2.5 rounded-2xl border border-border/80 bg-surface p-3 shadow-[0_10px_30px_-18px_rgba(30,53,84,0.35)] sm:gap-3 sm:rounded-3xl sm:p-4 md:grid-cols-4 md:p-5">
             {stats.map((s, i) => (
-              <Reveal key={s.label} delay={i * 100} className={cn('min-w-0 rounded-xl border border-border/70 bg-canvas/70 p-3 shadow-[0_3px_12px_-9px_rgba(30,53,84,0.28)] sm:rounded-2xl sm:p-4', s.tone)}>
+              <Reveal key={s.label} delay={i * 100} className={cn('min-w-0 rounded-xl border border-border/70 bg-canvas/80 p-3 shadow-[0_3px_12px_-9px_rgba(30,53,84,0.28)] sm:rounded-xl sm:p-3.5', s.tone)}>
                 <s.icon aria-hidden="true" className="mb-2 size-4 text-primary sm:size-5" />
                 <CountUp
                   value={s.value}
@@ -74,7 +75,7 @@ export function Component() {
         </Container>
       </section>
 
-      <section className="border-y border-border/70 bg-surface py-8" aria-label="Selected clients">
+      <section className="home-showcase-clients border-b border-border/70 bg-surface py-7 sm:py-8" aria-label="Selected clients">
         <Container>
           <p className="mb-6 text-center text-xs font-bold tracking-[0.18em] text-fg-muted uppercase">Trusted by teams across industries</p>
           <LogoMarquee />
