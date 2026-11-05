@@ -89,8 +89,8 @@ export function Component() {
             <h2 id="home-companies-heading" className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">
               A connected group of specialists
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-fg-muted">
-              Explore the companies within our group and visit their websites to learn more.
+            <p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-fg-muted">
+              Our group brings together Tektonix and Megatekton as distinct, specialized companies within one connected network. Each company has its own identity and focus, while working under a shared commitment to practical solutions, strong partnerships and dependable service. Together, they broaden the expertise and capabilities available across the group.
             </p>
           </Reveal>
 
