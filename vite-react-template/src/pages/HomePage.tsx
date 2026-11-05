@@ -1,4 +1,6 @@
-import { ArrowRight, CalendarDays, Cpu, Handshake, ShieldCheck, UsersRound } from 'lucide-react'
+import { ArrowRight, CalendarDays, Cpu, ExternalLink, Handshake, ShieldCheck, UsersRound } from 'lucide-react'
+import tektonixLogo from '@/assets/eqisi/subsidiary/viber_image_2026-10-30_12-44-49-627.png'
+import megatektonLogo from '@/assets/eqisi/subsidiary/viber_image_2026-10-30_12-45-01-890.png'
 import { Link } from 'react-router'
 import { Container } from '@/components/layout/Container'
 import { GlobeVisual } from '@/components/home/GlobeVisual'
@@ -77,6 +79,68 @@ export function Component() {
         <Container>
           <p className="mb-6 text-center text-xs font-bold tracking-[0.18em] text-fg-muted uppercase">Trusted by teams across industries</p>
           <LogoMarquee />
+        </Container>
+      </section>
+
+      <section className="border-b border-border bg-canvas py-16 sm:py-20" aria-labelledby="home-companies-heading">
+        <Container>
+          <Reveal className="mx-auto mb-10 max-w-2xl text-center">
+            <p className="mb-3 text-sm font-bold tracking-[0.18em] text-warning uppercase">Our Companies</p>
+            <h2 id="home-companies-heading" className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">
+              A connected group of specialists
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-fg-muted">
+              Explore the companies within our group and visit their websites to learn more.
+            </p>
+          </Reveal>
+
+          <div className="mx-auto grid max-w-5xl gap-5 md:grid-cols-2">
+            <Reveal>
+              <a
+                href="https://tektonix.cmatrixinc.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visit Tektonix website (opens in a new tab)"
+                className="group flex h-full min-h-64 flex-col rounded-2xl border border-border bg-surface p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-elevated focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:p-8"
+              >
+                <div className="flex min-h-40 flex-1 items-center justify-center rounded-xl bg-surface-muted/60 px-5 py-6">
+                  <img src={tektonixLogo} alt="Tektonix logo" loading="lazy" className="max-h-32 w-full object-contain transition-transform duration-300 group-hover:scale-[1.04]" />
+                </div>
+                <div className="mt-6 flex items-center justify-between gap-4">
+                  <div>
+                    <h3 className="text-xl font-bold text-fg">Tektonix</h3>
+                    <p className="mt-1 text-sm text-fg-muted">Visit company website</p>
+                  </div>
+                  <span className="grid size-11 shrink-0 place-items-center rounded-full bg-primary/10 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white">
+                    <ExternalLink aria-hidden="true" className="size-5" />
+                  </span>
+                </div>
+              </a>
+            </Reveal>
+
+            <Reveal delay={120}>
+              <a
+                href="https://mmc.cmatrixinc.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visit Megatekton website (opens in a new tab)"
+                className="group flex h-full min-h-64 flex-col rounded-2xl border border-border bg-surface p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-elevated focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:p-8"
+              >
+                <div className="flex min-h-40 flex-1 items-center justify-center rounded-xl bg-surface-muted/60 px-5 py-6">
+                  <img src={megatektonLogo} alt="Megatekton logo" loading="lazy" className="max-h-32 w-full object-contain transition-transform duration-300 group-hover:scale-[1.04]" />
+                </div>
+                <div className="mt-6 flex items-center justify-between gap-4">
+                  <div>
+                    <h3 className="text-xl font-bold text-fg">Megatekton</h3>
+                    <p className="mt-1 text-sm text-fg-muted">Visit company website</p>
+                  </div>
+                  <span className="grid size-11 shrink-0 place-items-center rounded-full bg-primary/10 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white">
+                    <ExternalLink aria-hidden="true" className="size-5" />
+                  </span>
+                </div>
+              </a>
+            </Reveal>
+          </div>
         </Container>
       </section>
 
