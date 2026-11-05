@@ -27,7 +27,7 @@ export function ScrollStory({ eyebrow, title, description, steps, visual }: Scro
     if (!section || steps.length < 2) return
 
     const mm = gsap.matchMedia()
-    mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
+    mm.add('(min-width: 1024px) and (min-height: 780px) and (prefers-reduced-motion: no-preference)', () => {
       const items = gsap.utils.toArray<HTMLElement>('[data-story-step]', section)
       if (!items.length) return
 
