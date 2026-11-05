@@ -67,7 +67,15 @@ export function Component() {
             const Icon = systemIcon(name)
             return (
               <Reveal key={name} delay={(i % 3) * 100} className="h-full">
-                <details data-service-card className={cn(card, 'service-system-card group/service motion-border border-t-4 border-t-primary open:shadow-elevated')}>
+                <details
+                  data-service-card
+                  onPointerMove={(event) => {
+                    const bounds = event.currentTarget.getBoundingClientRect()
+                    event.currentTarget.style.setProperty('--service-spot-x', `${event.clientX - bounds.left}px`)
+                    event.currentTarget.style.setProperty('--service-spot-y', `${event.clientY - bounds.top}px`)
+                  }}
+                  className={cn(card, 'service-system-card group/service motion-border border-t-4 border-t-primary open:shadow-elevated')}
+                >
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 [&::-webkit-details-marker]:hidden">
                     <span className="flex min-w-0 items-center gap-4">
                       <span className={cn(iconTile, 'service-system-icon')}>
