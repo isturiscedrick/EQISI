@@ -21,17 +21,17 @@ export function SystemsScroll() {
     if (!scene || !rail || !bar || !section || c.systems.length < 2) return
 
     const mm = gsap.matchMedia()
-    mm.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => {
+    mm.add('(min-width: 1100px) and (min-height: 760px) and (prefers-reduced-motion: no-preference)', () => {
       const getDistance = () => Math.max(0, rail.scrollWidth - scene.clientWidth)
       const tween = gsap.to(rail, {
         x: () => -getDistance(),
         ease: 'none',
         scrollTrigger: {
-          trigger: section,
-          start: 'top top+=88',
+          trigger: scene,
+          start: 'top top+=96',
           end: () => '+=' + getDistance(),
           scrub: 1,
-          pin: section,
+          pin: scene,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
@@ -40,8 +40,8 @@ export function SystemsScroll() {
         scaleX: 1,
         ease: 'none',
         scrollTrigger: {
-          trigger: section,
-          start: 'top top+=88',
+          trigger: scene,
+          start: 'top top+=96',
           end: () => '+=' + getDistance(),
           scrub: 1,
           invalidateOnRefresh: true,
@@ -61,12 +61,12 @@ export function SystemsScroll() {
 
   return (
     <div ref={root} className="systems-scroll-scene relative">
-      <div className="systems-scroll-stage flex min-h-[390px] flex-col justify-center gap-8 py-4 md:min-h-[min(66vh,560px)] md:overflow-hidden">
-        <div ref={track} className="systems-scroll-track flex w-full gap-4 overflow-x-auto overscroll-x-contain pb-4 md:w-max md:overflow-visible md:pb-2">
+      <div className="systems-scroll-stage flex min-h-[320px] flex-col justify-center gap-6 py-4 min-[1100px]:min-h-[min(62vh,520px)] min-[1100px]:overflow-hidden">
+        <div ref={track} className="systems-scroll-track flex w-full gap-4 overflow-x-auto overscroll-x-contain pb-4 snap-x snap-mandatory min-[1100px]:w-max min-[1100px]:overflow-visible min-[1100px]:pb-2">
           {c.systems.map((system, index) => {
             const Icon = systemIcon(system)
             return (
-              <article key={system} className={cn(card, 'motion-border systems-feature-card systems-scroll-card w-[min(82vw,300px)] shrink-0 snap-start sm:w-[320px] md:w-[min(34vw,360px)]')}>
+              <article key={system} className={cn(card, 'motion-border systems-feature-card systems-scroll-card w-[min(82vw,300px)] shrink-0 snap-start sm:w-[320px] min-[1100px]:w-[min(34vw,360px)]')}>
                 <div className="flex items-center justify-between">
                   <span className={cn(iconTile, 'systems-icon-tile')}><Icon aria-hidden="true" className="size-6" /></span>
                   <span className="systems-card-number text-sm font-bold tracking-widest text-warning">{String(index + 1).padStart(2, '0')}</span>
@@ -86,7 +86,7 @@ export function SystemsScroll() {
             )
           })}
         </div>
-        <div className="hidden items-center gap-4 md:flex" aria-hidden="true">
+        <div className="hidden items-center gap-4 min-[1100px]:flex" aria-hidden="true">
           <span className="text-xs font-bold tracking-[0.18em] text-fg-muted">SCROLL TO EXPLORE</span>
           <span className="h-1 flex-1 overflow-hidden rounded-full bg-primary/10"><span ref={progress} className="block h-full origin-left scale-x-0 rounded-full bg-gradient-to-r from-primary to-highlight" /></span>
           <span className="text-xs font-bold text-fg-muted">06 SYSTEMS</span>
