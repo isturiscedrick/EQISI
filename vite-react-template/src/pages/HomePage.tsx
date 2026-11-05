@@ -138,8 +138,8 @@ export function Component() {
       </Section>
 
       {/* About Teaser */}
-      <section className="border-b border-border bg-canvas py-16 sm:py-20" aria-labelledby="home-about-heading">
-        <Container className="grid items-center gap-12 lg:grid-cols-2">
+      <section className="border-b border-border bg-canvas py-12 sm:py-16" aria-labelledby="home-about-heading">
+        <Container className="grid items-center gap-8 lg:grid-cols-2">
           <Reveal>
             <p className="flex items-center gap-3 text-sm font-bold tracking-widest text-warning uppercase">
               <span aria-hidden="true" className="h-1 w-8 rounded-full bg-highlight" />
@@ -170,8 +170,8 @@ export function Component() {
       </section>
 
       {/* Careers & Benefits Teaser */}
-      <section className="border-b border-border bg-surface-muted py-16 sm:py-20" aria-labelledby="home-careers-heading">
-        <Container className="grid items-center gap-12 lg:grid-cols-2">
+      <section className="border-b border-border bg-surface-muted py-12 sm:py-16" aria-labelledby="home-careers-heading">
+        <Container className="grid items-center gap-8 lg:grid-cols-2">
           <Reveal className="aspect-[16/10] w-full overflow-hidden rounded-2xl border border-border bg-surface-muted shadow-card">
             <img
               src={asset('benefits.webp')}
