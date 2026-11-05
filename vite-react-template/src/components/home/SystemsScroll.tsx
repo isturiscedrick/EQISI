@@ -18,6 +18,7 @@ export function SystemsScroll() {
     const scene = root.current
     const frame = viewport.current
     const rail = track.current
+    const section = scene.closest<HTMLElement>('#systems-preview') ?? scene
     const progressBar = progress.current
     if (!scene || !frame || !rail || !c.systems.length) return
 
@@ -29,10 +30,10 @@ export function SystemsScroll() {
         x: () => -distance(),
         ease: 'none',
         scrollTrigger: {
-          trigger: scene,
+          trigger: section,
           start: 'top top+=88',
           end: () => `+=${distance()}`,
-          pin: scene,
+          pin: section,
           pinSpacing: true,
           scrub: 0.7,
           invalidateOnRefresh: true,
