@@ -623,3 +623,43 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .systems-horizontal-track { overflow-x: auto; }
 }
+
+
+/* Core Competencies ScrollTrigger viewport: clipped desktop rail, native touch swipe. */
+.systems-horizontal-viewport {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--primary) 58%, transparent) transparent;
+  overscroll-behavior-inline: contain;
+}
+.systems-horizontal-track {
+  width: max-content;
+  min-width: 100%;
+  padding-bottom: .75rem;
+  scroll-snap-type: x mandatory;
+}
+.systems-scroll-card {
+  flex: 0 0 min(84vw, 340px);
+  min-height: 220px;
+  scroll-snap-align: start;
+}
+@media (min-width: 1024px) and (min-height: 640px) and (prefers-reduced-motion: no-preference) {
+  .systems-horizontal-viewport { overflow: hidden; scrollbar-width: none; }
+  .systems-horizontal-viewport::-webkit-scrollbar { display: none; }
+  .systems-horizontal-track {
+    min-width: 0;
+    padding-bottom: 0;
+    scroll-snap-type: none;
+    will-change: transform;
+  }
+  .systems-scroll-card {
+    flex-basis: clamp(300px, 31vw, 370px);
+    min-height: 245px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .systems-horizontal-viewport { overflow-x: auto; }
+  .systems-horizontal-track { transform: none !important; }
+}
