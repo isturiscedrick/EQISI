@@ -32,7 +32,7 @@ export function PageHero({ id, eyebrow, title, description, actions, visual, lar
       const visual = section.querySelector<HTMLElement>('[data-hero-visual]')
       const pointerFine = window.matchMedia('(pointer: fine)').matches
       const setSpotX = gsap.quickTo(section, '--spot-x', { duration: 0.55, ease: 'power3.out', unit: 'px' })
-      const setSpotY = gsap.quickTo(section, '--spot-y', { duration: 0.55, ease: 'power3.out' })
+      const setSpotY = gsap.quickTo(section, '--spot-y', { duration: 0.55, ease: 'power3.out', unit: 'px' })
       const onPointerMove = (event: PointerEvent) => {
         const bounds = section.getBoundingClientRect()
         setSpotX(event.clientX - bounds.left)
@@ -122,7 +122,7 @@ export function PageHero({ id, eyebrow, title, description, actions, visual, lar
           {actions && <div data-hero-step="actions" className={cn('mt-5 flex w-full flex-col gap-3 sm:mt-6 sm:w-auto sm:flex-row', centered && 'justify-center [&>a]:min-h-11 [&>a]:w-full [&>a]:justify-center [&>a]:px-4 [&>a]:py-2 [&>a]:text-sm sm:[&>a]:min-h-12 sm:[&>a]:w-auto sm:[&>a]:px-6 sm:[&>a]:py-3 sm:[&>a]:text-base')}>{actions}</div>}
         </div>
         {visual && (
-          <div data-hero-visual data-parallax="8" className={cn('hero-visual-depth', centered ? 'relative z-10 mt-3 flex w-full justify-center sm:mt-5' : 'w-full')}>
+          <div data-hero-visual className={cn('hero-visual-depth', centered ? 'relative z-10 mt-3 flex w-full justify-center sm:mt-5' : 'w-full')}>
             {visual}
           </div>
         )}
