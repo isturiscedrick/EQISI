@@ -15,7 +15,6 @@ import { CountUp } from '@/components/ui/CountUp'
 import { Reveal } from '@/components/ui/Reveal'
 import { bannerButton } from '@/components/ui/surface-styles'
 import { siteConfig } from '@/config/site'
-import * as c from '@/content/eqisi'
 import { asset } from '@/lib/assets'
 import { cn } from '@/lib/cn'
 
@@ -36,6 +35,7 @@ export function Component() {
         id="home-hero"
         large
         centered
+        showcase
         eyebrow="Integrated Industrial & Workforce Solutions"
         title={<>We deliver with<br className="hidden sm:block" /> automation.</>}
         description="Connected operations. Powered by people and technology."
