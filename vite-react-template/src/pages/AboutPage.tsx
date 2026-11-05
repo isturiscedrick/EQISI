@@ -10,6 +10,7 @@ import { buttonStyles } from '@/components/ui/button-styles'
 import { Reveal } from '@/components/ui/Reveal'
 import { ScrollProgressTrack } from '@/components/ui/ScrollProgressTrack'
 import { ExecutiveProfileDialog } from '@/components/ui/ExecutiveProfileDialog'
+import { ScrollStory } from '@/components/ui/ScrollStory'
 import { bannerButton, card, iconTile } from '@/components/ui/surface-styles'
 import * as c from '@/content/eqisi'
 import { asset } from '@/lib/assets'
@@ -94,6 +95,26 @@ export function Component() {
           </Reveal>
         </div>
       </Section>
+
+      <ScrollStory
+        eyebrow="Our Heritage"
+        title="A foundation built over time"
+        description="EQISI's story connects a long-standing industry foundation with the people, services and systems supporting operations today."
+        steps={[
+          { title: '1986 — A group foundation', description: "Our industry heritage traces back to the establishment of the JRS (Jose R. Simeon) Group of Companies, formerly Matrix Group of Companies." },
+          { title: 'Connected capabilities', description: 'EQISI brings workforce, warehousing, logistics, facility support and management systems together for clients.' },
+          { title: 'Supporting what comes next', description: 'Our focus is to help businesses coordinate people, processes and technology as operational needs evolve.' },
+        ]}
+        visual={
+          <div className="about-story-visual overflow-hidden rounded-2xl border border-border bg-surface">
+            <img src={asset('industry.webp')} alt="Industrial manufacturing and warehousing facility" width={900} height={1012} loading="lazy" className="aspect-[5/4] w-full object-cover" />
+            <div className="grid grid-cols-2 gap-3 p-4 sm:p-5">
+              <div className="rounded-xl bg-canvas p-4"><span className="text-xs font-bold tracking-wider text-fg-muted uppercase">Heritage</span><p className="mt-1 text-2xl font-extrabold text-primary">1986</p></div>
+              <div className="rounded-xl bg-canvas p-4"><span className="text-xs font-bold tracking-wider text-fg-muted uppercase">Systems</span><p className="mt-1 text-2xl font-extrabold text-primary">06</p></div>
+            </div>
+          </div>
+        }
+      />
 
       {/* Mission & Vision */}
       <Section id="mission-vision" muted eyebrow="Direction & Purpose" title="Where we are headed">
