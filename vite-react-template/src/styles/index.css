@@ -592,3 +592,34 @@ body {
   }
   .systems-carousel { scroll-behavior: auto; }
 }
+
+
+/* Core Competencies: scroll-driven horizontal rail on desktop, swipe rail on touch layouts. */
+.systems-horizontal-track {
+  overscroll-behavior-inline: contain;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--primary) 60%, transparent) transparent;
+}
+.systems-horizontal-track::-webkit-scrollbar { height: 6px; }
+.systems-horizontal-track::-webkit-scrollbar-track { background: transparent; }
+.systems-horizontal-track::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 58%, transparent);
+}
+.systems-scroll-card {
+  flex: 0 0 min(84vw, 340px);
+  min-height: 220px;
+}
+@media (min-width: 1024px) and (min-height: 640px) {
+  .systems-horizontal-track {
+    overflow: visible;
+    will-change: transform;
+  }
+  .systems-scroll-card {
+    flex: 0 0 clamp(300px, 31vw, 370px);
+    min-height: 245px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .systems-horizontal-track { overflow-x: auto; }
+}
