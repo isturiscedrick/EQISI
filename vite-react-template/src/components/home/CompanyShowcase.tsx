@@ -206,12 +206,12 @@ export function CompanyShowcase() {
   return (
     <section
       ref={sectionRef}
-      className="company-showcase relative isolate overflow-hidden border-b border-border bg-canvas py-16 sm:py-20 lg:py-24"
+      className="company-showcase relative isolate overflow-hidden border-b border-border bg-canvas py-12 sm:py-16 lg:py-18"
       aria-labelledby="home-companies-heading"
     >
       <div aria-hidden="true" className="company-showcase-glow pointer-events-none absolute inset-0 -z-10" />
       <Container>
-        <div ref={headingRef} className="mx-auto mb-10 max-w-3xl text-center sm:mb-14">
+        <div ref={headingRef} className="mx-auto mb-7 max-w-3xl text-center sm:mb-9">
           <p data-company-eyebrow className="mb-3 text-sm font-bold tracking-[0.18em] text-warning uppercase">Our Companies</p>
           <h2 data-company-title id="home-companies-heading" className="company-showcase-heading text-3xl font-bold tracking-tight text-primary sm:text-4xl lg:text-5xl">
             {headingWords.map((word, index) => (
@@ -221,7 +221,7 @@ export function CompanyShowcase() {
               </span>
             ))}
           </h2>
-          <p data-company-description className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-fg-muted sm:text-lg">
+          <p data-company-description className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed sm:text-base text-fg-muted sm:text-lg">
             Explore the companies within our group and visit their websites to learn more.
           </p>
         </div>
@@ -242,7 +242,7 @@ export function CompanyShowcase() {
           </svg>
         </div>
 
-        <div ref={cardsRef} className="company-showcase-grid relative mx-auto grid max-w-5xl gap-5 md:grid-cols-2 md:gap-7">
+        <div ref={cardsRef} className="company-showcase-grid relative mx-auto grid max-w-5xl gap-4 md:grid-cols-2 md:gap-5">
           {companies.map((company, index) => (
             <a
               key={company.name}
@@ -251,10 +251,10 @@ export function CompanyShowcase() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Visit ${company.name} website (opens in a new tab)`}
-              className="company-showcase-card group relative flex h-full min-h-80 flex-col rounded-2xl border border-border bg-surface p-5 shadow-card sm:p-7"
+              className="company-showcase-card group relative flex h-full min-h-72 flex-col rounded-2xl border border-border bg-surface p-4 shadow-card sm:p-5"
             >
               <span aria-hidden="true" className="company-card-index">{String(index + 1).padStart(2, '0')}</span>
-              <div className="company-logo-stage flex min-h-44 flex-1 items-center justify-center overflow-hidden rounded-xl bg-surface-muted/60 px-5 py-7 sm:min-h-48">
+              <div className="company-logo-stage flex min-h-36 flex-1 items-center justify-center overflow-hidden rounded-xl bg-surface-muted/60 px-4 py-5 sm:min-h-40">
                 <img
                   data-company-logo
                   src={company.logo}
@@ -263,11 +263,11 @@ export function CompanyShowcase() {
                   className="company-showcase-logo max-h-32 w-full object-contain"
                 />
               </div>
-              <div className="mt-6 flex items-start justify-between gap-4">
+              <div className="mt-4 flex items-start justify-between gap-4">
                 <div className="min-w-0">
                   <h3 className="text-xl font-bold text-fg sm:text-2xl">{company.name}</h3>
-                  <p className="mt-2 max-w-sm text-sm leading-relaxed text-fg-muted">{company.description}</p>
-                  <p className="mt-4 inline-flex items-center gap-2 text-xs font-bold tracking-wide text-primary uppercase">
+                  <p className="mt-1.5 max-w-sm text-sm leading-relaxed text-fg-muted">{company.description}</p>
+                  <p className="mt-3 inline-flex items-center gap-2 text-xs font-bold tracking-wide text-primary uppercase">
                     Visit company website <span aria-hidden="true" className="company-link-line" />
                   </p>
                 </div>
