@@ -1058,3 +1058,59 @@ header nav a::after {
     scale: none !important;
   }
 }
+
+
+/* Advanced navigation choreography: active capsule, pointer glow and responsive motion. */
+.header-nav-motion { position: relative; isolation: isolate; }
+.nav-active-pill {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 9%, var(--surface));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--primary) 13%, transparent), 0 5px 14px -11px rgb(26 35 66 / .5);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 420ms cubic-bezier(.2,.8,.2,1), width 420ms cubic-bezier(.2,.8,.2,1), height 420ms cubic-bezier(.2,.8,.2,1), opacity 180ms ease;
+}
+.nav-pointer-glow {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(150px circle at var(--nav-glow-x, 50%) var(--nav-glow-y, 50%), rgb(72 96 172 / .12), transparent 75%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 240ms ease;
+}
+.header-nav-motion:hover .nav-pointer-glow { opacity: 1; }
+.nav-label { display: inline-flex; }
+.nav-label-char {
+  display: inline-block;
+  transition: transform 240ms cubic-bezier(.2,.8,.2,1), color 220ms ease;
+  transition-delay: calc(var(--char-index, 0) * 9ms);
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .nav-item-link:hover .nav-label-char,
+  .nav-item-link:focus-visible .nav-label-char {
+    transform: translateY(-1.5px);
+    color: var(--primary);
+  }
+  .nav-item-link[aria-current="page"] .nav-label-char { color: var(--primary); }
+  .header-nav-motion .nav-item-link { position: relative; z-index: 1; }
+}
+.header-smart-hidden {
+  transform: translateY(calc(-100% - 2px));
+  transition: transform 320ms cubic-bezier(.2,.8,.2,1), background-color 220ms ease, box-shadow 220ms ease;
+}
+@media (max-width: 767px) {
+  .nav-active-pill, .nav-pointer-glow { display: none; }
+  .header-nav-motion { overscroll-behavior: contain; }
+  .header-nav-motion .nav-item-link { min-height: 3.25rem; }
+  .header-smart-hidden { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-active-pill, .nav-label-char, .header-smart-hidden { transition: none !important; }
+  .nav-pointer-glow { display: none !important; }
+}
