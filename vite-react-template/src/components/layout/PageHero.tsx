@@ -12,10 +12,11 @@ interface PageHeroProps {
   visual?: ReactNode
   large?: boolean
   centered?: boolean
+  showcase?: boolean
 }
 
 /** Shared hero with an optional centered, showcase-style composition. */
-export function PageHero({ id, eyebrow, title, description, actions, visual, large = false, centered = false }: PageHeroProps) {
+export function PageHero({ id, eyebrow, title, description, actions, visual, large = false, centered = false, showcase = false }: PageHeroProps) {
   const sectionRef = useRef<HTMLElement>(null)
 
   // GSAP owns the cinematic entrance and scroll depth. Reduced-motion users get the static layout.
@@ -82,7 +83,7 @@ export function PageHero({ id, eyebrow, title, description, actions, visual, lar
   return (
     <section
       ref={sectionRef}
-      className={cn('relative overflow-hidden border-b border-border bg-canvas', centered ? 'pt-5 pb-3 sm:pt-10 sm:pb-8 lg:pt-11 lg:pb-8' : 'py-12 sm:py-20 lg:py-24')}
+      className={cn('relative overflow-hidden border-b border-border bg-canvas', showcase ? 'pt-5 pb-5 sm:pt-8 sm:pb-7 lg:pt-9 lg:pb-7' : centered ? 'pt-5 pb-3 sm:pt-10 sm:pb-8 lg:pt-11 lg:pb-8' : 'py-12 sm:py-20 lg:py-24')}
       aria-labelledby={`${id}-heading`}
     >
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
@@ -93,7 +94,7 @@ export function PageHero({ id, eyebrow, title, description, actions, visual, lar
         <div data-parallax="15" className="absolute -bottom-24 left-1/4 size-72 rounded-full bg-highlight/10 blur-3xl" />
       </div>
 
-      <Container className={cn('relative items-center gap-12', centered ? 'flex flex-col text-center gap-3 sm:gap-5 lg:gap-6' : visual ? 'grid lg:grid-cols-2' : 'flex')}>
+      <Container className={cn('relative items-center gap-12', centered ? 'flex flex-col text-center gap-3 sm:gap-4 lg:gap-5' : visual ? 'grid lg:grid-cols-2' : 'flex')}>
         <div className={cn('relative z-20', centered ? 'mx-auto max-w-3xl' : !visual && 'max-w-3xl')}>
           <div data-hero-step="eyebrow" className={cn('inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-1.5 text-xs font-bold tracking-wider text-warning uppercase shadow-subtle', centered && 'mx-auto')}>
             <span className="size-2 rounded-full bg-highlight" />
@@ -118,7 +119,7 @@ export function PageHero({ id, eyebrow, title, description, actions, visual, lar
           {actions && <div data-hero-step="actions" className={cn('mt-5 flex w-full flex-col gap-3 sm:mt-6 sm:w-auto sm:flex-row', centered && 'justify-center [&>a]:min-h-11 [&>a]:w-full [&>a]:justify-center [&>a]:px-4 [&>a]:py-2 [&>a]:text-sm sm:[&>a]:min-h-12 sm:[&>a]:w-auto sm:[&>a]:px-6 sm:[&>a]:py-3 sm:[&>a]:text-base')}>{actions}</div>}
         </div>
         {visual && (
-          <div data-hero-visual className={cn(centered ? 'relative z-10 mt-3 flex w-full justify-center sm:mt-5' : 'w-full')}>
+          <div data-hero-visual className={cn(centered ? 'relative z-10 mt-2 flex w-full justify-center sm:mt-3' : 'w-full')}>
             {visual}
           </div>
         )}
