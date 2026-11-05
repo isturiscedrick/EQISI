@@ -53,7 +53,10 @@ export function PageHero({ id, eyebrow, title, description, actions, visual, lar
         }, '-=0.2')
       }
       if (description) timeline.fromTo(description, { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: 0.55 }, '-=0.38')
-      if (actions) timeline.fromTo(actions, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.48 }, '-=0.3')
+      if (actions) {
+        actions.querySelectorAll<HTMLElement>('a, button').forEach((action) => action.classList.add('magnetic'))
+        timeline.fromTo(actions, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.48 }, '-=0.3')
+      }
       if (visual) timeline.fromTo(visual, { autoAlpha: 0, y: 22, scale: 0.985 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.85 }, '-=0.4')
 
       gsap.utils.toArray<HTMLElement>('[data-parallax]', section).forEach((el) => {
@@ -110,6 +113,7 @@ export function PageHero({ id, eyebrow, title, description, actions, visual, lar
           >
             {title}
           </h1>
+          <span aria-hidden="true" className={cn('hero-accent-rule', centered && 'mx-auto')} />
           {description && (
             <div data-hero-step="description" className={cn('mt-3 max-w-[34rem] text-[13px] leading-[1.65] text-fg-muted sm:mt-4 sm:text-lg', centered && 'mx-auto max-w-xl')}>
               {description}
@@ -118,7 +122,7 @@ export function PageHero({ id, eyebrow, title, description, actions, visual, lar
           {actions && <div data-hero-step="actions" className={cn('mt-5 flex w-full flex-col gap-3 sm:mt-6 sm:w-auto sm:flex-row', centered && 'justify-center [&>a]:min-h-11 [&>a]:w-full [&>a]:justify-center [&>a]:px-4 [&>a]:py-2 [&>a]:text-sm sm:[&>a]:min-h-12 sm:[&>a]:w-auto sm:[&>a]:px-6 sm:[&>a]:py-3 sm:[&>a]:text-base')}>{actions}</div>}
         </div>
         {visual && (
-          <div data-hero-visual className={cn(centered ? 'relative z-10 mt-3 flex w-full justify-center sm:mt-5' : 'w-full')}>
+          <div data-hero-visual data-parallax="8" className={cn('hero-visual-depth', centered ? 'relative z-10 mt-3 flex w-full justify-center sm:mt-5' : 'w-full')}>
             {visual}
           </div>
         )}
