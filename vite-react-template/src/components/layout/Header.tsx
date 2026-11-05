@@ -1,7 +1,7 @@
 import { ArrowRight, BriefcaseBusiness, Building2, Home, Mail, Menu, MessageCircle, UsersRound, X } from 'lucide-react'
 import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
 import { animate, stagger } from 'animejs'
-import { Link, NavLink } from 'react-router'
+import { Link, NavLink, useLocation } from 'react-router'
 import { buttonStyles } from '@/components/ui/button-styles'
 import { siteConfig } from '@/config/site'
 import { cn } from '@/lib/cn'
@@ -19,11 +19,15 @@ const navIcons = {
 export function Header() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [hidden, setHidden] = useState(false)
+  const location = useLocation()
   const menuId = useId()
   const toggleRef = useRef<HTMLButtonElement>(null)
   const navRef = useRef<HTMLElement>(null)
   const barRef = useRef<HTMLDivElement>(null)
   const headerRef = useRef<HTMLElement>(null)
+  const activePillRef = useRef<HTMLSpanElement>(null)
+  const lastScrollY = useRef(0)
 
   // Anime.js gives the mobile navigation a quick, lightweight entrance.
   useEffect(() => {
@@ -63,15 +67,58 @@ export function Header() {
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [open])
 
-  // Shrinks the header after the first few pixels.
+  // Compact the header near the top; reveal it when scrolling upward.
   useEffect(() => {
     function onScroll() {
-      setScrolled(window.scrollY > 8)
+      const currentY = window.scrollY
+      setScrolled(currentY > 8)
+      const delta = currentY - lastScrollY.current
+      if (open || currentY < 96) setHidden(false)
+      else if (Math.abs(delta) > 5) setHidden(delta > 0 && currentY > 180)
+      lastScrollY.current = currentY
     }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+  }, [open])
+
+  // Keep the active-page capsule aligned with the current desktop link.
+  useLayoutEffect(() => {
+    const nav = navRef.current
+    const pill = activePillRef.current
+    if (!nav || !pill) return
+    const update = () => {
+      if (window.matchMedia('(max-width: 767px)').matches) {
+        pill.style.opacity = '0'
+        return
+      }
+      const active = nav.querySelector<HTMLElement>('[aria-current="page"]')
+      if (!active) { pill.style.opacity = '0'; return }
+      const navRect = nav.getBoundingClientRect()
+      const rect = active.getBoundingClientRect()
+      pill.style.width = `${rect.width}px`
+      pill.style.height = `${rect.height}px`
+      pill.style.transform = `translate(${rect.left - navRect.left}px, ${rect.top - navRect.top}px)`
+      pill.style.opacity = '1'
+    }
+    update()
+    const observer = new ResizeObserver(update)
+    observer.observe(nav)
+    window.addEventListener('resize', update)
+    return () => { observer.disconnect(); window.removeEventListener('resize', update) }
+  }, [location.pathname])
+
+  // Fine-pointer magnetic response stays subtle and is disabled for touch/reduced motion.
+  function moveNavItem(event: React.PointerEvent<HTMLAnchorElement>) {
+    if (window.matchMedia('(pointer: coarse), (prefers-reduced-motion: reduce)').matches) return
+    const rect = event.currentTarget.getBoundingClientRect()
+    const x = (event.clientX - rect.left - rect.width / 2) * 0.10
+    const y = (event.clientY - rect.top - rect.height / 2) * 0.12
+    gsap.to(event.currentTarget, { x, y, duration: 0.22, ease: 'power2.out', overwrite: true })
+  }
+  function resetNavItem(event: React.PointerEvent<HTMLAnchorElement>) {
+    gsap.to(event.currentTarget, { x: 0, y: 0, duration: 0.42, ease: 'elastic.out(1, 0.55)', overwrite: true })
+  }
 
   // Entrance motion for the brand, desktop links and consultation action.
   useLayoutEffect(() => {
@@ -138,8 +185,9 @@ export function Header() {
       <header
         ref={headerRef}
         className={cn(
-          'sticky top-0 z-40 border-b border-border backdrop-blur transition-all duration-200',
+          'sticky top-0 z-40 border-b border-border backdrop-blur transition-all duration-300',
           scrolled ? 'bg-canvas/95 shadow-card' : 'bg-canvas/85',
+          hidden && !open && 'header-smart-hidden',
         )}
       >
         <div
@@ -168,12 +216,21 @@ export function Header() {
             ref={navRef}
             id={menuId}
             aria-label="Main"
+            onPointerMove={(event) => {
+              if (window.matchMedia('(pointer: coarse), (prefers-reduced-motion: reduce)').matches) return
+              const rect = event.currentTarget.getBoundingClientRect()
+              event.currentTarget.style.setProperty('--nav-glow-x', `${event.clientX - rect.left}px`)
+              event.currentTarget.style.setProperty('--nav-glow-y', `${event.clientY - rect.top}px`)
+            }}
             className={cn(
+              'header-nav-motion',
               open ? 'flex' : 'hidden',
               'fixed inset-y-0 left-0 right-auto z-50 h-dvh w-[min(82vw,320px)] flex-col gap-2 overflow-y-auto border-r border-border bg-canvas px-5 pb-6 pt-5 shadow-elevated md:static md:z-auto md:h-auto md:w-auto md:overflow-visible md:border-0 md:p-1',
               'md:flex md:flex-row md:items-center md:gap-1 md:rounded-full md:border md:border-border/70 md:bg-surface-muted/75 md:px-2 md:py-1 md:shadow-none',
             )}
           >
+            <span ref={activePillRef} aria-hidden="true" className="nav-active-pill" />
+            <div className="nav-pointer-glow" aria-hidden="true" />
             <div className="mb-4 flex items-center justify-between border-b border-border pb-4 text-left md:hidden">
               <span className="text-xs font-bold tracking-[0.18em] text-fg-muted uppercase">Main menu</span>
               <button type="button" onClick={() => setOpen(false)} aria-label="Close menu" className="inline-flex size-10 items-center justify-center rounded-full bg-surface-muted text-fg transition-colors hover:bg-border">
@@ -190,6 +247,8 @@ export function Header() {
                 end={item.to === '/'}
                 viewTransition
                 onClick={() => setOpen(false)}
+                onPointerMove={moveNavItem}
+                onPointerLeave={resetNavItem}
                 className={({ isActive }) =>
                   cn(
                     'nav-item-link group/nav relative inline-flex min-h-12 w-full items-center rounded-xl px-4 text-sm font-semibold transition-all duration-200 hover:translate-x-0.5 md:min-h-9 md:w-auto md:rounded-full',
@@ -200,7 +259,13 @@ export function Header() {
                 }
               >
                 <Icon aria-hidden="true" className="nav-item-icon mr-2 size-4 shrink-0" />
-                {item.label}
+                <span className="nav-label" aria-label={item.label}>
+                  {item.label.split('').map((character, index) => (
+                    <span key={`${item.to}-${index}`} className="nav-label-char" aria-hidden="true" style={{ '--char-index': index } as React.CSSProperties}>
+                      {character === ' ' ? '\u00a0' : character}
+                    </span>
+                  ))}
+                </span>
               </NavLink>
               )
             })}
