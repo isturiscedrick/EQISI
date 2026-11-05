@@ -594,72 +594,53 @@ body {
 }
 
 
-/* Core Competencies: scroll-driven horizontal rail on desktop, swipe rail on touch layouts. */
-.systems-horizontal-track {
-  overscroll-behavior-inline: contain;
-  scrollbar-width: thin;
-  scrollbar-color: color-mix(in srgb, var(--primary) 60%, transparent) transparent;
-}
-.systems-horizontal-track::-webkit-scrollbar { height: 6px; }
-.systems-horizontal-track::-webkit-scrollbar-track { background: transparent; }
-.systems-horizontal-track::-webkit-scrollbar-thumb {
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--primary) 58%, transparent);
-}
-.systems-scroll-card {
-  flex: 0 0 min(84vw, 340px);
-  min-height: 220px;
-}
-@media (min-width: 1024px) and (min-height: 640px) {
-  .systems-horizontal-track {
-    overflow: visible;
-    will-change: transform;
-  }
-  .systems-scroll-card {
-    flex: 0 0 clamp(300px, 31vw, 370px);
-    min-height: 245px;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .systems-horizontal-track { overflow-x: auto; }
-}
-
-
-/* Core Competencies ScrollTrigger viewport: clipped desktop rail, native touch swipe. */
+/* Core Competencies: GSAP owns desktop horizontal movement; touch layouts use native swipe. */
 .systems-horizontal-viewport {
+  display: block;
   width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
+  overscroll-behavior-inline: contain;
   scrollbar-width: thin;
   scrollbar-color: color-mix(in srgb, var(--primary) 58%, transparent) transparent;
-  overscroll-behavior-inline: contain;
 }
 .systems-horizontal-track {
+  display: flex;
+  flex-wrap: nowrap;
   width: max-content;
   min-width: 100%;
+  gap: 1.25rem;
   padding-bottom: .75rem;
   scroll-snap-type: x mandatory;
 }
 .systems-scroll-card {
   flex: 0 0 min(84vw, 340px);
+  width: min(84vw, 340px);
   min-height: 220px;
   scroll-snap-align: start;
 }
 @media (min-width: 1024px) and (min-height: 640px) and (prefers-reduced-motion: no-preference) {
-  .systems-horizontal-viewport { overflow: hidden; scrollbar-width: none; }
+  .systems-horizontal-viewport {
+    overflow: hidden !important;
+    scrollbar-width: none;
+  }
   .systems-horizontal-viewport::-webkit-scrollbar { display: none; }
   .systems-horizontal-track {
+    width: max-content;
     min-width: 0;
+    gap: 1.25rem;
     padding-bottom: 0;
     scroll-snap-type: none;
     will-change: transform;
   }
   .systems-scroll-card {
-    flex-basis: clamp(300px, 31vw, 370px);
+    flex: 0 0 clamp(300px, 31vw, 370px) !important;
+    width: clamp(300px, 31vw, 370px) !important;
+    min-width: clamp(300px, 31vw, 370px);
     min-height: 245px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .systems-horizontal-viewport { overflow-x: auto; }
+  .systems-horizontal-viewport { overflow-x: auto !important; }
   .systems-horizontal-track { transform: none !important; }
 }
