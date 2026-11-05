@@ -644,3 +644,86 @@ body {
   .systems-horizontal-viewport { overflow-x: auto !important; }
   .systems-horizontal-track { transform: none !important; }
 }
+
+
+/* Subsidiary showcase: restrained brand lighting, tactile card depth and animated details. */
+.company-showcase-glow {
+  background:
+    radial-gradient(ellipse at 18% 38%, rgb(72 96 172 / .075), transparent 34rem),
+    radial-gradient(ellipse at 84% 62%, rgb(240 84 36 / .065), transparent 30rem);
+}
+.company-showcase-card {
+  isolation: isolate;
+  overflow: hidden;
+  transform: translateZ(0);
+  transition: border-color 320ms ease, box-shadow 320ms ease, background-color 320ms ease;
+}
+.company-showcase-card::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(135deg, rgb(72 96 172 / .075), transparent 48%, rgb(240 84 36 / .055));
+  content: "";
+  opacity: 0;
+  transition: opacity 380ms ease;
+}
+.company-showcase-card:hover,
+.company-showcase-card:focus-visible {
+  border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
+  box-shadow: var(--shadow-elevated);
+}
+.company-showcase-card:hover::before,
+.company-showcase-card:focus-visible::before { opacity: 1; }
+.company-logo-stage {
+  position: relative;
+  isolation: isolate;
+}
+.company-logo-stage::after {
+  position: absolute;
+  z-index: -1;
+  width: 55%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(72 96 172 / .10), transparent 70%);
+  content: "";
+  transition: transform 500ms ease, opacity 500ms ease;
+}
+.company-showcase-card:hover .company-logo-stage::after {
+  transform: scale(1.45);
+  opacity: .75;
+}
+.company-card-index {
+  position: absolute;
+  top: .85rem;
+  right: 1rem;
+  color: var(--fg-muted);
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .16em;
+  opacity: .62;
+}
+.company-external-icon {
+  transition: color 300ms ease, background-color 300ms ease, transform 300ms ease;
+}
+.company-showcase-card:hover .company-external-icon,
+.company-showcase-card:focus-visible .company-external-icon {
+  transform: translate(2px, -2px);
+  color: white;
+  background: var(--primary);
+}
+.company-link-line {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1px;
+  background: var(--highlight);
+  transition: width 300ms ease;
+}
+.company-showcase-card:hover .company-link-line,
+.company-showcase-card:focus-visible .company-link-line { width: 2.5rem; }
+@media (prefers-reduced-motion: reduce) {
+  .company-showcase-card,
+  .company-showcase-card::before,
+  .company-logo-stage::after,
+  .company-external-icon,
+  .company-link-line { transition: none !important; }
+}
