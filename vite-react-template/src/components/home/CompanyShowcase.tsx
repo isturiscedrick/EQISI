@@ -115,8 +115,7 @@ export function CompanyShowcase() {
           '-=0.45',
         )
         timeline.to(particle, {
-          x: 500,
-          y: 0,
+          attr: { cx: 880 },
           duration: 1.4,
           ease: 'sine.inOut',
           repeat: 1,
