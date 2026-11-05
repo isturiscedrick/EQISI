@@ -72,7 +72,7 @@ export function ServiceExplorer() {
           })}
         </div>
       </div>
-      <div key={selected.id} className="service-explorer-panel relative flex flex-col justify-between rounded-2xl bg-surface-muted p-6 sm:p-8">
+      <div key={selected.id} aria-live="polite" className="service-explorer-panel relative flex flex-col justify-between rounded-2xl bg-surface-muted p-6 sm:p-8">
         <div>
           <span className="grid size-12 place-items-center rounded-xl bg-primary text-primary-fg shadow-subtle">
             <ActiveIcon aria-hidden="true" className="size-6" />
