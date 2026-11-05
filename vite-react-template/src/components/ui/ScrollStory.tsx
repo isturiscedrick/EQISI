@@ -63,8 +63,8 @@ export function ScrollStory({ eyebrow, title, description, steps, visual }: Scro
   }, [steps.length])
 
   return (
-    <section ref={root} className="relative border-y border-border bg-canvas py-14 sm:py-20 lg:min-h-[78vh] lg:py-16">
-      <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
+    <section ref={root} className="relative border-y border-border bg-canvas py-10 sm:py-14 lg:min-h-[70vh] lg:py-12">
+      <div className="mx-auto grid w-full max-w-6xl items-center gap-7 px-4 sm:px-6 lg:grid-cols-2 lg:gap-10 lg:px-8">
         <div className="relative">
           <p className="flex items-center gap-3 text-xs font-extrabold tracking-[0.2em] text-warning uppercase">
             <span aria-hidden="true" className="h-[3px] w-10 rounded-full bg-highlight" />
@@ -72,7 +72,7 @@ export function ScrollStory({ eyebrow, title, description, steps, visual }: Scro
           </p>
           <h2 className="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-fg sm:text-4xl">{title}</h2>
           <p className="mt-4 max-w-xl text-sm leading-7 text-fg-muted sm:text-base">{description}</p>
-          <ol className="mt-8 space-y-5">
+          <ol className="mt-6 space-y-4">
             {steps.map((step, index) => (
               <li key={step.title} data-story-step className={cn('border-l-2 pl-5 transition-colors', index === 0 ? 'border-highlight' : 'border-border')}>
                 <span className="text-xs font-extrabold tracking-[0.16em] text-warning">0{index + 1}</span>
@@ -82,7 +82,7 @@ export function ScrollStory({ eyebrow, title, description, steps, visual }: Scro
             ))}
           </ol>
         </div>
-        <div data-story-visual className="relative mx-auto w-full max-w-xl rounded-3xl border border-border bg-surface-muted p-5 shadow-elevated sm:p-8">
+        <div data-story-visual className="relative mx-auto w-full max-w-xl rounded-3xl border border-border bg-surface-muted p-4 shadow-elevated sm:p-6">
           <div aria-hidden="true" className="pointer-events-none absolute -inset-5 rounded-[2rem] bg-primary/5 blur-2xl" />
           <div className="relative">{visual}</div>
         </div>
