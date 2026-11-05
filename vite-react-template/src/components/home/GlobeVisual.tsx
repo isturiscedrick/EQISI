@@ -274,7 +274,7 @@ export function GlobeVisual() {
         viewBox="0 0 900 560"
         role="img"
         aria-labelledby="eqisi-globe-title"
-        className="globe-parallax relative z-10 mx-auto block h-[clamp(220px,42vw,300px)] w-full max-w-[760px] overflow-visible sm:h-[clamp(290px,36vw,360px)]"
+        className="globe-parallax relative z-10 mx-auto block h-[clamp(210px,25vw,260px)] w-full max-w-[720px] overflow-visible sm:h-[clamp(230px,24vw,280px)]"
       >
         <title id="eqisi-globe-title">EQISI animated rotating wireframe globe with an orbiting satellite</title>
         <defs>
