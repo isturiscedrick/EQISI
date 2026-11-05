@@ -53,10 +53,10 @@ export function Component() {
         visual={<GlobeVisual />}
       />
 
-      {/* Key stats: a card that overlaps the hero */}
-      <section className="relative z-10 pt-4 pb-8 sm:py-16" aria-label="Key Highlights">
+      {/* Key highlights: separated from the hero to prevent collisions on short screens. */}
+      <section className="relative z-10 pt-7 pb-10 sm:pt-10 sm:pb-14 lg:py-16" aria-label="Key Highlights">
         <Container>
-          <div className="grid grid-cols-2 gap-2.5 rounded-2xl border border-border/80 bg-surface p-3 shadow-[0_10px_30px_-18px_rgba(30,53,84,0.35)] sm:gap-4 sm:rounded-3xl sm:p-6 md:grid-cols-4">
+          <div className="grid grid-cols-1 gap-3 rounded-2xl min-[420px]:grid-cols-2 min-[420px]:gap-2.5 border border-border/80 bg-surface p-3 shadow-[0_10px_30px_-18px_rgba(30,53,84,0.35)] sm:gap-4 sm:rounded-3xl sm:p-6 lg:grid-cols-4">
             {stats.map((s, i) => (
               <Reveal key={s.label} delay={i * 100} className={cn('min-w-0 rounded-xl border border-border/70 bg-canvas/70 p-3 shadow-[0_3px_12px_-9px_rgba(30,53,84,0.28)] sm:rounded-2xl sm:p-4', s.tone)}>
                 <s.icon aria-hidden="true" className="mb-2 size-4 text-primary sm:size-5" />
