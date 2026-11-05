@@ -23,6 +23,7 @@ export function Header() {
   const toggleRef = useRef<HTMLButtonElement>(null)
   const navRef = useRef<HTMLElement>(null)
   const barRef = useRef<HTMLDivElement>(null)
+  const headerRef = useRef<HTMLElement>(null)
 
   // Anime.js gives the mobile navigation a quick, lightweight entrance.
   useEffect(() => {
@@ -72,6 +73,38 @@ export function Header() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // Entrance motion for the brand, desktop links and consultation action.
+  useLayoutEffect(() => {
+    const header = headerRef.current
+    if (!header || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    const context = gsap.context(() => {
+      const desktop = gsap.matchMedia()
+      desktop.add('(min-width: 768px)', () => {
+        const links = header.querySelectorAll<HTMLElement>('[data-nav-link]')
+        const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } })
+        timeline.fromTo(header.querySelector('[data-header-brand]'),
+          { autoAlpha: 0, y: -10, scale: 0.96 },
+          { autoAlpha: 1, y: 0, scale: 1, duration: 0.55 },
+        )
+        timeline.fromTo(links,
+          { autoAlpha: 0, y: -8 },
+          { autoAlpha: 1, y: 0, duration: 0.38, stagger: 0.065, clearProps: 'all' },
+          '-=0.28',
+        )
+        timeline.fromTo(header.querySelector('[data-header-cta]'),
+          { autoAlpha: 0, x: 12, scale: 0.96 },
+          { autoAlpha: 1, x: 0, scale: 1, duration: 0.42, clearProps: 'all' },
+          '-=0.2',
+        )
+        return () => timeline.kill()
+      })
+      return () => desktop.revert()
+    }, header)
+
+    return () => context.revert()
+  }, [])
+
   // Reading progress: a scrubbed tween across the whole document. ScrollTrigger re-measures the page
   // on resize and when RootLayout refreshes it. This is progress, not decoration, so it also runs
   // under reduced motion (it follows the scroll position exactly and has no easing).
@@ -103,6 +136,7 @@ export function Header() {
     <>
       {open && <button type="button" aria-label="Close navigation menu" onClick={() => setOpen(false)} className="fixed inset-0 z-40 bg-slate-950/45 backdrop-blur-[2px] md:hidden" />}
       <header
+        ref={headerRef}
         className={cn(
           'sticky top-0 z-40 border-b border-border backdrop-blur transition-all duration-200',
           scrolled ? 'bg-canvas/95 shadow-card' : 'bg-canvas/85',
@@ -121,12 +155,12 @@ export function Header() {
             aria-controls={menuId}
             aria-label={open ? 'Close menu' : 'Open menu'}
             onClick={() => setOpen((value) => !value)}
-            className="mr-2 inline-flex size-11 items-center justify-center rounded-md transition-colors hover:bg-surface-muted md:hidden"
+            className={cn('header-menu-toggle mr-2 inline-flex size-11 items-center justify-center rounded-md transition-colors hover:bg-surface-muted md:hidden', open && 'is-open')}
           >
             {open ? <X aria-hidden="true" className="size-5" /> : <Menu aria-hidden="true" className="size-5" />}
           </button>
 
-          <Link to="/" viewTransition aria-label={`${siteConfig.name} home`} className="shrink-0 rounded-md">
+          <Link data-header-brand to="/" viewTransition aria-label={`${siteConfig.name} home`} className="shrink-0 rounded-md">
             <Logo className={cn('header-brand-mark transition-all duration-200', scrolled ? 'h-9' : 'h-11')} />
           </Link>
 
@@ -151,20 +185,21 @@ export function Header() {
               return (
               <NavLink
                 key={item.to}
+                data-nav-link
                 to={item.to}
                 end={item.to === '/'}
                 viewTransition
                 onClick={() => setOpen(false)}
                 className={({ isActive }) =>
                   cn(
-                    'group/nav relative inline-flex min-h-12 w-full items-center rounded-xl px-4 text-sm font-semibold transition-all duration-200 hover:translate-x-0.5 md:min-h-9 md:w-auto md:rounded-full',
+                    'nav-item-link group/nav relative inline-flex min-h-12 w-full items-center rounded-xl px-4 text-sm font-semibold transition-all duration-200 hover:translate-x-0.5 md:min-h-9 md:w-auto md:rounded-full',
                     isActive
                       ? 'bg-surface text-primary shadow-subtle after:absolute after:bottom-1 after:left-4 after:h-0.5 after:w-5 after:rounded-full after:bg-highlight md:after:bottom-0 md:after:left-1/2 md:after:w-5 md:after:-translate-x-1/2'
                       : 'text-fg-muted after:absolute after:bottom-1 after:left-4 after:h-0.5 after:w-0 after:rounded-full after:bg-highlight after:transition-all after:duration-300 hover:bg-surface hover:text-fg hover:after:w-5 md:after:bottom-0 md:after:left-1/2 md:after:-translate-x-1/2',
                   )
                 }
               >
-                <Icon aria-hidden="true" className="mr-2 size-4 shrink-0" />
+                <Icon aria-hidden="true" className="nav-item-icon mr-2 size-4 shrink-0" />
                 {item.label}
               </NavLink>
               )
@@ -177,13 +212,14 @@ export function Header() {
           </nav>
 
           <Link
+            data-header-cta
             to="/contacts"
             viewTransition
             aria-label="Request a Consultation"
             title="Request a Consultation"
             className={cn(
               buttonStyles({ size: 'md' }),
-              'magnetic inline-flex size-10 min-h-10 shrink-0 items-center justify-center rounded-lg p-0 lg:h-11 lg:w-auto lg:gap-2 lg:rounded-md lg:px-4',
+              'header-cta magnetic inline-flex size-10 min-h-10 shrink-0 items-center justify-center rounded-lg p-0 lg:h-11 lg:w-auto lg:gap-2 lg:rounded-md lg:px-4',
             )}
           >
             <MessageCircle aria-hidden="true" className="size-4 shrink-0" />
