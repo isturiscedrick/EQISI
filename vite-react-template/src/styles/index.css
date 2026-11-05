@@ -1114,3 +1114,52 @@ header nav a::after {
   .nav-active-pill, .nav-label-char, .header-smart-hidden { transition: none !important; }
   .nav-pointer-glow { display: none !important; }
 }
+
+
+/* Homepage showcase composition: centered hero, compact metric panel and client trust strip. */
+.home-showcase-hero {
+  padding-top: clamp(2rem, 4vw, 3.25rem);
+  padding-bottom: clamp(1.25rem, 2.5vw, 2rem);
+}
+.home-showcase-hero [data-hero-step="title"] {
+  max-width: 13ch;
+  margin-inline: auto;
+  color: var(--fg);
+  font-size: clamp(2.65rem, 6.5vw, 4.75rem);
+  line-height: .99;
+  letter-spacing: -.055em;
+}
+.home-showcase-hero [data-hero-step="description"] {
+  max-width: 42rem;
+}
+.home-showcase-hero [data-hero-visual] {
+  margin-top: clamp(.5rem, 1.5vw, 1.1rem);
+}
+.home-showcase-hero .hero-accent-rule {
+  margin-top: 1rem;
+  width: 4rem;
+}
+.home-showcase-stats .stat-accent {
+  margin-top: .7rem;
+  height: 2px;
+}
+.home-showcase-clients {
+  background: var(--surface);
+}
+.home-showcase-clients > div > p {
+  margin-bottom: 1.25rem;
+  font-size: .65rem;
+  letter-spacing: .2em;
+}
+@media (min-width: 768px) {
+  .home-showcase-hero [data-hero-step="actions"] { margin-top: 1.25rem; }
+}
+@media (max-width: 639px) {
+  .home-showcase-hero [data-hero-step="title"] {
+    font-size: clamp(2.25rem, 10vw, 3.35rem);
+  }
+  .home-showcase-stats { padding-block: 1.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-showcase-hero .hero-visual-depth { transform: none !important; }
+}
