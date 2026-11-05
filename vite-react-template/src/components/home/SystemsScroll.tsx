@@ -7,37 +7,74 @@ import { cn } from '@/lib/cn'
 import { systemIcon } from '@/lib/icons'
 import * as c from '@/content/eqisi'
 
-/** Responsive competency grid. ScrollTrigger reveals cards without pinning or hiding content. */
+/**
+ * Desktop: vertical page scrolling drives a pinned horizontal card track.
+ * Touch layouts: keep a native horizontal swipe track so every card remains reachable.
+ */
 export function SystemsScroll() {
   const root = useRef<HTMLDivElement>(null)
+  const track = useRef<HTMLDivElement>(null)
+  const progress = useRef<HTMLSpanElement>(null)
 
   useLayoutEffect(() => {
     const scene = root.current
-    if (!scene || c.systems.length < 1) return
+    const rail = track.current
+    const progressBar = progress.current
+    if (!scene || !rail || !c.systems.length) return
 
     const mm = gsap.matchMedia()
-    mm.add('(prefers-reduced-motion: no-preference)', () => {
-      const cards = scene.querySelectorAll<HTMLElement>('[data-system-card]')
-      if (!cards.length) return
 
-      gsap.fromTo(cards,
-        { autoAlpha: 0, y: 34, scale: 0.975 },
-        {
-          autoAlpha: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.72,
-          stagger: 0.11,
-          ease: 'power3.out',
-          clearProps: 'all',
-          scrollTrigger: {
-            trigger: scene,
-            start: 'top 82%',
-            once: true,
-          },
-        },
-      )
-    })
+    mm.add(
+      {
+        desktop: '(min-width: 1024px) and (min-height: 640px) and (prefers-reduced-motion: no-preference)',
+        compact: '(max-width: 1023px), (max-height: 639px)',
+        reduced: '(prefers-reduced-motion: reduce)',
+      },
+      (context) => {
+        const conditions = context.conditions as { desktop: boolean; compact: boolean; reduced: boolean }
+
+        if (conditions.desktop) {
+          const getDistance = () => Math.max(0, rail.scrollWidth - scene.clientWidth)
+
+          gsap.to(rail, {
+            x: () => -getDistance(),
+            ease: 'none',
+            scrollTrigger: {
+              trigger: scene,
+              start: 'top top+=80',
+              end: () => `+=${getDistance()}`,
+              pin: true,
+              scrub: 0.8,
+              invalidateOnRefresh: true,
+              anticipatePin: 1,
+              onUpdate: (self) => {
+                if (progressBar) gsap.set(progressBar, { scaleX: self.progress })
+              },
+            },
+          })
+
+          return () => {
+            if (progressBar) gsap.set(progressBar, { scaleX: 0 })
+          }
+        }
+
+        if (conditions.compact) {
+          const cards = rail.querySelectorAll<HTMLElement>('[data-system-card]')
+          gsap.fromTo(cards,
+            { autoAlpha: 0, y: 22 },
+            {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.55,
+              stagger: 0.08,
+              ease: 'power2.out',
+              clearProps: 'all',
+              scrollTrigger: { trigger: scene, start: 'top 85%', once: true },
+            },
+          )
+        }
+      },
+    )
 
     const refresh = () => ScrollTrigger.refresh()
     document.fonts?.ready.then(refresh)
@@ -50,14 +87,18 @@ export function SystemsScroll() {
 
   return (
     <div ref={root} className="systems-scroll-scene relative">
-      <div className="grid grid-cols-1 gap-4 min-[520px]:grid-cols-2 lg:grid-cols-3 lg:gap-5">
+      <div
+        ref={track}
+        className="systems-horizontal-track flex w-full gap-4 overflow-x-auto pb-3 snap-x snap-mandatory lg:gap-5 lg:overflow-visible lg:pb-0 lg:snap-none"
+        aria-label="Core competency systems"
+      >
         {c.systems.map((system, index) => {
           const Icon = systemIcon(system)
           return (
             <article
               key={system}
               data-system-card
-              className={cn(card, 'motion-border systems-feature-card systems-scroll-card min-w-0')}
+              className={cn(card, 'motion-border systems-feature-card systems-scroll-card min-w-0 snap-start')}
             >
               <div className="flex items-center justify-between">
                 <span className={cn(iconTile, 'systems-icon-tile')}><Icon aria-hidden="true" className="size-6" /></span>
@@ -78,7 +119,13 @@ export function SystemsScroll() {
           )
         })}
       </div>
-      <div className="mt-7 flex justify-center md:justify-start">
+
+      <div className="systems-scroll-progress mt-4 hidden overflow-hidden rounded-full bg-primary/10 lg:block" aria-hidden="true">
+        <span ref={progress} className="block h-1 w-full origin-left scale-x-0 rounded-full bg-gradient-to-r from-primary to-highlight" />
+      </div>
+
+      <div className="mt-7 flex flex-wrap items-center justify-between gap-4">
+        <p className="text-xs font-semibold text-fg-muted">Scroll to move across the systems <span className="hidden lg:inline">·</span><span className="lg:hidden">or swipe horizontally</span></p>
         <Link to="/services" className="group inline-flex min-h-11 items-center gap-2 rounded-xl border border-border bg-surface px-4 py-2 text-sm font-semibold text-fg transition-colors hover:border-primary hover:text-primary">
           Explore All Services &amp; Capabilities
           <ArrowRight aria-hidden="true" className="size-4 transition-transform duration-200 group-hover:translate-x-1" />
