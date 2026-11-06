@@ -22,7 +22,7 @@ const rightTeam = [
   { name: 'Manuel', image: manuel },
 ]
 
-type Measure = { top: number; content: number }
+type Measure = { top: number; visibleHeight: number }
 
 /** Finds the visible (non-transparent) area of a PNG: where it starts and how tall it is, as fractions of the image height. */
 function measure(img: HTMLImageElement): Measure | null {
@@ -58,7 +58,12 @@ function measure(img: HTMLImageElement): Measure | null {
   }
   if (top < 0) return null
 
-  return { top: top / height, content: (bottom - top + 1) / height }
+  return {
+    top: top / height,
+    // Include the PNG's aspect ratio: equal alpha-height percentages alone
+    // do not produce equal on-screen portrait heights.
+    visibleHeight: ((bottom - top + 1) / height) * (h / w),
+  }
 }
 
 function PortraitGroup({ people, side }: { people: typeof leftTeam; side: 'left' | 'right' }) {
@@ -77,8 +82,8 @@ function PortraitGroup({ people, side }: { people: typeof leftTeam; side: 'left'
 export function TeamHeroVisual() {
   const frame = useRef<HTMLDivElement>(null)
 
-  // PNGs carry different amounts of transparent padding. Measure each one, then scale every person
-  // to the median visible height and pull the head to the top of its box, so sizes look even.
+  // PNGs have different canvas proportions and transparent padding. Measure the actual visible
+  // subject height in each file, normalize all eight to one shared target, and align their heads.
   useEffect(() => {
     const root = frame.current
     if (!root) return
@@ -105,11 +110,11 @@ export function TeamHeroVisual() {
       for (const result of results) if (result) measured.push(result)
       if (!measured.length) return
 
-      const heights = measured.map((item) => item.m.content).sort((a, b) => a - b)
-      const median = heights[Math.floor(heights.length / 2)] ?? 1
+      const heights = measured.map((item) => item.m.visibleHeight).sort((a, b) => a - b)
+      const targetHeight = heights[Math.floor(heights.length / 2)] ?? 1
 
       for (const { figure, m } of measured) {
-        const fit = Math.min(1.3, Math.max(0.75, median / m.content))
+        const fit = targetHeight / m.visibleHeight
         figure.style.setProperty('--fit', fit.toFixed(3))
         figure.style.setProperty('--lift', m.top.toFixed(3))
       }
