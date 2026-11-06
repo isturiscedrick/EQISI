@@ -58,23 +58,23 @@ export function Footer() {
     <footer ref={footerRef} className="bg-fg text-white/80">
       <div aria-hidden="true" className="h-1 bg-linear-to-r from-primary via-highlight to-primary" />
 
-      <Container data-footer-reveal className="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.2fr_1.4fr]">
+      <Container data-footer-reveal className="footer-main-grid grid gap-8 py-10 sm:grid-cols-2 sm:gap-10 sm:py-14 lg:grid-cols-[1.4fr_1fr_1.2fr_1.4fr]">
         {/* Brand */}
         <div>
           <span className="inline-block rounded-lg bg-white p-2">
             <Logo className="h-12" />
           </span>
-          <p className="mt-5 text-sm leading-relaxed">
+          <p className="footer-brand-copy mt-4 max-w-sm text-sm leading-relaxed sm:mt-5">
             Excel Quality Integrated Solutions Inc. &mdash; {siteConfig.description}
           </p>
-          <p className="mt-5 inline-flex items-center gap-2 rounded-full border border-white/20 px-3 py-1 text-xs font-semibold text-white">
+          <p className="mt-3 inline-flex items-center gap-2 rounded-full border border-white/20 px-3 py-1 text-xs font-semibold text-white sm:mt-5">
             <ShieldCheck aria-hidden="true" className="size-4 text-highlight" />
             DO-174 Compliant
           </p>
         </div>
 
         {/* Explore */}
-        <nav aria-label="Footer">
+        <nav className="footer-link-group" aria-label="Footer">
           <FooterHeading>Explore</FooterHeading>
           <ul className="mt-5 space-y-3 pl-4 text-sm">
             {siteConfig.nav.map((item) => (
@@ -100,7 +100,7 @@ export function Footer() {
         {/* Contact */}
         <div>
           <FooterHeading>Contact</FooterHeading>
-          <ul className="mt-5 space-y-4 text-sm">
+          <ul className="footer-contact-list mt-4 space-y-3 text-sm sm:mt-5 sm:space-y-4">
             <li className="flex gap-3">
               <Phone aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-highlight" />
               <a href={c.contact.phone.href} className="underline-offset-4 transition-colors hover:text-white hover:underline">
@@ -131,11 +131,11 @@ export function Footer() {
       </Container>
 
       <div className="border-t border-white/10">
-        <Container data-footer-reveal className="flex flex-col items-center justify-between gap-2 py-6 text-xs text-white/60 sm:flex-row">
+        <Container data-footer-reveal className="footer-bottom flex flex-col items-center justify-between gap-2 py-5 text-center text-[11px] leading-relaxed text-white/60 sm:flex-row sm:py-6 sm:text-left sm:text-xs">
           <p>
             &copy; {year} {siteConfig.name} &mdash; Excel Quality Integrated Solutions Inc. All rights reserved.
           </p>
-          <p>Warehousing, Manpower &amp; Supply Chain Automation</p>
+          <p className="footer-bottom-tagline">Warehousing, Manpower &amp; Supply Chain Automation</p>
         </Container>
       </div>
     </footer>
