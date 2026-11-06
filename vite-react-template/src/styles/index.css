@@ -1448,10 +1448,10 @@ header nav a::after {
 @media (max-width: 767px) {
   .mobile-nav-drawer {
     position: absolute !important;
-    inset: 100% auto auto 0 !important;
-    width: min(88vw, 340px) !important;
-    height: min(calc(100dvh - 4.5rem), 620px) !important;
-    max-height: calc(100dvh - 4.5rem) !important;
+    inset: 100% auto auto 1rem !important;
+    width: min(calc(88vw - 1rem), 340px) !important;
+    height: min(calc(100dvh - 5.5rem), 620px) !important;
+    max-height: calc(100dvh - 5.5rem) !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
     overscroll-behavior: contain;
