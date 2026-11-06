@@ -1391,3 +1391,113 @@ header nav a::after {
   .hero-team-group { width: 38%; }
   .hero-team-person { height: 138px; }
 }
+
+
+/* Homepage hero reference match: overlapping, staggered portrait clusters that frame the headline.
+   Applies from 640px up; below that, the earlier mobile layout above stays as it was. */
+.home-showcase-hero .hero-accent-rule { display: none; }
+
+@media (min-width: 640px) {
+  .home-showcase-hero [data-hero-step="description"] {
+    max-width: 31rem;
+    font-size: 0.9375rem;
+  }
+
+  .home-showcase-hero > .hero-side-visual {
+    --cluster-h: clamp(230px, 27vw, 540px);
+    inset-block-start: 7.5rem;
+    height: var(--cluster-h);
+    opacity: 1;
+  }
+  .home-showcase-hero .hero-team-group {
+    top: 0;
+    display: block;
+    gap: 0;
+    height: 100%;
+    width: calc(var(--cluster-h) * 0.92);
+  }
+  .home-showcase-hero .hero-team-group-left { left: 1.5%; right: auto; }
+  .home-showcase-hero .hero-team-group-right { right: 1.5%; left: auto; }
+
+  .home-showcase-hero .hero-team-person {
+    position: absolute;
+    flex: none;
+    height: 56%;
+  }
+  .home-showcase-hero .hero-team-group-left .hero-team-person:nth-child(n),
+  .home-showcase-hero .hero-team-group-right .hero-team-person:nth-child(n) {
+    margin-top: 0;
+  }
+  .home-showcase-hero .hero-team-person img {
+    filter: saturate(1) contrast(1.05);
+    -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+  }
+
+  /* Left cluster. Slots: 1 back-left, 2 top, 3 middle, 4 front. */
+  .home-showcase-hero .hero-team-group-left .hero-team-person:nth-child(1) { left: 0;   top: 17%; width: 42%; z-index: 1; }
+  .home-showcase-hero .hero-team-group-left .hero-team-person:nth-child(2) { left: 34%; top: 0;   width: 40%; z-index: 2; }
+  .home-showcase-hero .hero-team-group-left .hero-team-person:nth-child(3) { left: 24%; top: 40%; width: 42%; z-index: 3; }
+  .home-showcase-hero .hero-team-group-left .hero-team-person:nth-child(4) { left: 54%; top: 42%; width: 46%; z-index: 4; }
+
+  /* Right cluster. Slots: 1 top, 2 back-right, 3 middle, 4 front-left. */
+  .home-showcase-hero .hero-team-group-right .hero-team-person:nth-child(1) { left: 44%; top: 0;   width: 38%; z-index: 1; }
+  .home-showcase-hero .hero-team-group-right .hero-team-person:nth-child(2) { left: 62%; top: 17%; width: 38%; z-index: 2; }
+  .home-showcase-hero .hero-team-group-right .hero-team-person:nth-child(3) { left: 34%; top: 34%; width: 40%; z-index: 3; }
+  .home-showcase-hero .hero-team-group-right .hero-team-person:nth-child(4) { left: 0;   top: 44%; width: 42%; z-index: 4; }
+}
+
+/* Narrow desktop and tablet: portraits are close to the headline, so keep them quieter. */
+@media (min-width: 640px) and (max-width: 999px) {
+  .home-showcase-hero > .hero-side-visual { opacity: .55; }
+}
+
+@media (min-width: 1200px) {
+  .home-showcase-hero .hero-team-group-left { left: 5%; }
+  .home-showcase-hero .hero-team-group-right { right: 5%; }
+}
+
+@media (min-width: 1600px) {
+  .home-showcase-hero .hero-team-group-left { left: 8.5%; }
+  .home-showcase-hero .hero-team-group-right { right: 8.5%; }
+}
+
+
+/* Hero portraits, depth pass: soft blue wash behind each cluster, lighter back row,
+   back-to-front entrance, and a slow float. */
+@keyframes hero-person-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -6px; }
+}
+
+@media (min-width: 640px) {
+  /* Blue wash that blends the cut-outs into the page. */
+  .home-showcase-hero .hero-team-group::before {
+    position: absolute;
+    z-index: 0;
+    inset: 8% -6% -4%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at 50% 55%, rgb(72 96 172 / .16), rgb(72 96 172 / .06) 45%, transparent 72%);
+    content: "";
+    filter: blur(14px);
+    pointer-events: none;
+  }
+
+  /* Back row (slots 1 and 2) is slightly lighter, so the front row reads as closer. */
+  .home-showcase-hero .hero-team-group .hero-team-person:nth-child(-n+2) img {
+    filter: saturate(.9) contrast(.98) brightness(1.04);
+  }
+}
+
+@media (min-width: 640px) and (prefers-reduced-motion: no-preference) {
+  .home-showcase-hero .hero-team-person {
+    animation:
+      hero-person-reveal 900ms cubic-bezier(.2, .8, .2, 1) both,
+      hero-person-float 7s ease-in-out infinite;
+  }
+  /* Delay pairs are: entrance, float start. Back row enters first, front row last. */
+  .home-showcase-hero .hero-team-group .hero-team-person:nth-child(1) { animation-delay: .15s, 1.2s; }
+  .home-showcase-hero .hero-team-group .hero-team-person:nth-child(2) { animation-delay: .25s, 2.1s; }
+  .home-showcase-hero .hero-team-group .hero-team-person:nth-child(3) { animation-delay: .4s, 1.6s; }
+  .home-showcase-hero .hero-team-group .hero-team-person:nth-child(4) { animation-delay: .55s, 2.6s; }
+}

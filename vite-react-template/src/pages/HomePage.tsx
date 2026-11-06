@@ -41,7 +41,7 @@ export function Component() {
         centered
         eyebrow="Integrated Industrial & Workforce Solutions"
         title={<>We deliver with<br className="hidden sm:block" /> automation.</>}
-        description="Connected operations. Powered by people and technology."
+        description="Smarter warehousing, manpower, logistics and facility solutions—connected by technology, powered by people, and built around your operations."
         actions={
           <>
             <Link to="/services" className={buttonStyles({ size: 'lg' })}>
