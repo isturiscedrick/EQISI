@@ -10,17 +10,18 @@ import tugas from '@/assets/eqisi/team/team- blue and white/Tugas — blue and w
 
 // Order = slot: 1 back/top, 2 outer side, 3 lower, 4 front (see hero CSS).
 const leftTeam = [
-  { name: 'Joy', image: joy },
-  { name: 'Tugas', image: tugas },
   { name: 'Alfariz', image: alfariz },
-  { name: 'Flores', image: flores },
+  { name: 'Tugas', image: tugas },
+  { name: 'Manuel', image: manuel },
+  { name: 'Cajigal', image: cajigal },
 ]
 const rightTeam = [
-  { name: 'Cajigal', image: cajigal },
+  { name: 'Flores', image: flores },
   { name: 'Trinidad', image: trinidad },
   { name: 'Malaca', image: malaca },
-  { name: 'Manuel', image: manuel },
+  { name: 'Joy', image: joy },
 ]
+
 
 type Measure = { top: number; visibleHeight: number }
 
