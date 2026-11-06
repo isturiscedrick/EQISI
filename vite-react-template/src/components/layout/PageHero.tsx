@@ -10,13 +10,14 @@ interface PageHeroProps {
   description?: ReactNode
   actions?: ReactNode
   visual?: ReactNode
+  sideVisual?: ReactNode
   large?: boolean
   centered?: boolean
   className?: string
 }
 
 /** Shared hero with an optional centered, showcase-style composition. */
-export function PageHero({ id, eyebrow, title, description, actions, visual, large = false, centered = false, className }: PageHeroProps) {
+export function PageHero({ id, eyebrow, title, description, actions, visual, sideVisual, large = false, centered = false, className }: PageHeroProps) {
   const sectionRef = useRef<HTMLElement>(null)
 
   // GSAP owns the cinematic entrance and scroll depth. Reduced-motion users get the static layout.
@@ -89,6 +90,7 @@ export function PageHero({ id, eyebrow, title, description, actions, visual, lar
       className={cn('relative overflow-hidden border-b border-border bg-canvas', className, centered ? 'pt-5 pb-3 sm:pt-10 sm:pb-8 lg:pt-11 lg:pb-8' : 'py-10 sm:py-14 lg:py-16')}
       aria-labelledby={`${id}-heading`}
     >
+      {sideVisual && <div className="hero-side-visual" aria-hidden="true">{sideVisual}</div>}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         <div className="hero-mesh absolute inset-0" />
         <div className="hero-spotlight absolute inset-0" />
