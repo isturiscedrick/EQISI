@@ -116,8 +116,8 @@ export function TeamHeroVisual() {
 
       for (const { figure, m } of measured) {
         const baseFit = targetHeight / m.visibleHeight
-        // Alfariz gets a subtle 6% reduction while keeping the shared visible-height normalization.
-        const personAdjustment = figure.dataset.person === 'Alfariz' ? 0.94 : 1
+        // Enlarge the whole team by 10%; Alfariz retains his subtle 6% relative reduction.
+        const personAdjustment = (figure.dataset.person === 'Alfariz' ? 0.94 : 1) * 1.10
         const fit = baseFit * personAdjustment
         figure.style.setProperty('--fit', fit.toFixed(3))
         figure.style.setProperty('--lift', m.top.toFixed(3))
