@@ -31,7 +31,7 @@ export function BackToTop() {
       inert={!show}
       onClick={() => window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })}
       className={cn(
-        'back-to-top-progress fixed right-4 bottom-4 z-40 inline-flex size-12 items-center justify-center rounded-full bg-primary text-primary-fg shadow-elevated transition-all duration-200 hover:bg-primary/90 motion-safe:hover:-translate-y-1 sm:right-6 sm:bottom-6',
+        'back-to-top-progress fixed right-4 bottom-4 z-[25] inline-flex size-12 items-center justify-center rounded-full bg-primary text-primary-fg shadow-elevated transition-all duration-200 hover:bg-primary/90 motion-safe:hover:-translate-y-1 sm:right-6 sm:bottom-6',
         show ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-4 opacity-0',
       )}
     >

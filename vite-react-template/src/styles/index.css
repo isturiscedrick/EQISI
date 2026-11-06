@@ -1446,64 +1446,198 @@ header nav a::after {
 
 /* Mobile navigation drawer and footer: compact hierarchy, clear tap targets, less visual noise. */
 @media (max-width: 767px) {
+  /* Mobile sidebar: full-height panel pinned to the left edge.
+     Needs the header to have no backdrop-filter below md (see Header.tsx), otherwise `fixed`
+     would be positioned against the header instead of the viewport. */
   .mobile-nav-drawer {
-    position: absolute !important;
-    inset: 100% auto auto 1rem !important;
-    width: min(calc(88vw - 1rem), 340px) !important;
-    height: min(calc(100dvh - 5.5rem), 620px) !important;
-    max-height: calc(100dvh - 5.5rem) !important;
+    position: fixed !important;
+    inset: 0 auto 0 0 !important;
+    width: min(78vw, 320px) !important;
+    height: 100dvh !important;
+    max-height: none !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
     overscroll-behavior: contain;
-    padding: 1.1rem 1rem max(1.1rem, env(safe-area-inset-bottom)) !important;
-    border: 1px solid color-mix(in srgb, var(--border) 82%, transparent) !important;
-    border-top: 0 !important;
-    border-radius: 0 0 1.15rem 0;
-    background: color-mix(in srgb, var(--canvas) 97%, white) !important;
-    box-shadow: 0 22px 54px rgb(17 27 54 / .2), 0 3px 12px rgb(17 27 54 / .07);
+    padding: max(.75rem, env(safe-area-inset-top)) 0 max(1rem, env(safe-area-inset-bottom)) !important;
+    border: 0 !important;
+    border-right: 1px solid var(--border) !important;
+    border-radius: 0;
+    background: var(--canvas) !important;
+    box-shadow: 0 0 48px rgb(17 27 54 / .28);
     -webkit-overflow-scrolling: touch;
   }
 
-  .mobile-nav-drawer > div:first-of-type {
-    margin: 0 .15rem .55rem;
-    padding: 0 .1rem .85rem;
-    border-color: var(--border);
+  /* Logo header with close button */
+  .mobile-nav-head {
+    position: relative;
+    display: flex;
+    flex: none;
+    justify-content: center;
+    padding: .5rem 3rem 1rem;
   }
 
-  .mobile-nav-drawer .nav-item-link {
-    min-height: 3.15rem;
-    width: 100%;
-    padding-inline: .9rem;
-    border: 1px solid transparent;
-    border-radius: .8rem;
-    font-size: .925rem;
+  .mobile-nav-close {
+    position: absolute;
+    top: .35rem;
+    right: .6rem;
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 999px;
+    color: var(--fg-muted);
+    transition: background-color 200ms ease, color 200ms ease;
   }
 
-  .mobile-nav-drawer .nav-item-link[aria-current="page"] {
-    border-color: color-mix(in srgb, var(--primary) 17%, transparent);
-    background: color-mix(in srgb, var(--primary) 8%, var(--surface));
-    box-shadow: inset 3px 0 0 var(--highlight);
-  }
-
-  .mobile-nav-drawer .nav-item-icon {
-    width: 2rem;
-    height: 2rem;
-    margin-right: .75rem;
-    padding: .42rem;
-    border-radius: .65rem;
+  .mobile-nav-close:hover {
     background: var(--surface-muted);
     color: var(--fg);
   }
 
+  /* One row per page, separated by a thin divider */
+  .mobile-nav-group {
+    flex: none;
+    margin-inline: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .mobile-nav-group:last-of-type {
+    margin-bottom: 1rem;
+  }
+
+  .mobile-nav-row {
+    display: flex;
+    align-items: center;
+  }
+
+  .mobile-nav-drawer .nav-item-link {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 3rem;
+    padding-inline: .5rem;
+    border: 0;
+    border-radius: .5rem;
+    background: transparent;
+    box-shadow: none;
+    color: var(--fg);
+    font-size: .95rem;
+    font-weight: 500;
+    translate: none !important;
+  }
+
+  .mobile-nav-drawer .nav-item-link::before,
+  .mobile-nav-drawer .nav-item-link::after {
+    display: none;
+  }
+
+  .mobile-nav-drawer .nav-item-link:hover,
+  .mobile-nav-drawer .nav-item-link:focus-visible {
+    background: var(--surface-muted);
+  }
+
+  .mobile-nav-drawer .nav-item-link[aria-current="page"] {
+    background: color-mix(in srgb, var(--primary) 8%, var(--surface));
+    color: var(--primary);
+    font-weight: 700;
+  }
+
+  .mobile-nav-drawer .nav-item-icon {
+    width: 1.15rem;
+    height: 1.15rem;
+    margin-right: .85rem;
+    padding: 0;
+    background: none;
+    color: var(--fg);
+  }
+
   .mobile-nav-drawer .nav-item-link[aria-current="page"] .nav-item-icon {
-    background: color-mix(in srgb, var(--primary) 12%, var(--surface));
     color: var(--primary);
   }
 
+  /* Chevron that expands a page's section shortcuts */
+  .mobile-nav-expand {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: .5rem;
+    color: var(--fg-muted);
+    transition: background-color 200ms ease, color 200ms ease;
+  }
+
+  .mobile-nav-expand:hover {
+    background: var(--surface-muted);
+    color: var(--fg);
+  }
+
+  .mobile-nav-expand svg {
+    transition: transform 280ms cubic-bezier(.2, .8, .2, 1);
+  }
+
+  .mobile-nav-expand[aria-expanded="true"] {
+    color: var(--primary);
+  }
+
+  .mobile-nav-expand[aria-expanded="true"] svg {
+    transform: rotate(180deg);
+  }
+
+  /* Section shortcuts: height animates between 0fr and 1fr */
+  .mobile-nav-sub {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 280ms cubic-bezier(.2, .8, .2, 1);
+  }
+
+  .mobile-nav-sub[data-open="true"] {
+    grid-template-rows: 1fr;
+  }
+
+  .mobile-nav-sub > ul {
+    min-height: 0;
+    overflow: hidden;
+    margin: 0 0 0 1.05rem;
+    padding: 0 0 0 .75rem;
+    border-left: 2px solid color-mix(in srgb, var(--highlight) 45%, var(--border));
+  }
+
+  .mobile-nav-sub > ul > li:last-child {
+    margin-bottom: .5rem;
+  }
+
+  .mobile-nav-sub a {
+    display: flex;
+    align-items: center;
+    min-height: 2.6rem;
+    padding: 0 .75rem;
+    border-radius: .5rem;
+    color: var(--fg-muted);
+    font-size: .875rem;
+    font-weight: 500;
+    transition: background-color 200ms ease, color 200ms ease;
+  }
+
+  .mobile-nav-sub a:hover,
+  .mobile-nav-sub a:focus-visible {
+    background: var(--surface-muted);
+    color: var(--primary);
+  }
+
+  /* Consultation button pinned to the bottom of the sidebar.
+     width: auto + align-self: stretch fills the space between the 1rem side margins.
+     The w-full utility on the link would otherwise make it 100% wide plus the margins, and clip it. */
   .mobile-nav-drawer > a:last-child {
-    min-height: 2.9rem;
-    margin: 1rem .1rem .1rem;
-    border-radius: .8rem;
+    flex: none;
+    align-self: stretch;
+    width: auto;
+    min-height: 3rem;
+    margin: auto 1rem 0;
+    padding-inline: 1rem;
+    gap: .5rem;
+    border-radius: .75rem;
+    font-size: .875rem;
+    font-weight: 600;
   }
 
   .footer-main-grid {

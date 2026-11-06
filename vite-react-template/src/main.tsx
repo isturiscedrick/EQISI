@@ -1,10 +1,94 @@
-import { gsap, ScrollToPlugin } from '@/lib/gsap'
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import { RouterProvider } from 'react-router/dom'
+import { router } from '@/app/router'
+import '@/lib/gsap'
+import '@/styles/index.css'
 
 const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-const HEADER_OFFSET = 88
 
-// Smoothly animate same-page anchor navigation without hijacking normal wheel,
-// touch, keyboard, external-link, or browser-history scrolling.
+const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2)
+
+/** Distance to keep above a target: the same scroll-padding-top that index.css sets for the sticky header. */
+function scrollOffset(): number {
+  const value = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop)
+  return Number.isFinite(value) ? value : 80
+}
+
+/** Where the window must be scrolled for `target` to sit just below the header, measured right now. */
+function destinationFor(target: HTMLElement): number {
+  const max = document.documentElement.scrollHeight - window.innerHeight
+  const y = target.getBoundingClientRect().top + window.scrollY - scrollOffset()
+  return Math.max(0, Math.min(y, max))
+}
+
+let cancelActiveScroll: (() => void) | null = null
+
+/**
+ * Scrolls to `target` and keeps chasing it. The page height changes while scrolling (lazy images, reveal
+ * animations, ScrollTrigger refreshes), so the destination is re-measured on every frame instead of once.
+ * After arriving it keeps correcting for a short settle period. Wheel, touch or keyboard input cancels it.
+ */
+function scrollToTarget(target: HTMLElement) {
+  cancelActiveScroll?.()
+
+  const start = window.scrollY
+  const startTime = performance.now()
+  const duration = Math.min(1400, Math.max(600, Math.abs(destinationFor(target) - start) * 0.6))
+  const SETTLE_MS = 400
+
+  let frame = 0
+  let settleUntil = 0
+  let done = false
+
+  const jumpTo = (top: number) => window.scrollTo({ top, behavior: 'instant' })
+
+  const cleanup = () => {
+    done = true
+    cancelAnimationFrame(frame)
+    window.removeEventListener('wheel', cancel)
+    window.removeEventListener('touchstart', cancel)
+    window.removeEventListener('keydown', cancel)
+    if (cancelActiveScroll === cancel) cancelActiveScroll = null
+  }
+
+  function cancel() {
+    cleanup()
+  }
+
+  const step = (now: number) => {
+    if (done) return
+    const dest = destinationFor(target)
+    const t = Math.min(1, (now - startTime) / duration)
+
+    if (t < 1) {
+      jumpTo(start + (dest - start) * easeInOutCubic(t))
+      frame = requestAnimationFrame(step)
+      return
+    }
+
+    if (Math.abs(window.scrollY - dest) > 1) jumpTo(dest)
+    if (settleUntil === 0) settleUntil = now + SETTLE_MS
+
+    if (now < settleUntil) {
+      frame = requestAnimationFrame(step)
+      return
+    }
+
+    cleanup()
+    target.setAttribute('tabindex', '-1')
+    target.focus({ preventScroll: true })
+  }
+
+  cancelActiveScroll = cancel
+  window.addEventListener('wheel', cancel, { passive: true })
+  window.addEventListener('touchstart', cancel, { passive: true })
+  window.addEventListener('keydown', cancel)
+  frame = requestAnimationFrame(step)
+}
+
+// Same-page anchors (e.g. "Meet Our Team" -> #leadership) scroll smoothly without hijacking
+// external links, modified clicks, or browser-history navigation.
 function handleSmoothAnchorClick(event: MouseEvent) {
   if (
     REDUCED_MOTION ||
@@ -26,35 +110,12 @@ function handleSmoothAnchorClick(event: MouseEvent) {
   if (!target) return
 
   event.preventDefault()
-  window.history.pushState(null, '', url.hash)
-
-  gsap.to(window, {
-    duration: 1.15,
-    ease: 'power3.inOut',
-    overwrite: 'auto',
-    scrollTo: {
-      y: target,
-      offsetY: HEADER_OFFSET,
-      autoKill: true,
-    },
-    onComplete: () => {
-      target.setAttribute('tabindex', '-1')
-      target.focus({ preventScroll: true })
-    },
-  })
+  // Keep history.state as-is so React Router's own bookkeeping is not wiped.
+  window.history.pushState(window.history.state, '', url.hash)
+  scrollToTarget(target)
 }
 
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollToPlugin)
-  document.addEventListener('click', handleSmoothAnchorClick)
-}
-
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { RouterProvider } from 'react-router/dom'
-import { router } from '@/app/router'
-import '@/lib/gsap'
-import '@/styles/index.css'
+document.addEventListener('click', handleSmoothAnchorClick)
 
 const container = document.getElementById('root')
 if (!container) throw new Error('Root element #root was not found in index.html')
