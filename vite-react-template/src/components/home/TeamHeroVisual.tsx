@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import alfariz from '@/assets/eqisi/team/team- blue and white/Alfariz — blue and white.png'
 import cajigal from '@/assets/eqisi/team/team- blue and white/Cajigal — blue and white.png'
 import flores from '@/assets/eqisi/team/team- blue and white/Flores — blue and white.png'
@@ -7,18 +8,58 @@ import manuel from '@/assets/eqisi/team/team- blue and white/Manuel — blue and
 import trinidad from '@/assets/eqisi/team/team- blue and white/Trinidad — blue and white.png'
 import tugas from '@/assets/eqisi/team/team- blue and white/Tugas — blue and white.png'
 
+// Order = slot: 1 back/top, 2 outer side, 3 lower, 4 front (see hero CSS).
 const leftTeam = [
-  { name: 'Alfariz', image: alfariz },
-  { name: 'Cajigal', image: cajigal },
-  { name: 'Flores', image: flores },
   { name: 'Joy', image: joy },
+  { name: 'Tugas', image: tugas },
+  { name: 'Alfariz', image: alfariz },
+  { name: 'Flores', image: flores },
 ]
 const rightTeam = [
+  { name: 'Cajigal', image: cajigal },
+  { name: 'Trinidad', image: trinidad },
   { name: 'Malaca', image: malaca },
   { name: 'Manuel', image: manuel },
-  { name: 'Trinidad', image: trinidad },
-  { name: 'Tugas', image: tugas },
 ]
+
+type Measure = { top: number; content: number }
+
+/** Finds the visible (non-transparent) area of a PNG: where it starts and how tall it is, as fractions of the image height. */
+function measure(img: HTMLImageElement): Measure | null {
+  const w = img.naturalWidth
+  const h = img.naturalHeight
+  if (!w || !h) return null
+
+  const width = Math.min(w, 240)
+  const height = Math.max(1, Math.round((h * width) / w))
+  const canvas = document.createElement('canvas')
+  canvas.width = width
+  canvas.height = height
+  const ctx = canvas.getContext('2d', { willReadFrequently: true })
+  if (!ctx) return null
+
+  ctx.drawImage(img, 0, 0, width, height)
+  const { data } = ctx.getImageData(0, 0, width, height)
+
+  let top = -1
+  let bottom = -1
+  for (let y = 0; y < height; y++) {
+    let hit = false
+    for (let x = 0; x < width; x++) {
+      if (data[(y * width + x) * 4 + 3] > 40) {
+        hit = true
+        break
+      }
+    }
+    if (hit) {
+      if (top < 0) top = y
+      bottom = y
+    }
+  }
+  if (top < 0) return null
+
+  return { top: top / height, content: (bottom - top + 1) / height }
+}
 
 function PortraitGroup({ people, side }: { people: typeof leftTeam; side: 'left' | 'right' }) {
   return (
@@ -34,8 +75,53 @@ function PortraitGroup({ people, side }: { people: typeof leftTeam; side: 'left'
 
 /** Matching portrait groups that frame the centered homepage message. */
 export function TeamHeroVisual() {
+  const frame = useRef<HTMLDivElement>(null)
+
+  // PNGs carry different amounts of transparent padding. Measure each one, then scale every person
+  // to the median visible height and pull the head to the top of its box, so sizes look even.
+  useEffect(() => {
+    const root = frame.current
+    if (!root) return
+    let cancelled = false
+
+    const figures = Array.from(root.querySelectorAll<HTMLElement>('.hero-team-person'))
+
+    Promise.all(
+      figures.map(async (figure) => {
+        const img = figure.querySelector('img')
+        if (!img) return null
+        try {
+          await img.decode()
+        } catch {
+          return null
+        }
+        const m = measure(img)
+        return m ? { figure, m } : null
+      }),
+    ).then((results) => {
+      if (cancelled) return
+
+      const measured: Array<{ figure: HTMLElement; m: Measure }> = []
+      for (const result of results) if (result) measured.push(result)
+      if (!measured.length) return
+
+      const heights = measured.map((item) => item.m.content).sort((a, b) => a - b)
+      const median = heights[Math.floor(heights.length / 2)] ?? 1
+
+      for (const { figure, m } of measured) {
+        const fit = Math.min(1.3, Math.max(0.75, median / m.content))
+        figure.style.setProperty('--fit', fit.toFixed(3))
+        figure.style.setProperty('--lift', m.top.toFixed(3))
+      }
+    })
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
   return (
-    <div className="hero-team-frame">
+    <div className="hero-team-frame" ref={frame}>
       <PortraitGroup people={leftTeam} side="left" />
       <PortraitGroup people={rightTeam} side="right" />
     </div>
