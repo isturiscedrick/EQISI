@@ -1411,7 +1411,8 @@ header nav a::after {
   .home-showcase-hero .hero-team-group-left .hero-team-person:nth-child(1) img { transform: scale(1.10); }
   .home-showcase-hero .hero-team-group-left .hero-team-person:nth-child(2) img { transform: scale(1.06); }
   .home-showcase-hero .hero-team-group-left .hero-team-person:nth-child(3) img { transform: scale(1.07); }
-  .home-showcase-hero .hero-team-group-left .hero-team-person:nth-child(4) img { transform: scale(1.08); }
+  /* Joy's source portrait is framed closer than the others, so scale it down to match their visual size. */
+  .home-showcase-hero .hero-team-group-left .hero-team-person:nth-child(4) img { transform: scale(.82); }
   .home-showcase-hero .hero-team-group-right .hero-team-person:nth-child(1) img { transform: scale(1.07); }
   .home-showcase-hero .hero-team-group-right .hero-team-person:nth-child(2) img { transform: scale(1.08); }
   .home-showcase-hero .hero-team-group-right .hero-team-person:nth-child(3) img { transform: scale(1.06); }
