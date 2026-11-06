@@ -1270,3 +1270,79 @@ header nav a::after {
   .team-hero-portrait { animation: none; transform: none; }
   .team-hero-portrait img { transition: none; }
 }
+
+
+/* Hero portrait composition: people frame the central message, globe remains below. */
+.home-showcase-hero { isolation: isolate; }
+.home-showcase-hero > .hero-side-visual {
+  position: absolute;
+  z-index: 1;
+  inset: 5.5rem 0 auto;
+  height: clamp(250px, 30vw, 390px);
+  pointer-events: none;
+}
+.home-showcase-hero > .hero-side-visual + div { z-index: 0; }
+.home-showcase-hero > div.relative {
+  z-index: 2;
+}
+.home-showcase-hero [data-hero-step="eyebrow"],
+.home-showcase-hero [data-hero-step="title"],
+.home-showcase-hero [data-hero-step="description"],
+.home-showcase-hero [data-hero-step="actions"] { position: relative; z-index: 3; }
+.hero-team-frame { position: relative; width: 100%; height: 100%; max-width: 1440px; margin-inline: auto; }
+.hero-team-group {
+  position: absolute;
+  top: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(2px, .45vw, 8px);
+  width: min(34%, 440px);
+}
+.hero-team-group-left { left: 1.5%; justify-content: flex-start; }
+.hero-team-group-right { right: 1.5%; justify-content: flex-end; }
+.hero-team-person {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  height: clamp(170px, 22vw, 285px);
+  overflow: hidden;
+  opacity: 0;
+  animation: hero-person-reveal 900ms cubic-bezier(.2,.8,.2,1) forwards;
+  animation-delay: calc(var(--person-index, 0) * 90ms + .15s);
+}
+.hero-team-person img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center top;
+  filter: saturate(.78);
+  -webkit-mask-image: linear-gradient(to bottom, #000 66%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 66%, transparent 100%);
+}
+.hero-team-group-left .hero-team-person:nth-child(even),
+.hero-team-group-right .hero-team-person:nth-child(odd) { margin-top: 26px; }
+@keyframes hero-person-reveal {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: .88; transform: translateY(0); }
+}
+.home-showcase-hero [data-hero-visual] {
+  position: relative;
+  z-index: 4;
+  margin-top: clamp(0rem, 1vw, .6rem);
+}
+@media (max-width: 900px) {
+  .home-showcase-hero > .hero-side-visual { inset-block-start: 7rem; height: 230px; opacity: .5; }
+  .hero-team-group { width: 32%; }
+  .hero-team-person { height: 190px; }
+}
+@media (max-width: 639px) {
+  .home-showcase-hero > .hero-side-visual { inset-block-start: 7rem; height: 190px; opacity: .26; }
+  .hero-team-group { width: 40%; gap: 0; }
+  .hero-team-person { height: 150px; }
+  .hero-team-person:nth-child(n+4) { display: none; }
+  .home-showcase-hero [data-hero-step="title"] { position: relative; z-index: 3; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-team-person { opacity: .88; animation: none; }
+}
