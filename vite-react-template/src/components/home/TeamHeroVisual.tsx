@@ -117,7 +117,7 @@ export function TeamHeroVisual() {
       for (const { figure, m } of measured) {
         const baseFit = targetHeight / m.visibleHeight
         // Enlarge the whole team by 10%; Alfariz retains his subtle 6% relative reduction.
-        const personAdjustment = (figure.dataset.person === 'Alfariz' ? 0.94 : 1) * 1.10
+        const personAdjustment = (figure.dataset.person === 'Alfariz' ? 0.94 : 1) * 1.22
         const fit = baseFit * personAdjustment
         figure.style.setProperty('--fit', fit.toFixed(3))
         figure.style.setProperty('--lift', m.top.toFixed(3))
