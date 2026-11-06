@@ -1223,7 +1223,7 @@ header nav a::after {
 
 .hero-team-group {
   position: absolute;
-  top: 5.5cqw;
+  top: 8cqw;
   display: block;
   width: clamp(220px, calc((100cqw - var(--team-room, 33rem)) / 2), 31%);
   height: auto;
@@ -1348,7 +1348,7 @@ header nav a::after {
   }
 
   .hero-team-group {
-    top: 7cqw;
+    top: 9cqw;
     width: 29%;
   }
 
@@ -1365,7 +1365,7 @@ header nav a::after {
 
 @media (max-width: 639px) {
   .home-showcase-hero > .hero-side-visual {
-    inset-block-start: 7rem;
+    inset-block-start: 7.5rem;
     height: 190px;
     opacity: .32;
   }
