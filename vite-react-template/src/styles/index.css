@@ -1169,3 +1169,104 @@ header nav a::after {
 .company-heading-word-wrap:not(:last-child) {
   margin-inline-end: 0.2em;
 }
+
+
+/* Homepage hero: supplied EQISI team portraits in the blue-and-white treatment. */
+.team-hero-visual {
+  position: relative;
+  width: min(100%, 980px);
+  margin-inline: auto;
+  padding: clamp(12px, 2vw, 22px);
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, #4860ac 18%, transparent);
+  border-radius: 26px;
+  background: linear-gradient(145deg, rgb(255 255 255 / .96), rgb(239 244 253 / .92));
+  box-shadow: 0 22px 60px -42px rgb(30 53 84 / .48), inset 0 1px 0 rgb(255 255 255 / .95);
+}
+.team-hero-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 2px 14px;
+}
+.team-hero-kicker {
+  color: #294783;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+}
+.team-hero-caption {
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 600;
+}
+.team-hero-portraits {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  align-items: end;
+  gap: clamp(5px, 1vw, 11px);
+}
+.team-hero-portrait {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  border: 1px solid rgb(72 96 172 / .18);
+  border-radius: 13px;
+  background: #eaf0fb;
+  box-shadow: 0 8px 18px -14px rgb(30 53 84 / .55);
+  transform: translateY(calc((var(--portrait-index, 0) % 2) * 7px));
+  animation: team-portrait-enter 650ms both;
+  animation-delay: calc(var(--portrait-index, 0) * 65ms);
+}
+.team-hero-portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform 500ms cubic-bezier(.2,.8,.2,1), filter 500ms ease;
+}
+.team-hero-portrait figcaption {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  padding: 18px 3px 7px;
+  color: #fff;
+  background: linear-gradient(transparent, rgb(20 39 78 / .82));
+  font-size: clamp(8px, .85vw, 11px);
+  font-weight: 700;
+  text-align: center;
+  text-shadow: 0 1px 5px rgb(0 0 0 / .25);
+}
+.team-hero-portrait:last-child {
+  display: grid;
+  place-items: center;
+  padding: 12%;
+  background: #fff;
+}
+.team-hero-portrait:last-child img {
+  height: auto;
+  object-fit: contain;
+}
+@keyframes team-portrait-enter {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(calc((var(--portrait-index, 0) % 2) * 7px)); }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .team-hero-portrait:hover img { transform: scale(1.055); }
+  .team-hero-portrait:hover { border-color: rgb(72 96 172 / .48); }
+}
+@media (max-width: 767px) {
+  .team-hero-visual { padding: 12px; border-radius: 20px; }
+  .team-hero-heading { align-items: flex-start; flex-direction: column; gap: 3px; margin-bottom: 10px; }
+  .team-hero-portraits { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .team-hero-portrait { border-radius: 11px; transform: none; }
+  .team-hero-portrait figcaption { font-size: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .team-hero-portrait { animation: none; transform: none; }
+  .team-hero-portrait img { transition: none; }
+}
