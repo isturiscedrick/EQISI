@@ -55,6 +55,14 @@ export function Header() {
     }
   }, [open])
 
+  // Keep the page from scrolling behind the open mobile drawer.
+  useEffect(() => {
+    if (!open) return
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = previousOverflow }
+  }, [open])
+
   // Escape closes the mobile menu and returns focus to its toggle.
   useEffect(() => {
     if (!open) return
@@ -181,7 +189,7 @@ export function Header() {
 
   return (
     <>
-      {open && <button type="button" aria-label="Close navigation menu" onClick={() => setOpen(false)} className="fixed inset-0 z-40 bg-slate-950/45 backdrop-blur-[2px] md:hidden" />}
+      {open && <button type="button" aria-label="Close navigation menu" onClick={() => setOpen(false)} className="fixed inset-0 z-30 bg-slate-950/45 backdrop-blur-[2px] md:hidden" />}
       <header
         ref={headerRef}
         className={cn(
@@ -223,7 +231,7 @@ export function Header() {
               event.currentTarget.style.setProperty('--nav-glow-y', `${event.clientY - rect.top}px`)
             }}
             className={cn(
-              'header-nav-motion',
+              'header-nav-motion mobile-nav-drawer',
               open ? 'flex' : 'hidden',
               'fixed inset-y-0 left-0 right-auto z-50 h-dvh w-[min(82vw,320px)] flex-col gap-2 overflow-y-auto border-r border-border bg-canvas px-5 pb-6 pt-5 shadow-elevated md:static md:z-auto md:h-auto md:w-auto md:overflow-visible md:border-0 md:p-1',
               'md:flex md:flex-row md:items-center md:gap-1 md:rounded-full md:border md:border-border/70 md:bg-surface-muted/75 md:px-2 md:py-1 md:shadow-none',
