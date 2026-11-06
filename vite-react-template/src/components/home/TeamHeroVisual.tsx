@@ -70,7 +70,7 @@ function PortraitGroup({ people, side }: { people: typeof leftTeam; side: 'left'
   return (
     <div className={`hero-team-group hero-team-group-${side}`}>
       {people.map((person, index) => (
-        <figure className="hero-team-person" key={person.name} style={{ '--person-index': index } as React.CSSProperties}>
+        <figure className="hero-team-person" key={person.name} data-person={person.name} style={{ '--person-index': index } as React.CSSProperties}>
           <img src={person.image} alt="" loading="eager" />
         </figure>
       ))}
@@ -114,7 +114,10 @@ export function TeamHeroVisual() {
       const targetHeight = heights[Math.floor(heights.length / 2)] ?? 1
 
       for (const { figure, m } of measured) {
-        const fit = targetHeight / m.visibleHeight
+        const baseFit = targetHeight / m.visibleHeight
+        // Alfariz gets a subtle 6% reduction while keeping the shared visible-height normalization.
+        const personAdjustment = figure.dataset.person === 'Alfariz' ? 0.94 : 1
+        const fit = baseFit * personAdjustment
         figure.style.setProperty('--fit', fit.toFixed(3))
         figure.style.setProperty('--lift', m.top.toFixed(3))
       }
