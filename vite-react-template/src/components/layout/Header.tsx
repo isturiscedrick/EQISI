@@ -241,9 +241,6 @@ export function Header() {
             <div className="nav-pointer-glow" aria-hidden="true" />
             <div className="mb-4 flex items-center justify-between border-b border-border pb-4 text-left md:hidden">
               <span className="text-xs font-bold tracking-[0.18em] text-fg-muted uppercase">Main menu</span>
-              <button type="button" onClick={() => setOpen(false)} aria-label="Close menu" className="inline-flex size-10 items-center justify-center rounded-full bg-surface-muted text-fg transition-colors hover:bg-border">
-                <X aria-hidden="true" className="size-5" />
-              </button>
             </div>
             {siteConfig.nav.map((item) => {
               const Icon = navIcons[item.to as keyof typeof navIcons] ?? ArrowRight
