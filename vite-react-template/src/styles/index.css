@@ -1265,63 +1265,54 @@ header nav a::after {
   mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
 }
 
-/* Left cluster: Alfariz, Cajigal, Flores, Joy. Keep the same base width;
-   Joy has extra transparent padding in the source artwork, so use a smaller fit. */
+/* Left cluster: Alfariz, Tugas, Alfariz, Flores. Portrait scale is normalized from source pixels in TeamHeroVisual. */
 .hero-team-group-left .hero-team-person:nth-child(1) {
   left: 33%;
   top: 0;
   z-index: 1;
-  --fit: 1;
 }
 
 .hero-team-group-left .hero-team-person:nth-child(2) {
   left: 0;
   top: 17%;
   z-index: 2;
-  --fit: 1;
 }
 
 .hero-team-group-left .hero-team-person:nth-child(3) {
   left: 27%;
   top: 39%;
   z-index: 3;
-  --fit: 1;
 }
 
 .hero-team-group-left .hero-team-person:nth-child(4) {
   left: 56%;
   top: 43%;
   z-index: 4;
-  --fit: .82;
 }
 
-/* Right cluster: keep the same base sizing and staggered composition. */
+/* Right cluster: keep the same base sizing and staggered composition. All portrait scale comes from source-image measurement. */
 .hero-team-group-right .hero-team-person:nth-child(1) {
   left: 28%;
   top: 0;
   z-index: 1;
-  --fit: 1;
 }
 
 .hero-team-group-right .hero-team-person:nth-child(2) {
   left: 56%;
   top: 17%;
   z-index: 2;
-  --fit: 1;
 }
 
 .hero-team-group-right .hero-team-person:nth-child(3) {
   left: 33%;
   top: 34%;
   z-index: 3;
-  --fit: 1;
 }
 
 .hero-team-group-right .hero-team-person:nth-child(4) {
   left: 0;
   top: 47.5%;
   z-index: 4;
-  --fit: 1;
 }
 
 @keyframes hero-person-reveal {
