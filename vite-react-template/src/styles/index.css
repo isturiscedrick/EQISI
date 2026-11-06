@@ -1346,3 +1346,48 @@ header nav a::after {
 @media (prefers-reduced-motion: reduce) {
   .hero-team-person { opacity: .88; animation: none; }
 }
+
+
+/* Homepage hero portrait balance: keep the headline clear and portraits visible. */
+@media (min-width: 901px) {
+  .home-showcase-hero > .hero-side-visual {
+    inset-block-start: 6.25rem;
+    height: clamp(190px, 23vw, 270px);
+  }
+  .hero-team-group {
+    width: min(26%, 360px);
+    gap: clamp(5px, .8vw, 12px);
+  }
+  .hero-team-group-left { left: 1.75%; }
+  .hero-team-group-right { right: 1.75%; }
+  .hero-team-person {
+    height: clamp(150px, 18vw, 225px);
+  }
+  .hero-team-person img {
+    filter: saturate(.98) contrast(1.08);
+    -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
+  }
+}
+@media (min-width: 640px) and (max-width: 900px) {
+  .home-showcase-hero > .hero-side-visual {
+    inset-block-start: 6.5rem;
+    height: 210px;
+  }
+  .hero-team-group { width: 27%; gap: 3px; }
+  .hero-team-person { height: 165px; }
+  .hero-team-person img {
+    filter: saturate(.92) contrast(1.06);
+    -webkit-mask-image: linear-gradient(to bottom, #000 76%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 76%, transparent 100%);
+  }
+}
+@media (max-width: 639px) {
+  .home-showcase-hero > .hero-side-visual {
+    inset-block-start: 7.25rem;
+    height: 170px;
+    opacity: .42;
+  }
+  .hero-team-group { width: 38%; }
+  .hero-team-person { height: 138px; }
+}
