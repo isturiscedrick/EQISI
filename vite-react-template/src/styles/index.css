@@ -1171,314 +1171,167 @@ header nav a::after {
 }
 
 
-/* Homepage hero: supplied EQISI team portraits in the blue-and-white treatment. */
-.team-hero-visual {
-  position: relative;
-  width: min(100%, 980px);
-  margin-inline: auto;
-  padding: clamp(12px, 2vw, 22px);
-  overflow: hidden;
-  border: 1px solid color-mix(in srgb, #4860ac 18%, transparent);
-  border-radius: 26px;
-  background: linear-gradient(145deg, rgb(255 255 255 / .96), rgb(239 244 253 / .92));
-  box-shadow: 0 22px 60px -42px rgb(30 53 84 / .48), inset 0 1px 0 rgb(255 255 255 / .95);
-}
-.team-hero-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin: 0 2px 14px;
-}
-.team-hero-kicker {
-  color: #294783;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: .17em;
-  text-transform: uppercase;
-}
-.team-hero-caption {
-  color: #64748b;
-  font-size: 11px;
-  font-weight: 600;
-}
-.team-hero-portraits {
-  display: grid;
-  grid-template-columns: repeat(9, minmax(0, 1fr));
-  align-items: end;
-  gap: clamp(5px, 1vw, 11px);
-}
-.team-hero-portrait {
-  position: relative;
-  min-width: 0;
-  overflow: hidden;
-  aspect-ratio: 3 / 4;
-  border: 1px solid rgb(72 96 172 / .18);
-  border-radius: 13px;
-  background: #eaf0fb;
-  box-shadow: 0 8px 18px -14px rgb(30 53 84 / .55);
-  transform: translateY(calc((var(--portrait-index, 0) % 2) * 7px));
-  animation: team-portrait-enter 650ms both;
-  animation-delay: calc(var(--portrait-index, 0) * 65ms);
-}
-.team-hero-portrait img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  transition: transform 500ms cubic-bezier(.2,.8,.2,1), filter 500ms ease;
-}
-.team-hero-portrait figcaption {
-  position: absolute;
-  inset-inline: 0;
-  bottom: 0;
-  padding: 18px 3px 7px;
-  color: #fff;
-  background: linear-gradient(transparent, rgb(20 39 78 / .82));
-  font-size: clamp(8px, .85vw, 11px);
-  font-weight: 700;
-  text-align: center;
-  text-shadow: 0 1px 5px rgb(0 0 0 / .25);
-}
-.team-hero-portrait:last-child {
-  display: grid;
-  place-items: center;
-  padding: 12%;
-  background: #fff;
-}
-.team-hero-portrait:last-child img {
-  height: auto;
-  object-fit: contain;
-}
-@keyframes team-portrait-enter {
-  from { opacity: 0; transform: translateY(18px); }
-  to { opacity: 1; transform: translateY(calc((var(--portrait-index, 0) % 2) * 7px)); }
-}
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .team-hero-portrait:hover img { transform: scale(1.055); }
-  .team-hero-portrait:hover { border-color: rgb(72 96 172 / .48); }
-}
-@media (max-width: 767px) {
-  .team-hero-visual { padding: 12px; border-radius: 20px; }
-  .team-hero-heading { align-items: flex-start; flex-direction: column; gap: 3px; margin-bottom: 10px; }
-  .team-hero-portraits { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-  .team-hero-portrait { border-radius: 11px; transform: none; }
-  .team-hero-portrait figcaption { font-size: 10px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .team-hero-portrait { animation: none; transform: none; }
-  .team-hero-portrait img { transition: none; }
+/* Homepage hero team portraits
+   One source of truth for the layered portrait layout and responsive behavior. */
+.home-showcase-hero {
+  isolation: isolate;
 }
 
-
-/* Hero portrait composition: people frame the central message, globe remains below. */
-.home-showcase-hero { isolation: isolate; }
 .home-showcase-hero > .hero-side-visual {
   position: absolute;
   z-index: 1;
-  inset: 5.5rem 0 auto;
-  height: clamp(250px, 30vw, 390px);
+  inset: 0;
+  height: auto;
+  opacity: 1;
   pointer-events: none;
 }
-.home-showcase-hero > .hero-side-visual + div { z-index: 0; }
+
+.home-showcase-hero > .hero-side-visual + div {
+  z-index: 0;
+}
+
 .home-showcase-hero > div.relative {
   z-index: 2;
 }
+
 .home-showcase-hero [data-hero-step="eyebrow"],
 .home-showcase-hero [data-hero-step="title"],
 .home-showcase-hero [data-hero-step="description"],
-.home-showcase-hero [data-hero-step="actions"] { position: relative; z-index: 3; }
-.hero-team-frame { position: relative; width: 100%; height: 100%; max-width: 1440px; margin-inline: auto; }
-.hero-team-group {
-  position: absolute;
-  top: 0;
-  display: flex;
-  align-items: flex-start;
-  gap: clamp(2px, .45vw, 8px);
-  width: min(34%, 440px);
-}
-.hero-team-group-left { left: 1.5%; justify-content: flex-start; }
-.hero-team-group-right { right: 1.5%; justify-content: flex-end; }
-.hero-team-person {
+.home-showcase-hero [data-hero-step="actions"] {
   position: relative;
-  flex: 1 1 0;
-  min-width: 0;
-  height: clamp(170px, 22vw, 285px);
-  overflow: hidden;
-  opacity: 0;
-  animation: hero-person-reveal 900ms cubic-bezier(.2,.8,.2,1) forwards;
-  animation-delay: calc(var(--person-index, 0) * 90ms + .15s);
+  z-index: 3;
 }
-.hero-team-person img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center top;
-  filter: saturate(.78);
-  -webkit-mask-image: linear-gradient(to bottom, #000 66%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 66%, transparent 100%);
-}
-.hero-team-group-left .hero-team-person:nth-child(even),
-.hero-team-group-right .hero-team-person:nth-child(odd) { margin-top: 26px; }
-@keyframes hero-person-reveal {
-  from { opacity: 0; transform: translateY(22px); }
-  to { opacity: .88; transform: translateY(0); }
-}
+
 .home-showcase-hero [data-hero-visual] {
   position: relative;
   z-index: 4;
   margin-top: clamp(0rem, 1vw, .6rem);
 }
-@media (max-width: 900px) {
-  .home-showcase-hero > .hero-side-visual { inset-block-start: 7rem; height: 230px; opacity: .5; }
-  .hero-team-group { width: 32%; }
-  .hero-team-person { height: 190px; }
-}
-@media (max-width: 639px) {
-  .home-showcase-hero > .hero-side-visual { inset-block-start: 7rem; height: 190px; opacity: .26; }
-  .hero-team-group { width: 40%; gap: 0; }
-  .hero-team-person { height: 150px; }
-  .hero-team-person:nth-child(n+4) { display: none; }
-  .home-showcase-hero [data-hero-step="title"] { position: relative; z-index: 3; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero-team-person { opacity: .88; animation: none; }
+
+.home-showcase-hero .hero-accent-rule {
+  display: block;
 }
 
+.hero-team-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  container-type: inline-size;
+}
 
-/* Homepage hero portraits: clear faces, equal visual frames, no portrait overlap. */
-.home-showcase-hero .hero-accent-rule { display: block; }
+.hero-team-group {
+  position: absolute;
+  top: 5.5cqw;
+  display: block;
+  width: clamp(220px, calc((100cqw - var(--team-room, 33rem)) / 2), 31%);
+  height: auto;
+  aspect-ratio: 266 / 295;
+}
 
-@media (min-width: 640px) {
-  .home-showcase-hero [data-hero-step="description"] {
-    max-width: 31rem;
-    font-size: 0.9375rem;
-  }
+.hero-team-group-left {
+  left: 1.5%;
+  right: auto;
+}
 
-  .home-showcase-hero > .hero-side-visual {
-    --team-cluster-height: clamp(360px, 34vw, 490px);
-    inset-block-start: 7.5rem;
-    height: var(--team-cluster-height);
-    opacity: 1;
-    pointer-events: none;
-  }
+.hero-team-group-right {
+  right: 1.5%;
+  left: auto;
+}
 
-  .home-showcase-hero .hero-team-group {
-    position: absolute;
-    top: 0;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: repeat(2, minmax(0, 1fr));
-    align-items: end;
-    justify-items: center;
-    gap: clamp(4px, .65vw, 12px);
-    width: clamp(260px, 24vw, 430px);
-    height: var(--team-cluster-height);
-  }
-  .home-showcase-hero .hero-team-group-left { left: 1.1%; right: auto; }
-  .home-showcase-hero .hero-team-group-right { right: 1.1%; left: auto; }
+.hero-team-person {
+  position: absolute;
+  display: block;
+  width: 44%;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  opacity: 0;
+  animation: hero-person-reveal 850ms cubic-bezier(.2, .8, .2, 1) both;
+  animation-delay: calc(var(--person-index, 0) * 90ms + .12s);
+}
 
-  .home-showcase-hero .hero-team-person {
-    position: relative;
-    display: flex;
-    align-items: end;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    min-width: 0;
-    min-height: 0;
-    margin: 0;
-    overflow: visible;
+.hero-team-person img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center top;
+  transform: scale(var(--fit, 1)) translateY(calc(var(--lift, 0) * -100%));
+  transform-origin: center top;
+  filter: saturate(.94) contrast(1.04);
+  -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
+}
+
+/* Left cluster: Alfariz, Cajigal, Flores, Joy. Keep the same base width;
+   Joy has extra transparent padding in the source artwork, so use a smaller fit. */
+.hero-team-group-left .hero-team-person:nth-child(1) {
+  left: 33%;
+  top: 0;
+  z-index: 1;
+  --fit: 1;
+}
+
+.hero-team-group-left .hero-team-person:nth-child(2) {
+  left: 0;
+  top: 17%;
+  z-index: 2;
+  --fit: 1;
+}
+
+.hero-team-group-left .hero-team-person:nth-child(3) {
+  left: 27%;
+  top: 39%;
+  z-index: 3;
+  --fit: 1;
+}
+
+.hero-team-group-left .hero-team-person:nth-child(4) {
+  left: 56%;
+  top: 43%;
+  z-index: 4;
+  --fit: .82;
+}
+
+/* Right cluster: keep the same base sizing and staggered composition. */
+.hero-team-group-right .hero-team-person:nth-child(1) {
+  left: 28%;
+  top: 0;
+  z-index: 1;
+  --fit: 1;
+}
+
+.hero-team-group-right .hero-team-person:nth-child(2) {
+  left: 56%;
+  top: 17%;
+  z-index: 2;
+  --fit: 1;
+}
+
+.hero-team-group-right .hero-team-person:nth-child(3) {
+  left: 33%;
+  top: 34%;
+  z-index: 3;
+  --fit: 1;
+}
+
+.hero-team-group-right .hero-team-person:nth-child(4) {
+  left: 0;
+  top: 47.5%;
+  z-index: 4;
+  --fit: 1;
+}
+
+@keyframes hero-person-reveal {
+  from {
     opacity: 0;
-    aspect-ratio: 3 / 4;
+    translate: 0 22px;
   }
-  .home-showcase-hero .hero-team-person img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center bottom;
-    transform: scale(1.08);
-    transform-origin: center bottom;
-    filter: saturate(1.02) contrast(1.08);
-    -webkit-mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
-  }
-
-  /* Compensate slightly for the transparent padding in the source PNGs. */
-  .home-showcase-hero .hero-team-group-left .hero-team-person:nth-child(1) img { transform: scale(1.10); }
-  .home-showcase-hero .hero-team-group-left .hero-team-person:nth-child(2) img { transform: scale(1.06); }
-  .home-showcase-hero .hero-team-group-left .hero-team-person:nth-child(3) img { transform: scale(1.07); }
-  /* Joy's source portrait is framed closer than the others, so scale it down to match their visual size. */
-  .home-showcase-hero .hero-team-group-left .hero-team-person:nth-child(4) img { transform: scale(.82); }
-  .home-showcase-hero .hero-team-group-right .hero-team-person:nth-child(1) img { transform: scale(1.07); }
-  .home-showcase-hero .hero-team-group-right .hero-team-person:nth-child(2) img { transform: scale(1.08); }
-  .home-showcase-hero .hero-team-group-right .hero-team-person:nth-child(3) img { transform: scale(1.06); }
-  .home-showcase-hero .hero-team-group-right .hero-team-person:nth-child(4) img { transform: scale(1.08); }
-
-  .home-showcase-hero .hero-team-group::before {
-    position: absolute;
-    z-index: 0;
-    inset: 8% -8% -4%;
-    border-radius: 50%;
-    background: radial-gradient(ellipse at 50% 55%, rgb(72 96 172 / .12), rgb(72 96 172 / .04) 48%, transparent 74%);
-    content: "";
-    filter: blur(14px);
-    pointer-events: none;
-  }
-}
-
-@media (min-width: 640px) and (max-width: 999px) {
-  .home-showcase-hero > .hero-side-visual {
-    --team-cluster-height: 310px;
-    inset-block-start: 8rem;
-    opacity: .9;
-  }
-  .home-showcase-hero .hero-team-group { width: 27vw; }
-  .home-showcase-hero [data-hero-step="title"] { max-width: 11ch; }
-}
-
-@media (min-width: 1000px) {
-  .home-showcase-hero [data-hero-step="title"] { max-width: 12ch; }
-}
-
-@media (max-width: 639px) {
-  .home-showcase-hero > .hero-side-visual {
-    inset-block-start: 7.25rem;
-    height: 190px;
-    opacity: .4;
-    pointer-events: none;
-  }
-  .home-showcase-hero .hero-team-group {
-    position: absolute;
-    top: 0;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: repeat(2, minmax(0, 1fr));
-    gap: 2px;
-    width: 43%;
-    height: 190px;
-  }
-  .home-showcase-hero .hero-team-person {
-    display: flex;
-    align-items: end;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    opacity: .9;
-    overflow: visible;
-  }
-  .home-showcase-hero .hero-team-person img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center bottom;
-    transform: scale(1.06);
-    -webkit-mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
+  to {
+    opacity: .92;
+    translate: 0 0;
   }
 }
 
@@ -1488,153 +1341,104 @@ header nav a::after {
 }
 
 @media (min-width: 640px) and (prefers-reduced-motion: no-preference) {
-  .home-showcase-hero .hero-team-person {
-    animation: hero-person-reveal 850ms cubic-bezier(.2, .8, .2, 1) both,
+  .hero-team-person {
+    animation:
+      hero-person-reveal 850ms cubic-bezier(.2, .8, .2, 1) both,
       hero-person-float 7s ease-in-out infinite;
-  }
-  .home-showcase-hero .hero-team-group .hero-team-person:nth-child(1) { animation-delay: .12s, 1.2s; }
-  .home-showcase-hero .hero-team-group .hero-team-person:nth-child(2) { animation-delay: .22s, 2.1s; }
-  .home-showcase-hero .hero-team-group .hero-team-person:nth-child(3) { animation-delay: .36s, 1.6s; }
-  .home-showcase-hero .hero-team-group .hero-team-person:nth-child(4) { animation-delay: .5s, 2.6s; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .home-showcase-hero .hero-team-person {
-    opacity: .95;
-    animation: none !important;
-    translate: none;
+    animation-delay:
+      calc(var(--person-index, 0) * 90ms + .12s),
+      calc(1.2s + var(--person-index, 0) * .35s);
   }
 }
 
-/* Hero portraits: staggered, overlapping clusters matched to the reference screenshot.
-   Appended last so it overrides the earlier hero-team rules at the same specificity. */
-@media (min-width: 640px) {
+@media (min-width: 640px) and (max-width: 999px) {
   .home-showcase-hero > .hero-side-visual {
-    inset: 0;
-    height: auto;
-    opacity: 1;
+    opacity: .88;
   }
 
-  /* cqw = 1% of the frame's width, so the layout scales as one piece. */
-  .home-showcase-hero > .hero-side-visual .hero-team-frame {
-    container-type: inline-size;
-    max-width: 1280px;
-    height: 100%;
+  .hero-team-group {
+    top: 7cqw;
+    width: 29%;
   }
 
-  .home-showcase-hero > .hero-side-visual .hero-team-frame .hero-team-group {
-    position: absolute;
-    top: 6.6cqw;
-    display: block;
-    width: 25.5%;
-    height: auto;
+  .home-showcase-hero [data-hero-step="title"] {
+    max-width: 11ch;
+  }
+}
+
+@media (min-width: 1000px) {
+  .home-showcase-hero [data-hero-step="title"] {
+    max-width: 12ch;
+  }
+}
+
+@media (max-width: 639px) {
+  .home-showcase-hero > .hero-side-visual {
+    inset-block-start: 7rem;
+    height: 190px;
+    opacity: .32;
+  }
+
+  .hero-team-group {
+    top: 0;
+    width: 42%;
     aspect-ratio: 266 / 295;
-    gap: 0;
-  }
-  .home-showcase-hero > .hero-side-visual .hero-team-frame .hero-team-group-left {
-    left: 8.5%;
-    right: auto;
-  }
-  .home-showcase-hero > .hero-side-visual .hero-team-frame .hero-team-group-right {
-    right: 9.8%;
-    left: auto;
   }
 
-  .home-showcase-hero > .hero-side-visual .hero-team-frame .hero-team-group .hero-team-person {
-    position: absolute;
-    display: block;
-    height: auto;
-    aspect-ratio: 4 / 5;
-    margin: 0;
-    overflow: visible;
-  }
-
-  .home-showcase-hero > .hero-side-visual .hero-team-frame .hero-team-group .hero-team-person img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center top;
-    transform: none;
-    filter: none;
-    -webkit-mask-image: linear-gradient(to bottom, #000 58%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 58%, transparent 100%);
-  }
-
-  /* Left cluster: slots 1-4 */
-  .home-showcase-hero .hero-team-group-left .hero-team-person:nth-child(1) { left: 34%; top: 0;   width: 46%; z-index: 1; }
-  .home-showcase-hero .hero-team-group-left .hero-team-person:nth-child(2) { left: 0;   top: 17%; width: 42%; z-index: 2; }
-  .home-showcase-hero .hero-team-group-left .hero-team-person:nth-child(3) { left: 27%; top: 39%; width: 39%; z-index: 3; }
-  .home-showcase-hero .hero-team-group-left .hero-team-person:nth-child(4) { left: 52%; top: 43%; width: 48%; z-index: 4; }
-
-  /* Right cluster: slots 1-4 */
-  .home-showcase-hero .hero-team-group-right .hero-team-person:nth-child(1) { left: 31%;   top: 0;     width: 40%; z-index: 1; }
-  .home-showcase-hero .hero-team-group-right .hero-team-person:nth-child(2) { left: 59%;   top: 17%;   width: 41%; z-index: 2; }
-  .home-showcase-hero .hero-team-group-right .hero-team-person:nth-child(3) { left: 34.5%; top: 34%;   width: 39%; z-index: 3; }
-  .home-showcase-hero .hero-team-group-right .hero-team-person:nth-child(4) { left: 0;     top: 47.5%; width: 41%; z-index: 4; }
-}
-
-/* Hero portraits: larger clusters, pushed toward the edges to keep clear of the headline. */
-@media (min-width: 640px) {
-  .home-showcase-hero > .hero-side-visual .hero-team-frame .hero-team-group {
-    top: 5cqw;
-    width: 31%;
-  }
-  .home-showcase-hero > .hero-side-visual .hero-team-frame .hero-team-group-left {
-    left: 3%;
-  }
-  .home-showcase-hero > .hero-side-visual .hero-team-frame .hero-team-group-right {
-    right: 3%;
-  }
-}
-
-/* Hero portraits: uniform size for every person, plus a per-slot --fit tweak for PNG padding differences. */
-@media (min-width: 640px) {
-  .home-showcase-hero > .hero-side-visual .hero-team-frame .hero-team-group .hero-team-person {
+  .hero-team-person {
     width: 44%;
   }
 
-  .home-showcase-hero > .hero-side-visual .hero-team-frame .hero-team-group .hero-team-person img {
-    transform: scale(var(--fit, 1));
-    transform-origin: center top;
+  .hero-team-group-left .hero-team-person:nth-child(1) {
+    left: 30%;
+    top: 0;
   }
 
-  /* Left cluster: slots 1-4. Raise --fit above 1 to enlarge a person, lower it to shrink. */
-  .home-showcase-hero .hero-team-group-left .hero-team-person:nth-child(1) { left: 33%; top: 0;   z-index: 1; --fit: 1; }
-  .home-showcase-hero .hero-team-group-left .hero-team-person:nth-child(2) { left: 0;   top: 17%; z-index: 2; --fit: 1; }
-  .home-showcase-hero .hero-team-group-left .hero-team-person:nth-child(3) { left: 27%; top: 39%; z-index: 3; --fit: 1; }
-  .home-showcase-hero .hero-team-group-left .hero-team-person:nth-child(4) { left: 56%; top: 43%; z-index: 4; --fit: 1; }
+  .hero-team-group-left .hero-team-person:nth-child(2) {
+    left: 0;
+    top: 18%;
+  }
 
-  /* Right cluster: slots 1-4 */
-  .home-showcase-hero .hero-team-group-right .hero-team-person:nth-child(1) { left: 28%; top: 0;     z-index: 1; --fit: 1; }
-  .home-showcase-hero .hero-team-group-right .hero-team-person:nth-child(2) { left: 56%; top: 17%;   z-index: 2; --fit: 1; }
-  .home-showcase-hero .hero-team-group-right .hero-team-person:nth-child(3) { left: 33%; top: 34%;   z-index: 3; --fit: 1; }
-  .home-showcase-hero .hero-team-group-right .hero-team-person:nth-child(4) { left: 0;   top: 47.5%; z-index: 4; --fit: 1; }
+  .hero-team-group-left .hero-team-person:nth-child(3) {
+    left: 24%;
+    top: 42%;
+  }
+
+  .hero-team-group-left .hero-team-person:nth-child(4) {
+    left: 54%;
+    top: 47%;
+  }
+
+  .hero-team-group-right .hero-team-person:nth-child(1) {
+    left: 25%;
+    top: 0;
+  }
+
+  .hero-team-group-right .hero-team-person:nth-child(2) {
+    left: 55%;
+    top: 18%;
+  }
+
+  .hero-team-group-right .hero-team-person:nth-child(3) {
+    left: 30%;
+    top: 39%;
+  }
+
+  .hero-team-group-right .hero-team-person:nth-child(4) {
+    left: 0;
+    top: 48%;
+  }
+
+  .home-showcase-hero [data-hero-step="title"] {
+    position: relative;
+    z-index: 3;
+  }
 }
 
-/* Hero portraits: natural image size (no letterboxing), measured scale and lift, clusters sized to the free side space. */
-@media (min-width: 640px) {
-  /* Cluster width = the space left beside the headline, capped at 31%.
-     Lower --team-room to make the clusters bigger (they will start to touch the text). */
-  .home-showcase-hero > .hero-side-visual .hero-team-frame .hero-team-group {
-    width: clamp(220px, calc((100cqw - var(--team-room, 33rem)) / 2), 31%);
-  }
-  .home-showcase-hero > .hero-side-visual .hero-team-frame .hero-team-group-left {
-    left: 1.5%;
-  }
-  .home-showcase-hero > .hero-side-visual .hero-team-frame .hero-team-group-right {
-    right: 1.5%;
-  }
-
-  /* The box now follows the image, so the fade mask starts and ends on the picture itself. */
-  .home-showcase-hero > .hero-side-visual .hero-team-frame .hero-team-group .hero-team-person {
-    height: auto;
-    aspect-ratio: auto;
-  }
-  .home-showcase-hero > .hero-side-visual .hero-team-frame .hero-team-group .hero-team-person img {
-    height: auto;
-    object-fit: fill;
-    transform: scale(var(--fit, 1)) translateY(calc(var(--lift, 0) * -100%));
-    transform-origin: center top;
+@media (prefers-reduced-motion: reduce) {
+  .hero-team-person {
+    opacity: .92;
+    animation: none !important;
+    translate: none;
   }
 }
