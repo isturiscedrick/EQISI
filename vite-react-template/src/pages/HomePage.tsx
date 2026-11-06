@@ -2,6 +2,7 @@ import { ArrowRight, CalendarDays, Cpu, Handshake, ShieldCheck, UsersRound } fro
 import { Link } from 'react-router'
 import { Container } from '@/components/layout/Container'
 import { TeamHeroVisual } from '@/components/home/TeamHeroVisual'
+import { GlobeVisual } from '@/components/home/GlobeVisual'
 import { LogoMarquee } from '@/components/home/LogoMarquee'
 import { ScrollStory } from '@/components/ui/ScrollStory'
 import { ServiceExplorer } from '@/components/ui/ServiceExplorer'
@@ -52,7 +53,8 @@ export function Component() {
             </Link>
           </>
         }
-        visual={<TeamHeroVisual />}
+        sideVisual={<TeamHeroVisual />}
+        visual={<GlobeVisual />}
       />
 
       {/* Key stats: a card that overlaps the hero */}
