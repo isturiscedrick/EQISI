@@ -30,7 +30,7 @@ const stats = [
 function WarehouseIllustration() {
   return (
     <div className="home-feature-illustration flex aspect-[4/5] w-full items-center justify-center overflow-hidden sm:aspect-[5/4]">
-      <svg viewBox="0 0 640 500" role="img" aria-labelledby="warehouse-illustration-title" className="h-full w-full">
+      <svg viewBox="0 0 640 500" role="img" aria-labelledby="warehouse-illustration-title" className="illustration-motion h-full w-full">
         <title id="warehouse-illustration-title">Illustration of a modern warehouse with organized inventory and logistics equipment</title>
         <defs>
           <linearGradient id="warehouse-bg" x1="0" y1="0" x2="1" y2="1">
