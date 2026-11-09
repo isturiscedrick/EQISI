@@ -52,7 +52,7 @@ const stageIcons: LucideIcon[] = [ClipboardList, Users, UserCheck, Stethoscope]
 function CareersIllustration() {
   return (
     <div className="relative flex aspect-[16/10] w-full items-center justify-center overflow-hidden">
-      <svg viewBox="0 0 640 420" role="img" aria-labelledby="careers-illustration-title" className="h-full w-full">
+      <svg viewBox="0 0 640 420" role="img" aria-labelledby="careers-illustration-title" className="illustration-motion h-full w-full">
         <title id="careers-illustration-title">Illustration of employees connected to digital payroll, welfare and career support</title>
         <defs><linearGradient id="careers-bg" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#4860AC" stopOpacity=".15"/><stop offset="1" stopColor="#F05424" stopOpacity=".12"/></linearGradient></defs>
         <rect x="12" y="12" width="616" height="396" rx="28" fill="url(#careers-bg)"/>
