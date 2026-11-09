@@ -15,7 +15,7 @@ function Pin({ x, y, primary = false }: { x: number; y: number; primary?: boolea
 /** Decorative map of the three EQISI offices. */
 export function LocationIllustration({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 480 360" aria-hidden="true" focusable="false" className={className}>
+    <svg viewBox="0 0 480 360" aria-hidden="true" focusable="false" className={className ? `illustration-motion ${className}` : "illustration-motion"}>
       <rect x="16" y="16" width="448" height="328" rx="24" className="fill-surface-muted stroke-border" strokeWidth="3" />
 
       {/* Roads */}
