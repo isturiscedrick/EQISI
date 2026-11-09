@@ -63,6 +63,52 @@ function AboutWarehouseIllustration({ compact = false }: { compact?: boolean }) 
   )
 }
 
+
+function HeritageTimelineIllustration() {
+  return (
+    <div className="about-heritage-illustration relative flex aspect-[5/4] w-full items-center justify-center overflow-hidden">
+      <svg viewBox="0 0 640 460" role="img" aria-labelledby="heritage-timeline-title" className="h-full w-full">
+        <title id="heritage-timeline-title">Illustrated timeline showing EQISI's heritage, connected capabilities and future direction</title>
+        <defs>
+          <linearGradient id="heritage-timeline-glow" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#4860AC" stopOpacity=".13"/><stop offset="1" stopColor="#F05424" stopOpacity=".12"/></linearGradient>
+          <linearGradient id="heritage-road" x1="0" y1="0" x2="1" y2="0"><stop stopColor="#4860AC"/><stop offset=".58" stopColor="#7C8BC4"/><stop offset="1" stopColor="#F05424"/></linearGradient>
+        </defs>
+        <circle cx="320" cy="230" r="194" fill="url(#heritage-timeline-glow)"/>
+        <path d="M84 342C145 342 137 128 252 128s105 205 208 205 79-113 96-113" fill="none" stroke="#4860AC" strokeOpacity=".12" strokeWidth="34" strokeLinecap="round"/>
+        <path d="M84 342C145 342 137 128 252 128s105 205 208 205 79-113 96-113" fill="none" stroke="url(#heritage-road)" strokeWidth="9" strokeLinecap="round" strokeDasharray="2 1"/>
+        <g transform="translate(70 280)">
+          <circle cx="42" cy="62" r="42" fill="#fff" stroke="#4860AC" strokeWidth="5"/>
+          <path d="M19 58h46M25 58V38l17-12 17 12v20M34 58V45h16v13" fill="none" stroke="#4860AC" strokeWidth="5" strokeLinejoin="round" strokeLinecap="round"/>
+          <circle cx="42" cy="62" r="51" fill="none" stroke="#4860AC" strokeOpacity=".18" strokeWidth="3"/>
+          <text x="42" y="126" textAnchor="middle" fill="#4860AC" fontSize="22" fontWeight="800">1986</text>
+          <text x="42" y="148" textAnchor="middle" fill="#24365F" fontSize="12" fontWeight="700">FOUNDATION</text>
+        </g>
+        <g transform="translate(208 70)">
+          <circle cx="44" cy="58" r="43" fill="#fff" stroke="#4860AC" strokeWidth="5"/>
+          <path d="M20 70V48l24-15 24 15v22M30 70V54h28v16M15 75h58" fill="none" stroke="#F05424" strokeWidth="5" strokeLinejoin="round" strokeLinecap="round"/>
+          <text x="44" y="124" textAnchor="middle" fill="#4860AC" fontSize="14" fontWeight="800">GROWTH</text>
+          <text x="44" y="143" textAnchor="middle" fill="#24365F" fontSize="11" fontWeight="700">CAPABILITIES</text>
+        </g>
+        <g transform="translate(420 282)">
+          <circle cx="42" cy="52" r="42" fill="#fff" stroke="#F05424" strokeWidth="5"/>
+          <path d="M19 51h46M42 28v46M25 34l34 34M59 34 25 68" stroke="#4860AC" strokeWidth="5" strokeLinecap="round"/>
+          <circle cx="42" cy="52" r="10" fill="#F05424"/>
+          <text x="42" y="116" textAnchor="middle" fill="#4860AC" fontSize="14" fontWeight="800">TODAY</text>
+          <text x="42" y="135" textAnchor="middle" fill="#24365F" fontSize="11" fontWeight="700">INTEGRATION</text>
+        </g>
+        <g transform="translate(500 142)">
+          <circle cx="34" cy="34" r="34" fill="#F05424" fillOpacity=".12"/>
+          <path d="M16 37 29 50 53 21" fill="none" stroke="#F05424" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round"/>
+          <text x="34" y="91" textAnchor="middle" fill="#F05424" fontSize="13" fontWeight="800">NEXT</text>
+        </g>
+        <g fill="#4860AC"><circle cx="145" cy="190" r="5"/><circle cx="348" cy="230" r="5"/><circle cx="570" cy="230" r="5"/></g>
+        <path d="M160 390h320" stroke="#4860AC" strokeOpacity=".16" strokeWidth="3" strokeLinecap="round"/>
+        <path d="M185 390h74m34 0h74m34 0h74" stroke="#F05424" strokeOpacity=".5" strokeWidth="5" strokeLinecap="round"/>
+      </svg>
+    </div>
+  )
+}
+
 function InnovationIllustration() {
   return (
     <div className="relative flex aspect-[16/10] w-full items-center justify-center overflow-hidden">
@@ -139,7 +185,7 @@ export function Component() {
         ]}
         visual={
           <div className="about-story-visual overflow-hidden">
-            <AboutWarehouseIllustration compact />
+            <HeritageTimelineIllustration />
             <div className="grid grid-cols-2 gap-3 p-4 sm:p-5">
               <div className="rounded-xl bg-canvas p-4"><span className="text-xs font-bold tracking-wider text-fg-muted uppercase">Heritage</span><p className="mt-1 text-2xl font-extrabold text-primary">1986</p></div>
               <div className="rounded-xl bg-canvas p-4"><span className="text-xs font-bold tracking-wider text-fg-muted uppercase">Systems</span><p className="mt-1 text-2xl font-extrabold text-primary">06</p></div>
