@@ -27,7 +27,9 @@ export function SiteLoader() {
       .fromTo(line, { scaleX: 0 }, { scaleX: 1, duration: 0.42, ease: 'power2.inOut' }, '-=0.12')
       .to(root, { autoAlpha: 0, duration: 0.32, delay: 0.08, ease: 'power2.out' })
 
-    return () => timeline.kill()
+    return () => {
+      timeline.kill()
+    }
   }, [])
 
   if (!visible) return null
