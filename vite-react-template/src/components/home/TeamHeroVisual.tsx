@@ -10,16 +10,16 @@ import tugas from '@/assets/eqisi/team/team- blue and white/Tugas — blue and w
 
 // Order = slot: 1 back/top, 2 outer side, 3 lower, 4 front (see hero CSS).
 const leftTeam = [
-  { name: 'Alfariz', image: alfariz },
-  { name: 'Tugas', image: tugas },
-  { name: 'Manuel', image: manuel },
-  { name: 'Cajigal', image: cajigal },
+  { name: 'Gretchen Alfariz', role: 'Chief Finance Officer', image: alfariz },
+  { name: 'Gigy Josephine Tugas', role: 'Chief HR Officer', image: tugas },
+  { name: 'Jelle Jasmin Manuel', role: 'Chief Operating Officer', image: manuel },
+  { name: 'Aniceto Apollo L. Cajigal Jr.', role: 'Chairman & CEO', image: cajigal },
 ]
 const rightTeam = [
-  { name: 'Flores', image: flores },
-  { name: 'Trinidad', image: trinidad },
-  { name: 'Malaca', image: malaca },
-  { name: 'Joy', image: joy },
+  { name: 'Atty. Edgardo Flores Jr.', role: 'Chief Legal Officer', image: flores },
+  { name: 'Annabel S. Trinidad', role: 'Chief IT Officer', image: trinidad },
+  { name: 'Rodulfo Mejes Malaca', role: 'General Manager', image: malaca },
+  { name: 'Joy Catherine P. Lopez', role: 'President for Operations', image: joy },
 ]
 
 
@@ -71,8 +71,19 @@ function PortraitGroup({ people, side }: { people: typeof leftTeam; side: 'left'
   return (
     <div className={`hero-team-group hero-team-group-${side}`}>
       {people.map((person, index) => (
-        <figure className="hero-team-person" key={person.name} data-person={person.name} style={{ '--person-index': index } as React.CSSProperties}>
+        <figure
+          className="hero-team-person"
+          key={person.name}
+          data-person={person.name}
+          tabIndex={0}
+          aria-label={`${person.name}, ${person.role}`}
+          style={{ '--person-index': index } as React.CSSProperties}
+        >
           <img src={person.image} alt="" loading="eager" />
+          <figcaption className="hero-team-person-caption">
+            <span className="hero-team-person-name">{person.name}</span>
+            <span className="hero-team-person-role">{person.role}</span>
+          </figcaption>
         </figure>
       ))}
     </div>
