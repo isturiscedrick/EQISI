@@ -12,7 +12,6 @@ import { ExecutiveProfileDialog } from '@/components/ui/ExecutiveProfileDialog'
 import { ScrollStory } from '@/components/ui/ScrollStory'
 import { bannerButton, card, iconTile } from '@/components/ui/surface-styles'
 import * as c from '@/content/eqisi'
-import { asset } from '@/lib/assets'
 import alfariz from '@/assets/eqisi/team/alfariz.png'
 import ann from '@/assets/eqisi/team/ann.png'
 import cajigal from '@/assets/eqisi/team/cajigal.png'
@@ -40,6 +39,52 @@ const valueIcons: Record<string, LucideIcon> = {
   Maaasahan: ShieldCheck,
 }
 
+
+function AboutWarehouseIllustration({ compact = false }: { compact?: boolean }) {
+  return (
+    <div className={cn("about-illustration relative flex w-full items-center justify-center overflow-hidden rounded-2xl border border-border bg-surface-muted p-4 shadow-elevated sm:p-6", compact ? "aspect-[5/4]" : "aspect-[16/10] sm:aspect-[5/4] lg:aspect-[4/3]")}>
+      <svg viewBox="0 0 640 460" role="img" aria-labelledby="about-warehouse-title" className="h-full w-full">
+        <title id="about-warehouse-title">Illustration of an organized warehouse and connected industrial operations</title>
+        <defs>
+          <linearGradient id="about-warehouse-glow" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#4860AC" stopOpacity=".16"/><stop offset="1" stopColor="#F05424" stopOpacity=".13"/></linearGradient>
+          <linearGradient id="about-warehouse-floor" x1="0" y1="0" x2="0" y2="1"><stop stopColor="#4860AC" stopOpacity=".14"/><stop offset="1" stopColor="#4860AC" stopOpacity=".02"/></linearGradient>
+        </defs>
+        <rect x="12" y="12" width="616" height="436" rx="28" fill="url(#about-warehouse-glow)"/>
+        <circle cx="530" cy="94" r="46" fill="#F05424" opacity=".12"/><circle cx="98" cy="360" r="58" fill="#4860AC" opacity=".08"/>
+        <path d="M70 170 320 55l250 115v210H70z" fill="#fff" fillOpacity=".82" stroke="#4860AC" strokeOpacity=".32" strokeWidth="5" strokeLinejoin="round"/>
+        <path d="m70 170 250-115 250 115M110 188v180m420-180v180M320 88v280" fill="none" stroke="#4860AC" strokeWidth="7" strokeLinejoin="round" opacity=".7"/>
+        <path d="M92 368h456l44 35H48z" fill="url(#about-warehouse-floor)"/>
+        <g stroke="#4860AC" strokeWidth="7" strokeLinecap="round"><path d="M125 210v145m112-145v145m-112-104h112m-112 55h112M403 210v145m112-145v145m-112-104h112m-112 55h112"/></g>
+        <g><rect x="138" y="215" width="86" height="28" rx="5" fill="#F05424"/><rect x="138" y="257" width="86" height="39" rx="5" fill="#4860AC"/><rect x="138" y="310" width="86" height="39" rx="5" fill="#F05424" opacity=".8"/><rect x="416" y="215" width="86" height="28" rx="5" fill="#4860AC"/><rect x="416" y="257" width="86" height="39" rx="5" fill="#F05424"/><rect x="416" y="310" width="86" height="39" rx="5" fill="#4860AC" opacity=".85"/></g>
+        <g transform="translate(252 292)"><rect y="37" width="135" height="56" rx="12" fill="#F05424"/><path d="m20 37 19-31h46l26 31" fill="#F7B38F" stroke="#F05424" strokeWidth="5" strokeLinejoin="round"/><rect x="45" y="14" width="38" height="22" rx="4" fill="#fff" fillOpacity=".8"/><circle cx="31" cy="96" r="15" fill="#24365F"/><circle cx="105" cy="96" r="15" fill="#24365F"/><path d="M126 47h17v49" stroke="#24365F" strokeWidth="7" strokeLinecap="round"/><rect x="-18" y="7" width="42" height="30" rx="4" fill="#4860AC"/><path d="M-10 17h26m-26 9h26" stroke="#fff" strokeWidth="3" strokeLinecap="round"/></g>
+        <path d="M274 414h92" stroke="#F05424" strokeWidth="8" strokeLinecap="round"/><circle cx="320" cy="414" r="7" fill="#F05424"/>
+      </svg>
+    </div>
+  )
+}
+
+function InnovationIllustration() {
+  return (
+    <div className="relative flex aspect-[16/10] w-full items-center justify-center overflow-hidden rounded-2xl border border-border bg-surface-muted p-4 shadow-elevated sm:p-6">
+      <svg viewBox="0 0 640 420" role="img" aria-labelledby="innovation-illustration-title" className="h-full w-full">
+        <title id="innovation-illustration-title">Illustration of industrial automation, robotics and connected technology</title>
+        <defs><linearGradient id="innovation-bg" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#4860AC" stopOpacity=".15"/><stop offset="1" stopColor="#F05424" stopOpacity=".12"/></linearGradient></defs>
+        <rect x="12" y="12" width="616" height="396" rx="28" fill="url(#innovation-bg)"/>
+        <path d="M75 330h490" stroke="#4860AC" strokeOpacity=".35" strokeWidth="8" strokeLinecap="round"/>
+        <rect x="92" y="235" width="456" height="78" rx="14" fill="#fff" stroke="#4860AC" strokeOpacity=".3" strokeWidth="4"/>
+        <path d="M116 270h408M145 246v48m82-48v48m82-48v48m82-48v48m82-48v48" stroke="#4860AC" strokeOpacity=".25" strokeWidth="4"/>
+        <g transform="translate(184 78)" stroke="#4860AC" strokeWidth="18" strokeLinecap="round" strokeLinejoin="round" fill="none"><path d="M70 145 112 91l78 8 47-53"/><path d="m218 46 28-20 28 18-12 35-36-2z" fill="#F05424" stroke="#F05424"/><path d="M70 145 34 177" strokeWidth="23"/><circle cx="70" cy="145" r="19" fill="#F05424"/><circle cx="112" cy="91" r="16" fill="#fff"/><circle cx="190" cy="99" r="16" fill="#fff"/></g>
+        <rect x="110" y="104" width="72" height="54" rx="10" fill="#fff" stroke="#4860AC" strokeWidth="4"/><path d="M127 122h38m-38 15h25" stroke="#F05424" strokeWidth="5" strokeLinecap="round"/>
+        <rect x="402" y="72" width="128" height="110" rx="16" fill="#fff" stroke="#4860AC" strokeOpacity=".3" strokeWidth="4"/>
+        <path d="M426 145v-22l20-16 18 13 23-28 20 16" fill="none" stroke="#F05424" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round"/>
+        <circle cx="446" cy="123" r="6" fill="#4860AC"/><circle cx="464" cy="120" r="6" fill="#4860AC"/><circle cx="487" cy="92" r="6" fill="#4860AC"/>
+        <g fill="#4860AC"><circle cx="118" cy="204" r="6"/><circle cx="522" cy="204" r="6"/><circle cx="320" cy="53" r="6"/></g>
+        <path d="M150 188c34-29 54-36 80-36m190 36c-25-26-42-35-64-39" fill="none" stroke="#F05424" strokeWidth="4" strokeDasharray="7 9" strokeLinecap="round"/>
+      </svg>
+    </div>
+  )
+}
+
 export function Component() {
   const [selectedExecutive, setSelectedExecutive] = useState<(typeof executiveTeam)[number] | null>(null)
 
@@ -65,19 +110,7 @@ export function Component() {
             </Link>
           </>
         }
-        visual={
-          <div className="relative flex aspect-[16/10] w-full items-center justify-center overflow-hidden rounded-2xl border border-border bg-surface-muted shadow-elevated sm:aspect-[5/4] lg:aspect-[4/3]">
-            <img
-              src={asset('industry.webp')}
-              alt="Industrial manufacturing and warehousing facility"
-              width={900}
-              height={1012}
-              loading="eager"
-              decoding="async"
-              className="h-full w-full object-contain object-center"
-            />
-          </div>
-        }
+        visual={<AboutWarehouseIllustration />}
       />
 
       <Section id="company-overview" muted eyebrow="Who We Are" title="Experience that moves businesses forward">
@@ -106,7 +139,7 @@ export function Component() {
         ]}
         visual={
           <div className="about-story-visual overflow-hidden rounded-2xl border border-border bg-surface">
-            <img src={asset('industry.webp')} alt="Industrial manufacturing and warehousing facility" width={900} height={1012} loading="lazy" className="aspect-[5/4] w-full object-cover" />
+            <AboutWarehouseIllustration compact />
             <div className="grid grid-cols-2 gap-3 p-4 sm:p-5">
               <div className="rounded-xl bg-canvas p-4"><span className="text-xs font-bold tracking-wider text-fg-muted uppercase">Heritage</span><p className="mt-1 text-2xl font-extrabold text-primary">1986</p></div>
               <div className="rounded-xl bg-canvas p-4"><span className="text-xs font-bold tracking-wider text-fg-muted uppercase">Systems</span><p className="mt-1 text-2xl font-extrabold text-primary">06</p></div>
@@ -254,15 +287,8 @@ export function Component() {
               ))}
             </ol>
           </div>
-          <Reveal delay={150} className="aspect-[16/10] w-full overflow-hidden rounded-2xl border border-border bg-surface-muted shadow-elevated">
-            <img
-              src={asset('edge.webp')}
-              alt="High technology automation and robotics"
-              width={900}
-              height={506}
-              loading="lazy"
-              className="h-full w-full object-cover object-center transition-transform duration-500 motion-safe:hover:scale-[1.03]"
-            />
+          <Reveal delay={150}>
+            <InnovationIllustration />
           </Reveal>
         </Container>
       </section>
