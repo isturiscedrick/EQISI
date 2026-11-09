@@ -30,7 +30,6 @@ import { Reveal } from '@/components/ui/Reveal'
 import { ScrollProgressTrack } from '@/components/ui/ScrollProgressTrack'
 import { bannerButton, card, iconTile } from '@/components/ui/surface-styles'
 import * as c from '@/content/eqisi'
-import { asset } from '@/lib/assets'
 import { cn } from '@/lib/cn'
 
 const benefitIcons: Record<string, LucideIcon> = {
@@ -48,6 +47,30 @@ const benefitIcons: Record<string, LucideIcon> = {
 // Same order as c.benefitReasons and c.recruitment.
 const reasonIcons: LucideIcon[] = [LifeBuoy, UserCheck, Clock]
 const stageIcons: LucideIcon[] = [ClipboardList, Users, UserCheck, Stethoscope]
+
+
+function CareersIllustration() {
+  return (
+    <div className="relative flex aspect-[16/10] w-full items-center justify-center overflow-hidden rounded-2xl border border-border bg-surface-muted p-4 shadow-elevated sm:p-6">
+      <svg viewBox="0 0 640 420" role="img" aria-labelledby="careers-illustration-title" className="h-full w-full">
+        <title id="careers-illustration-title">Illustration of employees connected to digital payroll, welfare and career support</title>
+        <defs><linearGradient id="careers-bg" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#4860AC" stopOpacity=".15"/><stop offset="1" stopColor="#F05424" stopOpacity=".12"/></linearGradient></defs>
+        <rect x="12" y="12" width="616" height="396" rx="28" fill="url(#careers-bg)"/>
+        <rect x="164" y="48" width="312" height="235" rx="20" fill="#fff" stroke="#4860AC" strokeOpacity=".3" strokeWidth="4"/>
+        <rect x="164" y="48" width="312" height="46" rx="18" fill="#4860AC"/><path d="M164 76h312v18H164z" fill="#4860AC"/>
+        <circle cx="190" cy="71" r="5" fill="#fff"/><circle cx="208" cy="71" r="5" fill="#fff" opacity=".65"/><circle cx="226" cy="71" r="5" fill="#fff" opacity=".4"/>
+        <rect x="190" y="114" width="116" height="70" rx="11" fill="#4860AC" opacity=".1"/><rect x="320" y="114" width="130" height="70" rx="11" fill="#F05424" opacity=".12"/>
+        <text x="205" y="138" fill="#4860AC" fontSize="11" fontWeight="700" letterSpacing="1">PAYROLL</text><text x="205" y="166" fill="#24365F" fontSize="22" fontWeight="800">On time</text>
+        <text x="334" y="138" fill="#C64A25" fontSize="11" fontWeight="700" letterSpacing="1">WELFARE</text><text x="334" y="166" fill="#24365F" fontSize="20" fontWeight="800">Supported</text>
+        <path d="M193 211h250" stroke="#4860AC" strokeOpacity=".16" strokeWidth="8" strokeLinecap="round"/><path d="M193 211h176" stroke="#4860AC" strokeWidth="8" strokeLinecap="round"/><path d="M193 236h210" stroke="#F05424" strokeOpacity=".65" strokeWidth="8" strokeLinecap="round"/>
+        <g transform="translate(65 166)"><circle cx="43" cy="28" r="23" fill="#F4B38F"/><path d="M20 26c3-22 43-32 51-1-12-5-20-13-24-20-7 10-15 17-27 21z" fill="#24365F"/><path d="M7 117c2-40 16-61 36-61s34 21 36 61" fill="#4860AC"/><path d="M25 80h37" stroke="#fff" strokeOpacity=".7" strokeWidth="5" strokeLinecap="round"/></g>
+        <g transform="translate(472 166)"><circle cx="43" cy="28" r="23" fill="#D99570"/><path d="M20 25c4-25 42-32 50-1-12-3-22-10-28-18-5 10-12 16-22 19z" fill="#24365F"/><path d="M7 117c2-40 16-61 36-61s34 21 36 61" fill="#F05424"/><path d="M25 80h37" stroke="#fff" strokeOpacity=".7" strokeWidth="5" strokeLinecap="round"/></g>
+        <path d="M108 150c18-27 30-37 52-43m373 43c-18-26-31-37-56-43" fill="none" stroke="#F05424" strokeWidth="4" strokeDasharray="7 9" strokeLinecap="round"/>
+        <rect x="253" y="315" width="134" height="34" rx="17" fill="#F05424"/><path d="m275 332 8 7 13-15" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/><text x="307" y="337" fill="#fff" fontSize="11" fontWeight="700" letterSpacing=".8">CONNECTED</text>
+      </svg>
+    </div>
+  )
+}
 
 export function Component() {
   return (
@@ -72,17 +95,7 @@ export function Component() {
             </Link>
           </>
         }
-        visual={
-          <div className="aspect-[16/10] w-full overflow-hidden rounded-2xl border border-border bg-surface-muted shadow-elevated">
-            <img
-              src={asset('benefits.webp')}
-              alt="Workers on a production floor"
-              width={900}
-              height={507}
-              className="h-full w-full object-cover object-center transition-transform duration-500 motion-safe:hover:scale-[1.03]"
-            />
-          </div>
-        }
+        visual={<CareersIllustration />}
       />
 
       {/* Employee Benefits & Tech */}
