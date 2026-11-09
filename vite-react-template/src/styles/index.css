@@ -1715,3 +1715,32 @@ header nav a::after {
 @media (min-width: 640px) and (max-width: 767px) {
   .footer-contact-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+
+/* Shared illustration motion language, matching the Services hero's gentle movement. */
+@media (prefers-reduced-motion: no-preference) {
+  .illustration-motion > g {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: illustration-drift 6.8s ease-in-out infinite;
+  }
+  .illustration-motion > g:nth-of-type(2n) { animation-delay: -2.4s; animation-duration: 7.8s; }
+  .illustration-motion > g:nth-of-type(3n) { animation-delay: -4.1s; animation-duration: 8.6s; }
+  .illustration-motion > circle {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: illustration-glow 5.5s ease-in-out infinite;
+  }
+  .illustration-motion > circle:nth-of-type(2n) { animation-delay: -2.7s; }
+  .illustration-motion > path[stroke-dasharray],
+  .illustration-motion > line[stroke-dasharray] { animation: illustration-flow 10s linear infinite; }
+}
+@keyframes illustration-drift { 0%, 100% { translate: 0 0; } 50% { translate: 0 -5px; } }
+@keyframes illustration-glow { 0%, 100% { opacity: .72; scale: 1; } 50% { opacity: 1; scale: 1.045; } }
+@keyframes illustration-flow { to { stroke-dashoffset: -48; } }
+@media (prefers-reduced-motion: reduce) {
+  .illustration-motion > g, .illustration-motion > circle,
+  .illustration-motion > path[stroke-dasharray], .illustration-motion > line[stroke-dasharray] {
+    animation: none !important; translate: none !important; scale: none !important;
+  }
+}
