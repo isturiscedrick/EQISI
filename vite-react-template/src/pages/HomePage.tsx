@@ -16,7 +16,6 @@ import { CountUp } from '@/components/ui/CountUp'
 import { Reveal } from '@/components/ui/Reveal'
 import { bannerButton } from '@/components/ui/surface-styles'
 import { siteConfig } from '@/config/site'
-import * as c from '@/content/eqisi'
 import { cn } from '@/lib/cn'
 
 // `from` is the number the count-up starts at. "DO-174" is a regulation name, not a quantity, so it has none.
