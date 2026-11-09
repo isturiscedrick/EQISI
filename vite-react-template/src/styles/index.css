@@ -1898,3 +1898,21 @@ header nav a::after {
     transition: none !important;
   }
 }
+
+
+/* Keep the long homepage eyebrow compact on narrow screens without changing desktop sizing. */
+@media (max-width: 639px) {
+  .home-showcase-hero [data-hero-step="eyebrow"] {
+    gap: .4rem;
+    padding: .35rem .65rem;
+    font-size: .58rem;
+    letter-spacing: .075em;
+    line-height: 1.35;
+  }
+
+  .home-showcase-hero [data-hero-step="eyebrow"] > span {
+    width: .375rem;
+    height: .375rem;
+    flex: none;
+  }
+}
