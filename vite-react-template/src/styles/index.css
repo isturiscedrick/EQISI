@@ -1744,3 +1744,50 @@ header nav a::after {
     animation: none !important; translate: none !important; scale: none !important;
   }
 }
+
+/* Mobile team portrait order: row 1 = people 3, 4, 5, 6; row 2 = people 1, 2, 7, 8.
+   Desktop keeps the original two-cluster composition above. */
+@media (max-width: 639px) {
+  .hero-team-frame {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .hero-team-group {
+    display: contents;
+  }
+
+  .hero-team-person {
+    position: relative;
+    inset: auto !important;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    margin: 0;
+    overflow: visible;
+    align-self: stretch;
+    justify-self: stretch;
+  }
+
+  .hero-team-person img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center bottom;
+  }
+
+  /* First row: 3, 4, 5, 6 */
+  .hero-team-person[data-person="Manuel"] { grid-column: 1; grid-row: 1; }
+  .hero-team-person[data-person="Cajigal"] { grid-column: 2; grid-row: 1; }
+  .hero-team-person[data-person="Flores"] { grid-column: 3; grid-row: 1; }
+  .hero-team-person[data-person="Trinidad"] { grid-column: 4; grid-row: 1; }
+
+  /* Second row: 1, 2, 7, 8 */
+  .hero-team-person[data-person="Alfariz"] { grid-column: 1; grid-row: 2; }
+  .hero-team-person[data-person="Tugas"] { grid-column: 2; grid-row: 2; }
+  .hero-team-person[data-person="Malaca"] { grid-column: 3; grid-row: 2; }
+  .hero-team-person[data-person="Joy"] { grid-column: 4; grid-row: 2; }
+}
