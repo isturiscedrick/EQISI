@@ -42,7 +42,7 @@ const valueIcons: Record<string, LucideIcon> = {
 
 function AboutWarehouseIllustration({ compact = false }: { compact?: boolean }) {
   return (
-    <div className={cn("about-illustration relative flex w-full items-center justify-center overflow-hidden rounded-2xl border border-border bg-surface-muted p-4 shadow-elevated sm:p-6", compact ? "aspect-[5/4]" : "aspect-[16/10] sm:aspect-[5/4] lg:aspect-[4/3]")}>
+    <div className={cn("about-illustration relative flex w-full items-center justify-center overflow-hidden", compact ? "aspect-[5/4]" : "aspect-[16/10] sm:aspect-[5/4] lg:aspect-[4/3]")}>
       <svg viewBox="0 0 640 460" role="img" aria-labelledby="about-warehouse-title" className="h-full w-full">
         <title id="about-warehouse-title">Illustration of an organized warehouse and connected industrial operations</title>
         <defs>
@@ -65,7 +65,7 @@ function AboutWarehouseIllustration({ compact = false }: { compact?: boolean }) 
 
 function InnovationIllustration() {
   return (
-    <div className="relative flex aspect-[16/10] w-full items-center justify-center overflow-hidden rounded-2xl border border-border bg-surface-muted p-4 shadow-elevated sm:p-6">
+    <div className="relative flex aspect-[16/10] w-full items-center justify-center overflow-hidden">
       <svg viewBox="0 0 640 420" role="img" aria-labelledby="innovation-illustration-title" className="h-full w-full">
         <title id="innovation-illustration-title">Illustration of industrial automation, robotics and connected technology</title>
         <defs><linearGradient id="innovation-bg" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#4860AC" stopOpacity=".15"/><stop offset="1" stopColor="#F05424" stopOpacity=".12"/></linearGradient></defs>
@@ -138,7 +138,7 @@ export function Component() {
           { title: 'Supporting what comes next', description: 'Our focus is to help businesses coordinate people, processes and technology as operational needs evolve.' },
         ]}
         visual={
-          <div className="about-story-visual overflow-hidden rounded-2xl border border-border bg-surface">
+          <div className="about-story-visual overflow-hidden">
             <AboutWarehouseIllustration compact />
             <div className="grid grid-cols-2 gap-3 p-4 sm:p-5">
               <div className="rounded-xl bg-canvas p-4"><span className="text-xs font-bold tracking-wider text-fg-muted uppercase">Heritage</span><p className="mt-1 text-2xl font-extrabold text-primary">1986</p></div>
