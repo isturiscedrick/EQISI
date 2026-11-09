@@ -1757,7 +1757,12 @@ header nav a::after {
   }
 
   .hero-team-group {
+    position: static;
+    inset: auto;
     display: contents;
+    width: auto;
+    height: auto;
+    aspect-ratio: auto;
   }
 
   .hero-team-person {
