@@ -1795,4 +1795,16 @@ header nav a::after {
   .hero-team-person[data-person="Tugas"] { grid-column: 2; grid-row: 2; }
   .hero-team-person[data-person="Malaca"] { grid-column: 4; grid-row: 1; }
   .hero-team-person[data-person="Joy"] { grid-column: 3; grid-row: 1; }
+
+  /* Correct the two third-column portraits independently: Joy needs more visible height,
+     while Trinidad needs a small downward adjustment to align her head with the row. */
+  .hero-team-person[data-person="Joy"] img {
+    transform: scale(calc(var(--fit, 1) * 1.28))
+      translateY(calc(var(--lift, 0) * -100% + 9px));
+  }
+
+  .hero-team-person[data-person="Trinidad"] img {
+    transform: scale(calc(var(--fit, 1) * 1.06))
+      translateY(calc(var(--lift, 0) * -100% + 10px));
+  }
 }
