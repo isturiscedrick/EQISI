@@ -1810,81 +1810,109 @@ header nav a::after {
 }
 
 
-/* Hero portraits: hover reveals name and position (fine pointers, 640px and up).
-   Touch and the mobile portrait grid are unchanged. */
-@media (hover: hover) and (pointer: fine) and (min-width: 640px) {
-  /* The portraits sit under the hero content, so let pointer events fall through empty areas
-     and switch them back on only for the text, the buttons, the globe and the portraits. */
-  .home-showcase-hero > div.relative {
-    pointer-events: none;
-  }
-
-  .home-showcase-hero [data-hero-step],
-  .home-showcase-hero .globe-parallax {
-    pointer-events: auto;
-  }
-
-  .hero-team-person img {
-    pointer-events: auto;
-    cursor: default;
-    transition:
-      scale 320ms cubic-bezier(.2, .8, .2, 1),
-      translate 320ms cubic-bezier(.2, .8, .2, 1),
-      filter 320ms ease;
-  }
-
-  .hero-team-person[data-active="true"] img {
-    scale: 1.05;
-    translate: 0 -6px;
-    filter: saturate(1.1) contrast(1.06) drop-shadow(0 10px 18px rgb(26 35 66 / .28));
-  }
+/* Team portrait interaction: reveal each leader's name and role on hover or keyboard focus. */
+.hero-team-person {
+  cursor: pointer;
+  isolation: isolate;
+  transition: filter 280ms ease, translate 320ms cubic-bezier(.2,.8,.2,1);
 }
-
-.hero-team-tip {
-  position: fixed;
-  z-index: 60;
-  top: var(--tip-y, 0);
-  left: var(--tip-x, 0);
-  width: max-content;
-  max-width: 12rem;
-  padding: .55rem .8rem;
-  border: 1px solid var(--border);
-  border-top: 3px solid var(--highlight);
-  border-radius: .75rem;
-  background: var(--surface);
-  box-shadow: var(--shadow-elevated);
+.hero-team-person img {
+  transition: filter 280ms ease, transform 380ms cubic-bezier(.2,.8,.2,1);
+}
+.hero-team-person-caption {
+  position: absolute;
+  z-index: 8;
+  inset: auto 3% 4% 3%;
+  display: flex;
+  flex-direction: column;
+  gap: .12rem;
+  padding: .5rem .6rem;
+  border: 1px solid rgb(255 255 255 / .34);
+  border-radius: .65rem;
+  background: rgb(24 38 77 / .9);
+  color: #fff;
   text-align: center;
-  pointer-events: none;
+  box-shadow: 0 8px 24px rgb(17 27 54 / .2);
   opacity: 0;
-  transform: translate(-50%, calc(-50% + 6px));
-  transition: opacity 180ms ease, transform 260ms cubic-bezier(.2, .8, .2, 1);
+  translate: 0 8px;
+  scale: .97;
+  pointer-events: none;
+  transition: opacity 220ms ease, translate 260ms ease, scale 260ms ease;
+  backdrop-filter: blur(10px);
 }
-
-.hero-team-tip[data-visible] {
-  opacity: 1;
-  transform: translate(-50%, -50%);
-}
-
-.hero-team-tip-name {
-  font-family: var(--font-heading);
-  font-size: .8rem;
+.hero-team-person-name {
+  font-size: clamp(.58rem, .72vw, .78rem);
+  line-height: 1.2;
   font-weight: 800;
+}
+.hero-team-person-role {
+  color: rgb(255 255 255 / .82);
+  font-size: clamp(.48rem, .58vw, .62rem);
   line-height: 1.25;
-  color: var(--fg);
+  font-weight: 600;
 }
-
-.hero-team-tip-role {
-  margin-top: .2rem;
-  font-size: .68rem;
-  font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: var(--accent);
+@media (hover: hover) and (pointer: fine) {
+  .hero-team-person:hover,
+  .hero-team-person:focus-visible {
+    z-index: 20 !important;
+    filter: drop-shadow(0 12px 18px rgb(17 27 54 / .24));
+    translate: 0 -7px;
+  }
+  .hero-team-person:hover img,
+  .hero-team-person:focus-visible img {
+    filter: saturate(1.08) contrast(1.06) brightness(1.04);
+  }
+  .hero-team-person:hover .hero-team-person-caption,
+  .hero-team-person:focus-visible .hero-team-person-caption {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
 }
-
+@media (hover: none), (pointer: coarse) {
+  .hero-team-person-caption {
+    inset-inline: 1%;
+    bottom: 2%;
+    padding: .25rem .2rem;
+    border-radius: .4rem;
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+    background: rgb(24 38 77 / .82);
+  }
+  .hero-team-person-name { font-size: clamp(.46rem, 2vw, .62rem); }
+  .hero-team-person-role { font-size: clamp(.38rem, 1.55vw, .5rem); }
+}
+@media (max-width: 639px) {
+  .hero-team-person-caption {
+    inset-inline: 1%;
+    bottom: 1%;
+    padding: .22rem .12rem;
+    gap: .08rem;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
-  .hero-team-tip {
-    transition: none;
+  .hero-team-person,
+  .hero-team-person img,
+  .hero-team-person-caption {
+    transition: none !important;
   }
 }
 
+
+/* Keep the long homepage eyebrow compact on narrow screens without changing desktop sizing. */
+@media (max-width: 639px) {
+  .home-showcase-hero [data-hero-step="eyebrow"] {
+    gap: .4rem;
+    padding: .35rem .65rem;
+    font-size: .58rem;
+    letter-spacing: .075em;
+    line-height: 1.35;
+  }
+
+  .home-showcase-hero [data-hero-step="eyebrow"] > span {
+    width: .375rem;
+    height: .375rem;
+    flex: none;
+  }
+}

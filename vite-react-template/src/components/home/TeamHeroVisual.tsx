@@ -12,6 +12,7 @@ import tugas from '@/assets/eqisi/team/team- blue and white/Tugas — blue and w
 type Person = { name: string; fullName: string; role: string; image: string }
 
 // Order = slot: 1 back/top, 2 outer side, 3 lower, 4 front (see hero CSS).
+<<<<<<< HEAD
 // `name` (surname) is the key used by the CSS in data-person. fullName and role match AboutPage's executiveTeam.
 const leftTeam: Person[] = [
   { name: 'Alfariz', fullName: 'Gretchen Alfariz', role: 'Chief Finance Officer', image: alfariz },
@@ -24,6 +25,19 @@ const rightTeam: Person[] = [
   { name: 'Trinidad', fullName: 'Annabel S. Trinidad', role: 'Chief IT Officer', image: trinidad },
   { name: 'Malaca', fullName: 'Rodulfo Mejes Malaca', role: 'General Manager', image: malaca },
   { name: 'Joy', fullName: 'Joy Catherine P. Lopez', role: 'President for Operations', image: joy },
+=======
+const leftTeam = [
+  { name: 'Gretchen Alfariz', role: 'Chief Finance Officer', image: alfariz },
+  { name: 'Gigy Josephine Tugas', role: 'Chief HR Officer', image: tugas },
+  { name: 'Jelle Jasmin Manuel', role: 'Chief Operating Officer', image: manuel },
+  { name: 'Aniceto Apollo L. Cajigal Jr.', role: 'Chairman & CEO', image: cajigal },
+]
+const rightTeam = [
+  { name: 'Atty. Edgardo Flores Jr.', role: 'Chief Legal Officer', image: flores },
+  { name: 'Annabel S. Trinidad', role: 'Chief IT Officer', image: trinidad },
+  { name: 'Rodulfo Mejes Malaca', role: 'General Manager', image: malaca },
+  { name: 'Joy Catherine P. Lopez', role: 'President for Operations', image: joy },
+>>>>>>> feature/mobile-team-portrait-layout
 ]
 
 // Half of the tooltip's max width (12rem), used to keep it inside the viewport.
@@ -96,12 +110,21 @@ function PortraitGroup({
           className="hero-team-person"
           key={person.name}
           data-person={person.name}
+<<<<<<< HEAD
           data-active={activeName === person.name || undefined}
           onPointerEnter={(event) => onShow(person, event.currentTarget)}
           onPointerLeave={onHide}
+=======
+          tabIndex={0}
+          aria-label={`${person.name}, ${person.role}`}
+>>>>>>> feature/mobile-team-portrait-layout
           style={{ '--person-index': index } as React.CSSProperties}
         >
           <img src={person.image} alt="" loading="eager" />
+          <figcaption className="hero-team-person-caption">
+            <span className="hero-team-person-name">{person.name}</span>
+            <span className="hero-team-person-role">{person.role}</span>
+          </figcaption>
         </figure>
       ))}
     </div>
