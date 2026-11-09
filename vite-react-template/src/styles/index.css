@@ -1808,3 +1808,83 @@ header nav a::after {
       translateY(calc(var(--lift, 0) * -100% + 10px));
   }
 }
+
+
+/* Hero portraits: hover reveals name and position (fine pointers, 640px and up).
+   Touch and the mobile portrait grid are unchanged. */
+@media (hover: hover) and (pointer: fine) and (min-width: 640px) {
+  /* The portraits sit under the hero content, so let pointer events fall through empty areas
+     and switch them back on only for the text, the buttons, the globe and the portraits. */
+  .home-showcase-hero > div.relative {
+    pointer-events: none;
+  }
+
+  .home-showcase-hero [data-hero-step],
+  .home-showcase-hero .globe-parallax {
+    pointer-events: auto;
+  }
+
+  .hero-team-person img {
+    pointer-events: auto;
+    cursor: default;
+    transition:
+      scale 320ms cubic-bezier(.2, .8, .2, 1),
+      translate 320ms cubic-bezier(.2, .8, .2, 1),
+      filter 320ms ease;
+  }
+
+  .hero-team-person[data-active="true"] img {
+    scale: 1.05;
+    translate: 0 -6px;
+    filter: saturate(1.1) contrast(1.06) drop-shadow(0 10px 18px rgb(26 35 66 / .28));
+  }
+}
+
+.hero-team-tip {
+  position: fixed;
+  z-index: 60;
+  top: var(--tip-y, 0);
+  left: var(--tip-x, 0);
+  width: max-content;
+  max-width: 12rem;
+  padding: .55rem .8rem;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--highlight);
+  border-radius: .75rem;
+  background: var(--surface);
+  box-shadow: var(--shadow-elevated);
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, calc(-50% + 6px));
+  transition: opacity 180ms ease, transform 260ms cubic-bezier(.2, .8, .2, 1);
+}
+
+.hero-team-tip[data-visible] {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+
+.hero-team-tip-name {
+  font-family: var(--font-heading);
+  font-size: .8rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--fg);
+}
+
+.hero-team-tip-role {
+  margin-top: .2rem;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-team-tip {
+    transition: none;
+  }
+}
+
