@@ -43,7 +43,7 @@ const valueIcons: Record<string, LucideIcon> = {
 function AboutWarehouseIllustration({ compact = false }: { compact?: boolean }) {
   return (
     <div className={cn("about-illustration relative flex w-full items-center justify-center overflow-hidden", compact ? "aspect-[5/4]" : "aspect-[16/10] sm:aspect-[5/4] lg:aspect-[4/3]")}>
-      <svg viewBox="0 0 640 460" role="img" aria-labelledby="about-warehouse-title" className="h-full w-full">
+      <svg viewBox="0 0 640 460" role="img" aria-labelledby="about-warehouse-title" className="illustration-motion h-full w-full">
         <title id="about-warehouse-title">Illustration of an organized warehouse and connected industrial operations</title>
         <defs>
           <linearGradient id="about-warehouse-glow" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#4860AC" stopOpacity=".16"/><stop offset="1" stopColor="#F05424" stopOpacity=".13"/></linearGradient>
