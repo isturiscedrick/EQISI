@@ -10,7 +10,6 @@ import { Reveal } from '@/components/ui/Reveal'
 import { ServiceExplorer } from '@/components/ui/ServiceExplorer'
 import { bannerButton, card, chip, iconTile } from '@/components/ui/surface-styles'
 import * as c from '@/content/eqisi'
-import { asset } from '@/lib/assets'
 import { cn } from '@/lib/cn'
 import { industryIcon, systemIcon } from '@/lib/icons'
 
@@ -164,33 +163,6 @@ export function Component() {
             </Reveal>
           ))}
         </div>
-      </Section>
-
-      {/* Clients Grid */}
-      <Section
-        id="clients"
-        eyebrow="Client Portfolio"
-        title="Trusted by industry leaders"
-        lead="A track record of reliable service across 26+ major Philippine and multinational enterprises."
-      >
-        <ul className="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7">
-          {c.clients.map((client) => (
-            <li
-              key={client.name}
-              title={client.name}
-              className="grid aspect-square place-items-center overflow-hidden rounded-full border-4 border-border bg-white shadow-subtle transition-all duration-200 hover:border-primary/50 hover:shadow-card motion-safe:hover:scale-105"
-            >
-              <img
-                src={asset(client.logo)}
-                alt={client.name}
-                width={150}
-                height={150}
-                loading="lazy"
-                className={cn('size-full object-contain', 'padded' in client && client.padded && 'p-[14%]')}
-              />
-            </li>
-          ))}
-        </ul>
       </Section>
 
       <CtaBanner
