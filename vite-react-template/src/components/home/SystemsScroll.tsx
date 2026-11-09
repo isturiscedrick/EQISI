@@ -18,9 +18,10 @@ export function SystemsScroll() {
     const scene = root.current
     const frame = viewport.current
     const rail = track.current
-    const section = scene.closest<HTMLElement>('#systems-preview') ?? scene
     const progressBar = progress.current
     if (!scene || !frame || !rail || !c.systems.length) return
+
+    const section = scene.closest<HTMLElement>('#systems-preview') ?? scene
 
     const mm = gsap.matchMedia()
     mm.add('(min-width: 1024px) and (min-height: 640px) and (prefers-reduced-motion: no-preference)', () => {
