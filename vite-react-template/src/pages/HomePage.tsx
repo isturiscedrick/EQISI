@@ -29,7 +29,7 @@ const stats = [
 
 function WarehouseIllustration() {
   return (
-    <div className="home-feature-illustration flex aspect-[4/5] w-full items-center justify-center overflow-hidden rounded-2xl border border-border bg-surface-muted p-3 shadow-card sm:aspect-[5/4] sm:p-5">
+    <div className="home-feature-illustration flex aspect-[4/5] w-full items-center justify-center overflow-hidden sm:aspect-[5/4]">
       <svg viewBox="0 0 640 500" role="img" aria-labelledby="warehouse-illustration-title" className="h-full w-full">
         <title id="warehouse-illustration-title">Illustration of a modern warehouse with organized inventory and logistics equipment</title>
         <defs>
@@ -85,7 +85,7 @@ function WarehouseIllustration() {
 
 function WorkforceIllustration() {
   return (
-    <div className="home-feature-illustration flex aspect-[16/10] w-full items-center justify-center overflow-hidden rounded-2xl border border-border bg-canvas p-3 shadow-card sm:p-5">
+    <div className="home-feature-illustration flex aspect-[16/10] w-full items-center justify-center overflow-hidden">
       <svg viewBox="0 0 640 400" role="img" aria-labelledby="workforce-illustration-title" className="h-full w-full">
         <title id="workforce-illustration-title">Illustration of a connected workforce, payroll dashboard and employee support</title>
         <defs>
